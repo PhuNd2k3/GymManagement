@@ -31,14 +31,20 @@ const App = () => {
     checkLoginStatus();
   }, [location]);
 
+  const renderHeader = () => {
+    if (location.pathname !== "/login") {
+      return isLoggedIn && userRole === "hoivien" ? <HeaderUser /> : <Header />;
+    }
+    return null;
+  };
+
   return (
     <div className="app">
       <div className="overlay"></div>
-      {console.log(isLoggedIn)}
-      {location.pathname !== "/login" && (isLoggedIn && userRole === "hoivien" ? <HeaderUser /> : <Header />)}
+      {renderHeader()}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} />} />
         <Route path="/packages" element={<Packages />} />
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn ? (
