@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Header from "./components/Header/Header";
 import HeaderUser from "./components/HeaderUser/HeaderUser";
 import Home from "./pages/Home";
@@ -12,28 +12,30 @@ import Login from "./pages/Login";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const location = useLocation();
 
-  // Giả sử có một hàm để kiểm tra trạng thái đăng nhập
   const checkLoginStatus = () => {
-    // Giả sử bạn lưu token vào localStorage sau khi người dùng đăng nhập
-    // const token = localStorage.getItem('authToken');
-    // if (token) {
-    //   setIsLoggedIn(true);
-    // } else {
-    //   setIsLoggedIn(false);
-    // }
+    const token = localStorage.getItem('authToken');
+    const role = localStorage.getItem('userRole');
+    if (token && role) {
+      setIsLoggedIn(true);
+      setUserRole(role);
+    } else {
+      setIsLoggedIn(false);
+      setUserRole(null);
+    }
   };
 
-  // Gọi hàm kiểm tra trạng thái đăng nhập khi component được render
   useEffect(() => {
     checkLoginStatus();
-  }, []);
+  }, [location]);
 
   return (
     <div className="app">
-    <div class="overlay"></div>
-    {console.log(isLoggedIn)}
-      {isLoggedIn ? <HeaderUser /> : <Header />}
+      <div className="overlay"></div>
+      {console.log(isLoggedIn)}
+      {location.pathname !== "/login" && (isLoggedIn && userRole === "hoivien" ? <HeaderUser /> : <Header />)}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
