@@ -1,0 +1,64 @@
+@use "../abstracts";
+
+%flexItemsCenter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header {
+    padding: 30px 0;
+    z-index: 10;
+
+    ul {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    li {
+        margin: 0 15px;
+    }
+
+    li a {
+        position: relative;
+        color: #fff;
+        padding: 5px 10px;
+        font-size: 1.6rem;
+        font-weight: 600;
+
+        &::after,
+        &.active::after {
+            position: absolute;
+            content: "";
+            width: 0%;
+            height: 3px;
+            background-color: red;
+            bottom: -5px;
+            left: 10px;
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+        &:hover::after,
+        &.active::after {
+            width: calc(100% - 20px);
+        }
+    }
+}
+
+.top-bar {
+    @extend %flexItemsCenter;
+}
+
+.btn-login {
+  font-size: 1.6rem;
+  color: #FFF;
+  font-weight: 600;
+  background-color: #000;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+
+.btn-login:hover {
+  background-color: red;
+}
