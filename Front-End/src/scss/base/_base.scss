@@ -41,7 +41,7 @@ button, input, select, textarea {
     position: relative;
     background: url(../../assets/img/bg-img-1.jpg);
     // filter: sepia(100%) hue-rotate(20deg);
-    height: 100vh;
+    min-height: 100vh;
     background-size: cover;
     background-repeat: no-repeat;
 }

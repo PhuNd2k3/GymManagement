@@ -1,0 +1,17 @@
+.home {
+    height: calc(100vh - 108.5px);
+    .container, .col, .row {
+        height: 100%;
+    }
+    .home-title {
+        // height: 100%;
+        // display: inline-flex;
+        // align-items: center;
+        // justify-content: center;
+        margin-top: 50px;
+        font-size: 8rem;
+        line-height: 10rem;
+        font-weight: 600;
+        color: #FFF;
+    }
+}
