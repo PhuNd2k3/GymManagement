@@ -39,9 +39,17 @@ button, input, select, textarea {
 
 .app {
     position: relative;
-    background: url(../../assets/img/bg-img-1.jpg);
+    // background: url(../../assets/img/bg-img-1.jpg);
     // filter: sepia(100%) hue-rotate(20deg);
     min-height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.background {
+    padding-top: 108.5px;
+    height: 100vh;
+    background: url(../../assets/img/Background.png);
     background-size: cover;
     background-repeat: no-repeat;
 }

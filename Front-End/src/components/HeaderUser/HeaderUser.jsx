@@ -21,18 +21,18 @@ const HeaderUser = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/about-us" activeClassName="active">
-                  VỀ CHÚNG TÔI
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/schedule" activeClassName="active">
-                  QUẢN LÝ LỊCH TẬP
+                <NavLink to="/training-history" activeClassName="active">
+                  LỊCH SỬ ĐI TẬP
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/feedback" activeClassName="active">
                   PHẢN HỒI
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/about-us" activeClassName="active">
+                  VỀ CHÚNG TÔI
                 </NavLink>
               </li>
               <li>
