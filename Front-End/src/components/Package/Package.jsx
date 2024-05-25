@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, Radio } from "antd";
+import { Button, Modal, Radio, Select, Input } from "antd";
+
+const { Option } = Select;
 
 const Package = ({
     name,
@@ -12,6 +14,8 @@ const Package = ({
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState("bankCard"); // Default payment method
+    const [selectedBank, setSelectedBank] = useState("");
+    const [accountNumber, setAccountNumber] = useState("");
 
     const handlePackageClick = () => {
         if (!isLoggedIn) {
@@ -23,12 +27,15 @@ const Package = ({
     };
 
     const handleOk = () => {
-        // Handle the payment logic here based on the selected payment method
         if (paymentMethod === "bankCard") {
-            // Logic for bank card payment
+            if (!selectedBank || !accountNumber) {
+                alert("Vui lòng chọn ngân hàng và nhập số tài khoản.");
+                return;
+            }
             console.log("Thanh toán bằng thẻ ngân hàng");
+            console.log("Ngân hàng: ", selectedBank);
+            console.log("Số tài khoản: ", accountNumber);
         } else if (paymentMethod === "cashOnDelivery") {
-            // Logic for cash on delivery
             console.log("Thanh toán tại nhà");
         }
         setIsModalOpen(false);
@@ -41,6 +48,38 @@ const Package = ({
     const onPaymentMethodChange = (e) => {
         setPaymentMethod(e.target.value);
     };
+
+    const handleBankChange = (value) => {
+        setSelectedBank(value);
+    };
+
+    const handleAccountNumberChange = (e) => {
+        setAccountNumber(e.target.value);
+    };
+
+    // Mảng chứa danh sách ngân hàng
+    const vietnameseBanks = [
+        "Vietcombank",
+        "Techcombank",
+        "BIDV",
+        "MBBank",
+        "VietinBank",
+        "Agribank",
+        "VPBank",
+        "Sacombank",
+        "ACB",
+        "SeABank",
+        "SHB",
+        "Eximbank",
+        "HDBank",
+        "OceanBank",
+        "ABBank",
+        "GPBank",
+        "Nam A Bank",
+        "VIB",
+        "TPBank",
+        "PVcomBank",
+    ];
 
     return (
         <div className="package-item">
@@ -63,7 +102,7 @@ const Package = ({
                 </button>
                 <Modal
                     title="THANH TOÁN"
-                    open={isModalOpen}
+                    visible={isModalOpen}
                     onOk={handleOk}
                     onCancel={handleCancel}
                     className="payment"
@@ -88,6 +127,26 @@ const Package = ({
                                     Thanh toán tại nhà
                                 </Radio>
                             </Radio.Group>
+                            {paymentMethod === "bankCard" && (
+                                <>
+                                    <Select
+                                        placeholder="Chọn ngân hàng"
+                                        style={{ width: "100%", marginTop: 10 }}
+                                        onChange={handleBankChange}
+                                    >
+                                        {vietnameseBanks.map((bank, index) => (
+                                            <Option key={index} value={bank}>
+                                                {bank}
+                                            </Option>
+                                        ))}
+                                    </Select>
+                                    <Input
+                                        placeholder="Nhập số tài khoản"
+                                        style={{ width: "100%", marginTop: 10 }}
+                                        onChange={handleAccountNumberChange}
+                                    />
+                                </>
+                            )}
                         </div>
                     </div>
                 </Modal>
