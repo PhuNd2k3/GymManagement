@@ -1,28 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
 import Package from "../components/Package/Package";
 
 const Packages = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const packagesData = [
-    {
-      name: "Gói tập Gym cơ bản",
-      price: 500000,
-      exercise_frequency: "3 buổi/tuần",
-      number: 10,
-    },
-    {
-      name: "Gói tập Gym nâng cao",
-      price: 800000,
-      exercise_frequency: "5 buổi/tuần",
-      number: 5,
-    },
-    {
-      name: "Gói Yoga giảm cân",
-      price: 300000,
-      exercise_frequency: "2 buổi/tuần",
-      number: 15,
-    },
-  ];
+  const [packagesData, setPackagesData] = useState([]);
+  // const packagesData = [
+  //   {
+  //     name: "Gói tập Gym cơ bản",
+  //     price: 500000,
+  //     numbersOfTrainingPerWeek: "3",
+  //     memberCount: 10,
+  //   },
+  //   {
+  //     name: "Gói tập Gym nâng cao",
+  //     price: 800000,
+  //     numbersOfTrainingPerWeek: "5",
+  //     memberCount: 5,
+  //   },
+  //   {
+  //     name: "Gói Yoga giảm cân",
+  //     price: 300000,
+  //     numbersOfTrainingPerWeek: "2",
+  //     memberCount: 15,
+  //   },
+  // ];
+
+  useEffect(() => {
+    // Tạo một hàm để gọi API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/membership');
+        console.log(response);
+      } catch (error) {
+      }
+    };
+
+    // Gọi hàm fetchData khi component được mount
+    fetchData();
+  }, []);
 
   const filteredPackages = packagesData.filter((packageData) =>
     packageData.name.toLowerCase().includes(searchTerm.toLowerCase())
