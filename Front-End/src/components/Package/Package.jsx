@@ -95,6 +95,9 @@ const Package = ({
                 <p className="package-number">
                     Số người tập: <strong>{memberCount}</strong> người
                 </p>
+                <p className="package-number">
+                    Thời hạn: <strong>60</strong> ngày
+                </p>
             </div>
             <>
                 <button className="package-btn" onClick={handlePackageClick}>
