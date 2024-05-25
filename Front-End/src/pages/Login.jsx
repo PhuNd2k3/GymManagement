@@ -27,7 +27,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
   };
 
   return (
-    <div className="login">
+    <div className="login background">
       <div className="login-container">
         <h2 className="login-title">Đăng Nhập</h2>
         <form onSubmit={handleSubmit}>

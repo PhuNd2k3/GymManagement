@@ -5,7 +5,7 @@ import HeaderUser from "./components/HeaderUser/HeaderUser";
 import Home from "./pages/Home";
 import Packages from './pages/Packages';
 import AboutUs from './pages/AboutUs';
-import Schedule from './pages/Schedule';
+import TrainingHistory from './pages/TrainingHistory';
 import Feedback from './pages/Feedback';
 import Profile from './pages/Profile';
 import Login from "./pages/Login";
@@ -49,7 +49,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn ? (
           <>
-            <Route path="/schedule" element={<Schedule />} />
+            <Route path="/training-history" element={<TrainingHistory />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/profile" element={<Profile />} />
           </>

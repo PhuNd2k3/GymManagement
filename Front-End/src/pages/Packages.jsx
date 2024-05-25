@@ -31,7 +31,8 @@ const Packages = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/membership');
-        console.log(response);
+        // console.log(response);
+        setPackagesData(response.data);
       } catch (error) {
       }
     };
@@ -50,7 +51,7 @@ const Packages = () => {
   };
 
   return (
-    <div className="packages">
+    <div className="packages background">
       <div className="container">
         <form className="form" onSubmit={handleSubmit}>
           <label htmlFor="search">
