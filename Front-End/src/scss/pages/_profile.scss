@@ -1,0 +1,93 @@
+.profile {
+    padding-top: 108.5px;
+
+    &-title {
+        font-weight: 700;
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        padding: 0 100px;
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    
+    .form-top {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        &-left, &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-left {
+            width: 55%;
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #737373;
+            }
+
+            input, select {
+                margin-bottom: 15px;
+                padding: 8px;
+                font-size: 16px;
+                border: 2px solid #DBDBDB;
+                border-radius: 4px;
+            }
+
+            input:disabled, select:disabled {
+                background-color: #f5f5f5;
+                cursor: not-allowed;
+            }
+        }
+
+        &-right {
+            width: 30%;
+            align-items: flex-end;
+            margin: auto;
+            img {
+                width: 300px;
+                height: 300px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+
+            input[type="file"] {
+                display: block;
+            }
+        }
+    }
+
+    .form-bottom {
+        margin-top: 20px;
+
+        // input[type="submit"], button {
+        //     padding: 10px 20px;
+        //     font-size: 16px;
+        //     cursor: pointer;
+        // }
+
+        input[type="submit"], button {
+            width: 100%;
+            font-size: 2rem;
+            font-weight: 700;
+            padding: 10px 40px;
+            border: none;
+            border-radius: 10px;
+            background-color: #c21b1b;
+            color: #fff;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+            &:hover {
+                background-color: red;
+            }
+        }
+    }
+}

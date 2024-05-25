@@ -14,7 +14,7 @@ const generateFakeData = () => {
 
 const TrainingHistory = () => {
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 8
+  const itemsPerPage = 6
   const data = generateFakeData()
 
   const startIndex = (currentPage - 1) * itemsPerPage
