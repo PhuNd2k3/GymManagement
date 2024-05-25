@@ -6,6 +6,6 @@ import lombok.Data;
 public class MembershipDTO {
     private String name;
     private Integer price;
-    private Long memberCount;
+    private Integer memberCount;
     private Integer numbersOfTrainingPerWeek;
 }

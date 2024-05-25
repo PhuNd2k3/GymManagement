@@ -9,7 +9,7 @@ import java.util.Date;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "full_name")
     private String fullName;
@@ -36,11 +36,11 @@ public class Member {
     @JoinColumn(name = "membership_id",nullable = false)
     private Membership membership;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
