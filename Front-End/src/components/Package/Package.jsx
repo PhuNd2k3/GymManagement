@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, Radio, Select, Input } from "antd";
+import { Button, Modal, Radio, Select, Input, DatePicker } from "antd";
 
 const { Option } = Select;
 
@@ -16,6 +16,8 @@ const Package = ({
     const [paymentMethod, setPaymentMethod] = useState("bankCard"); // Default payment method
     const [selectedBank, setSelectedBank] = useState("");
     const [accountNumber, setAccountNumber] = useState("");
+    const [cvv, setCvv] = useState("");
+    const [expiryDate, setExpiryDate] = useState(null);
 
     const handlePackageClick = () => {
         if (!isLoggedIn) {
@@ -28,13 +30,15 @@ const Package = ({
 
     const handleOk = () => {
         if (paymentMethod === "bankCard") {
-            if (!selectedBank || !accountNumber) {
-                alert("Vui lòng chọn ngân hàng và nhập số tài khoản.");
+            if (!selectedBank || !accountNumber || !cvv || !expiryDate) {
+                alert("Vui lòng điền đầy đủ thông tin thanh toán.");
                 return;
             }
             console.log("Thanh toán bằng thẻ ngân hàng");
             console.log("Ngân hàng: ", selectedBank);
             console.log("Số tài khoản: ", accountNumber);
+            console.log("CVV: ", cvv);
+            console.log("Ngày hết hạn: ", expiryDate.format("MM/YYYY"));
         } else if (paymentMethod === "cashOnDelivery") {
             console.log("Thanh toán tại nhà");
         }
@@ -55,6 +59,14 @@ const Package = ({
 
     const handleAccountNumberChange = (e) => {
         setAccountNumber(e.target.value);
+    };
+
+    const handleCvvChange = (e) => {
+        setCvv(e.target.value);
+    };
+
+    const handleExpiryDateChange = (date) => {
+        setExpiryDate(date);
     };
 
     // Mảng chứa danh sách ngân hàng
@@ -147,6 +159,26 @@ const Package = ({
                                         placeholder="Nhập số tài khoản"
                                         style={{ width: "100%", marginTop: 10 }}
                                         onChange={handleAccountNumberChange}
+                                    />
+                                    <Input
+                                        placeholder="Nhập số CVV"
+                                        style={{
+                                            width: "47.5%",
+                                            marginTop: 10,
+                                            marginRight: "2.5%",
+                                        }}
+                                        onChange={handleCvvChange}
+                                    />
+                                    <DatePicker
+                                        placeholder="Ngày hết hạn"
+                                        style={{
+                                            width: "47.5%",
+                                            marginTop: 10,
+                                            marginLeft: "2.5%",
+                                        }}
+                                        picker="day"
+                                        format="DD/MM/YYYY"
+                                        onChange={handleExpiryDateChange}
                                     />
                                 </>
                             )}
