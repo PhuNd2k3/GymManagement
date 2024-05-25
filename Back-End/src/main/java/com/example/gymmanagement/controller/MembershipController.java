@@ -19,12 +19,14 @@ public class MembershipController {
 
     @Autowired
     private IMembershipService membershipService;
+
     @GetMapping(value = "/{id}")
-    public void getMembership(@PathVariable Long id){
+    public void getMembership(@PathVariable Long id) {
         membershipService.getMembershipDetail(id);
     }
+
     @GetMapping(value = "")
-    public List<MembershipDTO> getMembership(){
+    public List<MembershipDTO> getMembership() {
         List<MembershipDTO> result = membershipService.findAll();
         return result;
     }
