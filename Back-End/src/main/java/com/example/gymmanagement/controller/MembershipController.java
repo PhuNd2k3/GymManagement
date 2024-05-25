@@ -16,7 +16,7 @@ import java.util.List;
 @ResponseBody
 @RequestMapping(value = "/membership")
 public class MembershipController {
-
+    
     @Autowired
     private IMembershipService membershipService;
 
