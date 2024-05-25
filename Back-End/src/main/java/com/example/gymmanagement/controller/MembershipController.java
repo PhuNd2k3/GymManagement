@@ -36,7 +36,7 @@ public class MembershipController {
         return new ResponseEntity<>(savedMembership, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/update")
     public ResponseEntity<Membership> updateMembership(@RequestBody Membership updateMembership) {
         Membership updatedMembership = membershipService.updateMembership(updateMembership);
         return new ResponseEntity<>(updatedMembership, HttpStatus.OK);
