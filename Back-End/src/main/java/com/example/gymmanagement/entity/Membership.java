@@ -7,11 +7,11 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name="membership")
+@Table(name = "membership")
 public class Membership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "numbers_of_training_per_week")
     private Integer numberOfTrainingPerWeek;

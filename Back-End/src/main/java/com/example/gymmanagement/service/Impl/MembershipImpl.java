@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
 public class MembershipImpl implements IMembershipService {
     @Autowired
@@ -32,9 +31,19 @@ public class MembershipImpl implements IMembershipService {
     public List<MembershipDTO> findAll() {
         List<Membership> membership = membershipRepository.findAll();
         List<MembershipDTO> result = new ArrayList<>();
-        for(Membership it : membership){
+        for (Membership it : membership) {
             result.add(membershipConverter.toMembershipDTO(it));
         }
         return result;
+    }
+
+    @Override
+    public Membership addMembership(Membership membership) {
+        return membershipRepository.save(membership);
+    }
+
+    @Override
+    public Membership updateMembership(Membership updateMembership) {
+        return membershipRepository.save(updateMembership);
     }
 }
