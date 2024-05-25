@@ -2,7 +2,11 @@ import React from 'react'
 
 const Feedback = () => {
   return (
-    <div>Feedback</div>
+    <section className="feedback background">
+      <div className="container">
+        Nà ní cồ rê
+      </div>
+    </section>
   )
 }
 

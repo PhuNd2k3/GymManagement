@@ -54,14 +54,24 @@
 }
 
 .btn-login {
-  font-size: 1.6rem;
-  color: #FFF;
-  font-weight: 600;
-  background-color: #000;
-  transition: background-color 0.3s;
-  z-index: 10;
+    font-size: 1.6rem;
+    color: #fff;
+    font-weight: 600;
+    background-color: #000;
+    transition: background-color 0.3s;
+    z-index: 10;
 }
 
 .btn-login:hover {
-  background-color: red;
+    background-color: red;
+}
+
+.header.active-profile {
+    li a {
+        color: #000;
+    }
+    .logo {
+        filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(16%)
+            hue-rotate(322deg) brightness(94%) contrast(105%);
+    }
 }

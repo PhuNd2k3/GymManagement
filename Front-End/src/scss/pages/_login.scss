@@ -62,16 +62,18 @@
         height: 120px;
         border-radius: 20px;
         background-color: #f6f3f3;
-
-        &:hover {
-            // background: #eee;
-        }
     }
     label.role-selected {
         background-color: #c21b39;
         p {
             color: #fff;
         }
+        .login-icon {
+            filter: brightness(0) saturate(100%) invert(100%) sepia(0%)
+                saturate(7498%) hue-rotate(168deg) brightness(100%)
+                contrast(103%);
+        }
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     &-icon {

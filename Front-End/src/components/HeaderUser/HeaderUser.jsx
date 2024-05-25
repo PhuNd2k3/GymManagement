@@ -1,15 +1,23 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import Logo from "../Logo/Logo";
 
 const HeaderUser = () => {
+  const location = useLocation();
+  const [isProfileActive, setIsProfileActive] = useState(false);
+
+  useEffect(() => {
+    // Kiểm tra xem địa chỉ URL hiện tại có phải là /profile không
+    setIsProfileActive(location.pathname === "/profile");
+  }, [location.pathname]);
+
   return (
-    <section id="header" className="header">
+    <section id="header" className={isProfileActive ? "active-profile header" : "header"}>
       <div className="container">
         <div className="top-bar">
           <Logo />
           <nav>
-            <ul>
+          <ul>
               <li>
                 <NavLink exact to="/" activeClassName="active">
                   TRANG CHỦ
