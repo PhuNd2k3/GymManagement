@@ -3,7 +3,7 @@ package com.example.gymmanagement.dto;
 import lombok.Data;
 
 @Data
-public class MembershipDto {
+public class MembershipDTO {
     private String name;
     private Integer price;
     private Long memberCount;
