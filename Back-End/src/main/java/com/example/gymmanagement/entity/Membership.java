@@ -28,4 +28,7 @@ public class Membership {
     @OneToMany(mappedBy = "membership")
     private List<Member> members;
 
+    @OneToMany(mappedBy = "membership")
+    private List<SignUpMembership> signUpMemberships;
+
 }

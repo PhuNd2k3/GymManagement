@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MembershipImpl implements IMembershipService {
+public class MembershipServiceImpl implements IMembershipService {
     @Autowired
     private IMembershipRepository membershipRepository;
 
