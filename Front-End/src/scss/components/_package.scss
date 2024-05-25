@@ -52,3 +52,93 @@
 .package-btn:hover {
     background-color: red;
 }
+
+:where(.css-dev-only-do-not-override-17seli4).ant-modal .ant-modal-title {
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.payment {
+    &-title {
+        font-weight: 600;
+        font-size: 1.6rem;
+        color: #737373;
+    }
+    &-info {
+        background-color: #EFECEC;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 10px 0;
+    }
+    &-name {
+        font-weight: 600;
+        font-size: 2.5rem;
+        color: #C21B1B;
+    }
+    &-price {
+        font-size: 2rem;
+        color: #737373;
+        font-weight: 600;
+        strong {
+            color: red;
+        }
+    }
+}
+
+// // Style for the modal buttons
+// .ant-modal-footer {
+//     .ant-btn-primary {
+//         background-color: #c21b1b;
+//         border-color: #c21b1b;
+//         color: #fff;
+//         &:hover,
+//         &:focus {
+//             background-color: #fff;
+//             border-color: #c21b1b;
+//             color: #c21b1b;
+//         }
+//     }
+//     .ant-btn {
+//         background-color: #c21b1b;
+//         border-color: #c21b1b;
+//         color: #fff;
+//         &:hover,
+//         &:focus {
+//             background-color: #fff;
+//             border-color: #c21b1b;
+//             color: #c21b1b;
+//         }
+//     }
+// }
+
+:where(.css-dev-only-do-not-override-17seli4).ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+    border-color: #c21b1b;
+    background-color: #c21b1b;
+}
+
+:where(.css-dev-only-do-not-override-17seli4) .ant-radio-wrapper:hover .ant-radio-inner {
+    border-color: #c21b1b;
+}
+
+
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-default {
+    color: #c21b1b;
+    border-color: #c21b1b;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+    color: #FFF;
+    border-color: #c21b1b;
+    background-color: #c21b1b;
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-primary {
+    background-color: #c21b1b;
+
+}
+
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+    background-color: #fff;
+    color: #c21b1b;
+    border-color: #c21b1b;
+}
