@@ -58,7 +58,7 @@ INSERT INTO feedback_type (feedback_type_name) VALUES
 ('Other');
 
 -- Dữ liệu cho bảng feedback
-INSERT INTO feedback (feedback_time, feedback_detail, reply_context, feedback_type_id, member_id, admin_id) VALUES
+INSERT INTO feedback (feedback_time, feedback_detail, reply_content, feedback_type_id, member_id, admin_id) VALUES
 ('2024-05-25 10:00:00', 'The gym was too crowded yesterday.', 'Thank you for your feedback.', 1, 1, 1),
 ('2024-05-26 11:30:00', 'The equipment needs maintenance.', 'We will look into it immediately.', 2, 2, 2),
 ('2024-05-25 16:00:00', 'The staff was very helpful.', 'We appreciate your kind words!', 3, 3, 1),
