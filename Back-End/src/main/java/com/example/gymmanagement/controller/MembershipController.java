@@ -55,13 +55,12 @@ public class MembershipController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<String> deleteMembership(@PathVariable Integer id) {
-        boolean isRemoved = membershipService.deleteMembership(id);
-        if (isRemoved) {
-            return new ResponseEntity<>("Membership deleted successfully",
-                    HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Membership not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Integer id) {
+        try {
+            membershipService.deleteMembership(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 
