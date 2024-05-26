@@ -20,17 +20,21 @@ import AdminProfile from './pages/AdminProfile';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);
   const location = useLocation();
 
   const checkLoginStatus = () => {
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('userRole');
-    if (token && role) {
+    const id = localStorage.getItem('userId');
+    if (token && role && id) {
       setIsLoggedIn(true);
       setUserRole(role);
+      setUserId(id);
     } else {
       setIsLoggedIn(false);
       setUserRole(null);
+      setUserId(null);
     }
   };
 
@@ -63,9 +67,9 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn && userRole === "hoivien" ? (
           <>
-            <Route path="/training-history" element={<TrainingHistory />} />
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/training/:id" element={<TrainingHistory />} />
+            <Route path="/feedback/:id" element={<Feedback />} />
+            <Route path="/profile/:id" element={<Profile />} />
           </>
         ) : (
           isLoggedIn && userRole === "quantrivien" ? (

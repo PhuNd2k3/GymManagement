@@ -64,7 +64,7 @@ const AdminAttendance = () => {
                                         <p className="member-phone">{member.phone}</p>
                                     </div>
                                 </div>
-                                <div className="member-item-left right">
+                                <div className="member-item-right">
                                     <button className="attendance-btn">
                                         Điểm danh
                                     </button>

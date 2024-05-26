@@ -7,28 +7,55 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email === "user@gmail.com" && password === "123456" && role === "hoivien") {
-      localStorage.setItem("authToken", "fakeAuthToken");
-      localStorage.setItem("userRole", role);
-      setIsLoggedIn(true);
-      setUserRole(role);
-      navigate("/");
-    } else if (email === "admin@gmail.com" && password === "123456" && role === "quantrivien") {
-      localStorage.setItem("authToken", "fakeAuthToken");
-      localStorage.setItem("userRole", role);
-      setIsLoggedIn(true);
-      setUserRole(role);
-      navigate("/admin/attendance");
-    } else {
-      alert("Invalid credentials or role.");
+
+    // Determine API URL based on role
+    const apiUrl = role === "hoivien" 
+      ? "http://localhost:808/api/login" 
+      : "http://localhost:808/api/admin/login";
+
+    // Make API call to authenticate and get user ID
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const { id, authToken } = data;
+
+        // Save auth token and user role
+        localStorage.setItem("authToken", authToken);
+        localStorage.setItem("userRole", role);
+        localStorage.setItem("userId", id);
+        setIsLoggedIn(true);
+        setUserRole(role);
+        setUserId(id);
+
+        // Navigate based on role
+        if (role === "hoivien") {
+          navigate(`/training/${id}`);
+        } else if (role === "quantrivien") {
+          navigate("/admin/attendance");
+        }
+      } else {
+        alert("Invalid credentials.");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Error logging in.");
     }
   };
 
