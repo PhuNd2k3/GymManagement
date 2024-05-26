@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,7 +57,12 @@ public class SignUpMembershipServiceImpl implements ISignUpMembershipService {
 
     @Override
     public SignUpMembership updateMembershipRegister(UpdateRegisterRequest request) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_MONTH, membershipRepository.findById(request.getMembershipId()).get().getPeriod());
+        Date newDate = calendar.getTime();
         Member member = memberRepository.findById(request.getMemberId()).get();
+        member.setMembershipPeriod(newDate);
         Membership membership = membershipRepository.findById(request.getMembershipId()).get();
         SignUpMembership signUpMembership = signUpMembershipRepository.findById(request.getId()).get();
         signUpMembership.setStatus(request.getStatus());
