@@ -4,6 +4,7 @@ import com.example.gymmanagement.converter.MembershipConverter;
 import com.example.gymmanagement.dto.MembershipDTO;
 import com.example.gymmanagement.entity.Membership;
 import com.example.gymmanagement.repository.IMembershipRepository;
+import com.example.gymmanagement.repository.ISignUpMembershipRepository;
 import com.example.gymmanagement.service.IMembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class MembershipServiceImpl implements IMembershipService {
 
     @Autowired
     private MembershipConverter membershipConverter;
+
+    @Autowired
+    private ISignUpMembershipRepository signUpMembershipRepository;
 
     @Override
     public MembershipDTO getMembershipDetail(Long id) {
@@ -45,5 +49,14 @@ public class MembershipServiceImpl implements IMembershipService {
     @Override
     public Membership updateMembership(Membership updateMembership) {
         return membershipRepository.save(updateMembership);
+    }
+
+    @Override
+    public boolean deleteMembership(Integer id) {
+        Membership membership = membershipRepository.findById(id).get();
+        if (membership == null) return false;
+        signUpMembershipRepository.deleteAllByMemberId(id);
+        membershipRepository.delete(membership);
+        return true;
     }
 }

@@ -41,7 +41,7 @@ public class MemberController {
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(value = "/membership/delete/{id}")
+    @DeleteMapping(value = "/member/delete/{id}")
     public ResponseEntity<String> deleteMember(@PathVariable Integer id){
         boolean isRemoved = memberService.deleteMember(id);
         if (isRemoved) {
