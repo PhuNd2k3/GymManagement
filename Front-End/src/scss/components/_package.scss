@@ -65,7 +65,7 @@
         color: #737373;
     }
     &-info {
-        background-color: #EFECEC;
+        background-color: #efecec;
         padding: 20px;
         border-radius: 10px;
         margin: 10px 0;
@@ -73,7 +73,7 @@
     &-name {
         font-weight: 600;
         font-size: 2.5rem;
-        color: #C21B1B;
+        color: #c21b1b;
     }
     &-price {
         font-size: 2rem;
@@ -111,33 +111,39 @@
 //     }
 // }
 
-:where(.css-dev-only-do-not-override-17seli4).ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+:where(.css-dev-only-do-not-override-17seli4).ant-radio-wrapper
+    .ant-radio-checked
+    .ant-radio-inner {
     border-color: #c21b1b;
     background-color: #c21b1b;
 }
 
-:where(.css-dev-only-do-not-override-17seli4) .ant-radio-wrapper:hover .ant-radio-inner {
+:where(.css-dev-only-do-not-override-17seli4)
+    .ant-radio-wrapper:hover
+    .ant-radio-inner {
     border-color: #c21b1b;
 }
-
 
 :where(.css-dev-only-do-not-override-17seli4).ant-btn-default {
     color: #c21b1b;
     border-color: #c21b1b;
 }
 
-:where(.css-dev-only-do-not-override-17seli4).ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
-    color: #FFF;
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-default:not(
+        :disabled
+    ):not(.ant-btn-disabled):hover {
+    color: #fff;
     border-color: #c21b1b;
     background-color: #c21b1b;
 }
 
 :where(.css-dev-only-do-not-override-17seli4).ant-btn-primary {
     background-color: #c21b1b;
-
 }
 
-:where(.css-dev-only-do-not-override-17seli4).ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+:where(.css-dev-only-do-not-override-17seli4).ant-btn-primary:not(
+        :disabled
+    ):not(.ant-btn-disabled):hover {
     background-color: #fff;
     color: #c21b1b;
     border-color: #c21b1b;
@@ -178,4 +184,28 @@
 :where(.css-dev-only-do-not-override-17seli4).ant-input-outlined:focus {
     border-color: #c21b1b !important;
     box-shadow: 0 0 0 2px rgba(194, 27, 27, 0.1);
+}
+
+.package-act {
+    // width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    button {
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: 1px solid #c21b1b;
+        color: #c21b1b;
+        background-color: #fff;
+        font-size: 1.6rem;
+        font-weight: 600;
+        line-height: 1.5714285714;
+        transition: color 0.3s ease, background-color 0.3s ease;
+        &:hover {
+            color: #fff;
+            background-color: #c21b1b;
+        }
+    }
 }
