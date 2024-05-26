@@ -8,7 +8,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "admin")
-public class Admin extends User{
+public class  Admin extends User{
     @OneToMany(mappedBy = "admin")
     private List<Feedback> feedbacks;
 }
