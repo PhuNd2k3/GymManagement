@@ -1,33 +1,45 @@
 import React, { useState, useEffect } from "react";
 import all_imgs from "../assets/img/all_imgs";
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 
 const AdminAttendance = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [members, setMembers] = useState([]); // State để lưu trữ danh sách thành viên
+    const [members, setMembers] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:8080/api/member/all')
             .then(response => {
-                // Chuyển đổi cấu trúc dữ liệu từ API thành mảng thành viên
                 const membersFromAPI = response.data.map(member => ({
                     id: member.id,
                     name: member.fullName,
                     sex: member.gender,
                     age: new Date().getFullYear() - new Date(member.dob).getFullYear(),
                     phone: member.phoneNumber,
-                    img: all_imgs.gym_equipment // Ảnh có thể cần điều chỉnh
+                    img: all_imgs.gym_equipment
                 }));
-                setMembers(membersFromAPI); // Cập nhật state với dữ liệu từ API
+                setMembers(membersFromAPI);
             })
             .catch(error => {
                 console.error('Error fetching members:', error);
             });
     }, []);
     
-
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const handleAttendance = (id, name) => {
+        axios.put(`http://localhost:8080/api/training/add/${id}`)
+            .then(response => {
+                alert('Điểm danh thành công cho thành viên: ' + name);
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 409) {
+                    alert('Người này đã điểm danh.');
+                } else {
+                    console.error('Error marking attendance:', error);
+                }
+            });
     };
 
     return (
@@ -70,7 +82,10 @@ const AdminAttendance = () => {
                                     </div>
                                 </div>
                                 <div className="member-item-right">
-                                    <button className="attendance-btn">
+                                    <button
+                                        className="attendance-btn"
+                                        onClick={() => handleAttendance(member.id, member.name)}
+                                    >
                                         Điểm danh
                                     </button>
                                 </div>
