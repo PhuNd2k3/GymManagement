@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import login_icon from "../assets/icon/login_icon";
 
 const Profile = () => {

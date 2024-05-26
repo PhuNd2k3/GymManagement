@@ -21,6 +21,12 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
       setIsLoggedIn(true);
       setUserRole(role);
       navigate("/");
+    } else if (email === "admin@gmail.com" && password === "123456" && role === "quantrivien") {
+      localStorage.setItem("authToken", "fakeAuthToken");
+      localStorage.setItem("userRole", role);
+      setIsLoggedIn(true);
+      setUserRole(role);
+      navigate("/admin/attendance");
     } else {
       alert("Invalid credentials or role.");
     }
