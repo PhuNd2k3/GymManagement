@@ -3,10 +3,11 @@ import { Modal, Input, DatePicker, InputNumber } from "antd";
 import axios from 'axios';
 import moment from 'moment';
 
-const GymEquipment = ({ name, imgSrc, initialData, onEditSuccess }) => {
+const GymEquipment = ({ name, imgSrc, initialData }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [preview, setPreview] = useState(imgSrc); 
     const [formData, setFormData] = useState(initialData);
+    const [equipmentName, setEquipmentName] = useState(name);
 
     useEffect(() => {
         if (initialData) {
@@ -29,8 +30,9 @@ const GymEquipment = ({ name, imgSrc, initialData, onEditSuccess }) => {
     const handleOk = async () => {
         setIsModalOpen(false);
         try {
-            await axios.post("http://localhost:8080/api/equipment/add", formData);
-            onEditSuccess(); // Gọi callback onEditSuccess sau khi cập nhật thành công
+            await axios.put("http://localhost:8080/api/equipment/update", formData);
+            setEquipmentName(formData.equipmentName); // Cập nhật tên thiết bị
+            // onEditSuccess(); // Gọi callback onEditSuccess sau khi cập nhật thành công
         } catch (error) {
             console.error("Error updating equipment:", error);
             // Handle error
@@ -48,7 +50,7 @@ const GymEquipment = ({ name, imgSrc, initialData, onEditSuccess }) => {
     return (
         <div className="gym-equipment">
             <div className="gym-equipment-info">
-                <h2 className="gym-equipment-name">{name}</h2>
+                <h2 className="gym-equipment-name">{equipmentName}</h2> {/* Sử dụng state mới */}
                 <img src={imgSrc} alt={name} className="gym-equipment-img" />
             </div>
             <div className="gym-equipment-act">

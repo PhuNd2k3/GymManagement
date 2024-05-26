@@ -121,7 +121,6 @@ const AdminGymEquipment = () => {
                         imgSrc={all_imgs.gym_equipment}
                         initialData={equipment}
                         updateName={updateEquipmentName}
-                        onEditSuccess={() => window.location.reload()}
                     />
                     ))}
                 </div>
