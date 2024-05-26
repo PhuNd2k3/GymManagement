@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Input, DatePicker, InputNumber } from "antd";
+import axios from 'axios';
+import moment from 'moment';
 
-const GymEquipment = ({ name, imgSrc, initialData }) => {
+const GymEquipment = ({ name, imgSrc, initialData, onEditSuccess }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [preview, setPreview] = useState(imgSrc); 
     const [formData, setFormData] = useState(initialData);
@@ -24,8 +26,15 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
         }
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         setIsModalOpen(false);
+        try {
+            await axios.post("http://localhost:8080/api/equipment/add", formData);
+            onEditSuccess(); // Gọi callback onEditSuccess sau khi cập nhật thành công
+        } catch (error) {
+            console.error("Error updating equipment:", error);
+            // Handle error
+        }
     };
 
     const handleCancel = () => {
@@ -65,11 +74,11 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
                                 </label>
                                 <Input
                                     id="equipmentName"
-                                    value={formData.name}
+                                    value={formData.equipmentName}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
-                                            name: e.target.value,
+                                            equipmentName: e.target.value,
                                         })
                                     }
                                 />
@@ -78,19 +87,46 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
                                 <label htmlFor="equipmentDate">
                                     Ngày nhập:
                                 </label>
-                                <DatePicker id="equipmentDate" />
+                                <DatePicker 
+                                    id="equipmentDate" 
+                                    value={formData.receiptDate ? moment(formData.receiptDate) : null} 
+                                    onChange={(date) =>
+                                        setFormData({
+                                            ...formData,
+                                            receiptDate: date.format("YYYY-MM-DD"),
+                                        })
+                                    }
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="equipmentQuantity">
                                     Số lượng:
                                 </label>
-                                <InputNumber id="equipmentQuantity" />
+                                <InputNumber 
+                                    id="equipmentQuantity" 
+                                    value={formData.equipmentQuantity} 
+                                    onChange={(value) =>
+                                        setFormData({
+                                            ...formData,
+                                            equipmentQuantity: value,
+                                        })
+                                    }
+                                />
                             </div>
                             <div className="form-group">
                                 <label htmlFor="equipmentDescription">
                                     Mô tả:
                                 </label>
-                                <Input.TextArea id="equipmentDescription" />
+                                <Input.TextArea 
+                                    id="equipmentDescription" 
+                                    value={formData.equipmentDescription} 
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            equipmentDescription: e.target.value,
+                                        })
+                                    }
+                                />
                             </div>
                         </div>
                         <div className="form-right">

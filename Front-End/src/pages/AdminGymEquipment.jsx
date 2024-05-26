@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import { Modal, Input, DatePicker, InputNumber } from "antd";
 import GymEquipment from "../components/GymEquipment/GymEquipment";
 import all_imgs from "../assets/img/all_imgs";
-import { Modal, Input, DatePicker, InputNumber } from "antd";
 import login_icon from "../assets/icon/login_icon";
 
 const AdminGymEquipment = () => {
@@ -14,6 +15,21 @@ const AdminGymEquipment = () => {
         quantity: 0,
         description: "",
     });
+    const [gymEquipment, setGymEquipment] = useState([]);
+
+    useEffect(() => {
+        const fetchGymEquipment = async () => {
+            try {
+                const response = await axios.get("http://localhost:8080/api/equipment/all");
+                setGymEquipment(response.data);
+            } catch (error) {
+                console.error("Error fetching gym equipment data:", error);
+                // Handle error
+            }
+        };
+
+        fetchGymEquipment();
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,7 +40,6 @@ const AdminGymEquipment = () => {
     };
 
     const handleOk = () => {
-        // Add new equipment to fakeData
         setIsModalOpen(false);
     };
 
@@ -43,16 +58,17 @@ const AdminGymEquipment = () => {
         }
     };
 
-    const fakeData = [
-        { id: 1, name: "Treadmill", imgSrc: all_imgs.gym_equipment },
-        { id: 2, name: "Dumbbells", imgSrc: all_imgs.gym_equipment },
-        { id: 3, name: "Bench Press", imgSrc: all_imgs.gym_equipment },
-        { id: 4, name: "Bench Press", imgSrc: all_imgs.gym_equipment },
-        { id: 5, name: "Bench Press", imgSrc: all_imgs.gym_equipment },
-        { id: 6, name: "Bench Press", imgSrc: all_imgs.gym_equipment },
-        { id: 7, name: "Bench Press", imgSrc: all_imgs.gym_equipment },
-        // Add more fake data as needed
-    ];
+    const updateEquipmentName = (id, newName) => {
+        setGymEquipment(prevEquipment => {
+            return prevEquipment.map(equipment => {
+                if (equipment.id === id) {
+                    return { ...equipment, equipmentName: newName };
+                } else {
+                    return equipment;
+                }
+            });
+        });
+    };
 
     return (
         <div className="admin-gym-equipment background">
@@ -98,13 +114,15 @@ const AdminGymEquipment = () => {
                 </form>
                 <button onClick={handleAddEquipment} className="add-equipment-btn">Thêm thiết bị</button>
                 <div className="gym-equipment-list">
-                    {fakeData.map((equipment) => (
+                    {gymEquipment.map((equipment) => (
                         <GymEquipment
-                            key={equipment.id}
-                            name={equipment.name}
-                            imgSrc={equipment.imgSrc}
-                            initialData={{ name: equipment.name }}
-                        />
+                        key={equipment.id}
+                        name={equipment.equipmentName}
+                        imgSrc={all_imgs.gym_equipment}
+                        initialData={equipment}
+                        updateName={updateEquipmentName}
+                        onEditSuccess={() => window.location.reload()}
+                    />
                     ))}
                 </div>
                 <Modal
