@@ -20,8 +20,8 @@ public class Feedback {
     @Column(name = "feedback_detail")
     private String feedbackDetail;
 
-    @Column(name = "reply_context")
-    private String replyContext;
+    @Column(name = "reply_content")
+    private String replyContent;
 
     @ManyToOne
     @JsonBackReference

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class MembershipDTO {
+    private Integer id;
     private String name;
     private Integer price;
     private Integer memberCount;
