@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import AdminPackage from "../components/AdminPackage/AdminPackage";
 
 const AdminPackages = () => {
@@ -26,7 +26,9 @@ const AdminPackages = () => {
     );
 
     const handleRemovePackage = (id) => {
-        setPackagesData(packagesData.filter((packageData) => packageData.id !== id));
+        setPackagesData(
+            packagesData.filter((packageData) => packageData.id !== id)
+        );
     };
 
     const handleSubmit = (e) => {

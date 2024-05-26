@@ -4,20 +4,26 @@ import { Modal, Input, InputNumber } from 'antd';
 
 const AdminPackage = ({
     id,
-    name,
-    price,
-    numbersOfTrainingPerWeek,
+    name: initialName,
+    price: initialPrice,
+    numbersOfTrainingPerWeek: initialTrainingFrequency,
     memberCount,
+    period,
     onRemove
 }) => {
     const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
-        membershipName: name,
-        membershipPrice: price,
-        membershipPeriod: 60, // Assuming this is fixed or comes from props
-        trainingFrequency: numbersOfTrainingPerWeek,
+        membershipName: initialName,
+        membershipPrice: initialPrice,
+        membershipPeriod: period,
+        trainingFrequency: initialTrainingFrequency,
     });
+
+    const [name, setName] = useState(initialName);
+    const [price, setPrice] = useState(initialPrice);
+    const [numbersOfTrainingPerWeek, setNumbersOfTrainingPerWeek] = useState(initialTrainingFrequency);
+    const [membershipPeriod, setMembershipPeriod] = useState(period);
 
     const handleDelete = async () => {
         try {
@@ -33,10 +39,25 @@ const AdminPackage = ({
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        // Handle form submission
-        // You can send the form data to the server here
-        setIsModalOpen(false);
+    const handleOk = async () => {
+        try {
+            const response = await axios.put(`http://localhost:8080/api/membership/update`, {
+                id: id,
+                numberOfTrainingPerWeek: formData.trainingFrequency,
+                name: formData.membershipName,
+                price: formData.membershipPrice,
+                period: formData.membershipPeriod
+            });
+            setName(formData.membershipName);
+            setPrice(formData.membershipPrice);
+            setNumbersOfTrainingPerWeek(formData.trainingFrequency);
+            setMembershipPeriod(formData.membershipPeriod);
+
+            console.log("Package updated successfully:", response.data);
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error("Error updating package:", error);
+        }
     };
 
     const handleCancel = () => {
@@ -57,7 +78,7 @@ const AdminPackage = ({
                     Số người tập: <strong>{memberCount}</strong> người
                 </p>
                 <p className="package-number">
-                    Thời hạn: <strong>60</strong> ngày
+                    Thời hạn: <strong>{membershipPeriod}</strong> ngày
                 </p>
             </div>
             <div className="package-act">
