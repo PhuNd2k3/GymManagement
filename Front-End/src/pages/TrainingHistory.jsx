@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import TrainingHistoryItem from "../components/TrainingHistoryItem/TrainingHistoryItem";
 import axios from "axios";
 
@@ -17,6 +18,7 @@ const formatDate = (dateString) => {
 };
 
 const TrainingHistory = () => {
+  const { id } = useParams(); // Lấy ID từ URL
   const [trainingHistory, setTrainingHistory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +27,7 @@ const TrainingHistory = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/training/1"
+          `http://localhost:8080/api/training/${id}`
         );
         const formattedData = response.data.map((item) => ({
           ...item,
@@ -41,7 +43,7 @@ const TrainingHistory = () => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;

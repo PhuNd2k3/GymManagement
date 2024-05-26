@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import login_icon from "./../assets/icon/login_icon";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
-const Login = ({ setIsLoggedIn, setUserRole }) => {
+const Login = ({ setIsLoggedIn, setUserRole, setUserId }) => {
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,22 +14,40 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
     setRole(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (email === "user@gmail.com" && password === "123456" && role === "hoivien") {
-      localStorage.setItem("authToken", "fakeAuthToken");
-      localStorage.setItem("userRole", role);
-      setIsLoggedIn(true);
-      setUserRole(role);
-      navigate("/");
-    } else if (email === "admin@gmail.com" && password === "123456" && role === "quantrivien") {
-      localStorage.setItem("authToken", "fakeAuthToken");
-      localStorage.setItem("userRole", role);
-      setIsLoggedIn(true);
-      setUserRole(role);
-      navigate("/admin/attendance");
-    } else {
-      alert("Invalid credentials or role.");
+    try {
+      let response;
+      if (role === "hoivien") {
+        response = await axios.post('http://localhost:8080/api/login', {
+          phone: email,
+          password: password,
+        });
+      } else if (role === "quantrivien") {
+        response = await axios.post('http://localhost:8080/api/admin/login', {
+          phone: email,
+          password: password,
+        });
+      }
+      
+      if (response.data.login) {
+        localStorage.setItem("authToken", "fakeAuthToken");
+        localStorage.setItem("userRole", role);
+        localStorage.setItem("userId", response.data.id); // Lưu ID của người dùng vào localStorage
+        setIsLoggedIn(true);
+        setUserRole(role);
+        setUserId(response.data.id); // Cập nhật state với ID của người dùng
+        if (role === "hoivien") {
+          navigate(`/training-history/${response.data.id}`);
+        } else if (role === "quantrivien") {
+          navigate(`/admin/attendance/${response.data.id}`);
+        }
+      } else {
+        alert("Invalid credentials or role.");
+      }
+    } catch (err) {
+      console.error("Error logging in:", err);
+      alert("An error occurred during login. Please check your credentials and try again.");
     }
   };
 
