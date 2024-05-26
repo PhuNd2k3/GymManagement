@@ -1,18 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import login_icon from "../assets/icon/login_icon";
 
 const Profile = () => {
+    const { id } = useParams(); // Lấy ID từ URL
     const [formData, setFormData] = useState({
-        fullName: "Nguyễn Đức Phú",
-        email: "phund@gmail.com",
-        phoneNumber: "1234567890",
-        gender: "male",
-        dob: "2003-01-01",
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        gender: "",
+        dob: "",
         profilePic: null,
+        membershipPeriod: "",
+        membershipName: "",
     });
-
     const [editing, setEditing] = useState(false);
     const [preview, setPreview] = useState(login_icon.form_avatar);
+
+    useEffect(() => {
+        // Fetch user data from API
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/profile/${id}`);
+                const data = response.data;
+                setFormData({
+                    fullName: data.fullName,
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    gender: data.gender.toLowerCase(),
+                    dob: data.dob.split("T")[0], // Chuyển đổi định dạng ngày
+                    profilePic: null,
+                    membershipPeriod: data.membershipPeriod.split("T")[0],
+                    membershipName: data.membershipName,
+                });
+                // Nếu có ảnh đại diện, cập nhật preview
+                if (data.profilePic) {
+                    setPreview(data.profilePic);
+                }
+            } catch (error) {
+                console.error("Error fetching profile data:", error);
+            }
+        };
+
+        fetchData();
+    }, [id]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,6 +74,7 @@ const Profile = () => {
         e.preventDefault();
         console.log(formData);
         setEditing(false);
+        // Thêm logic để gửi dữ liệu cập nhật lên API tại đây nếu cần
     };
 
     return (
@@ -112,6 +145,49 @@ const Profile = () => {
                                 required
                                 disabled={!editing}
                             />
+
+                            <div style={{ display: "flex", gap: "20px" }}>
+                                <div>
+                                    <label
+                                        htmlFor="membershipPeriod"
+                                        style={{
+                                            display: "inline-block",
+                                            marginBottom: "10px",
+                                        }}
+                                    >
+                                        Membership Period:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="membershipPeriod"
+                                        name="membershipPeriod"
+                                        value={formData.membershipPeriod}
+                                        readOnly
+                                        disabled
+                                        style={{ width: "100%" }}
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        htmlFor="membershipName"
+                                        style={{
+                                            display: "inline-block",
+                                            marginBottom: "10px",
+                                        }}
+                                    >
+                                        Membership Name:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="membershipName"
+                                        name="membershipName"
+                                        value={formData.membershipName}
+                                        readOnly
+                                        disabled
+                                        style={{ width: "100%" }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="form-top-right">
                             <img src={preview} alt="Profile Preview" />
