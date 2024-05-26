@@ -3,6 +3,7 @@ package com.example.gymmanagement.service.Impl;
 import com.example.gymmanagement.converter.MemberConverter;
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
+import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.entity.Member;
@@ -78,5 +79,16 @@ public class MemberServiceImpl implements IMemberService {
         signUpMembershipRepository.deleteAllByMemberId(member.getId());
         memberRepository.delete(member);
         return true;
+    }
+
+    @Override
+    public Member updateMember(MemberRequest request) {
+        Member member = memberRepository.findById(request.getId()).get();
+        member.setFullName(request.getFullName());
+        member.setEmail(request.getEmail());
+        member.setPhoneNumber(request.getPhoneNumber());
+        member.setDob(request.getDob());
+        member.setGender(request.getGender());
+        return memberRepository.save(member);
     }
 }

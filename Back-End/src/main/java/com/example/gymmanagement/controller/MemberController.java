@@ -2,6 +2,7 @@ package com.example.gymmanagement.controller;
 
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
+import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.entity.Member;
@@ -51,5 +52,11 @@ public class MemberController {
         } else {
             return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping(value = "/profile/update")
+    public ResponseEntity<String> addMember(@RequestBody MemberRequest request) {
+        Member updatedMember = memberService.updateMember(request);
+        return new ResponseEntity<>("Update profile successful!", HttpStatus.CREATED);
     }
 }
