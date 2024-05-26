@@ -1,56 +1,67 @@
-import React, { useState } from 'react'
-import TrainingHistoryItem from '../components/TrainingHistoryItem/TrainingHistoryItem'
+import React, { useState, useEffect } from "react";
+import TrainingHistoryItem from "../components/TrainingHistoryItem/TrainingHistoryItem";
+import axios from "axios";
 
-const generateFakeData = () => {
-  const items = []
-  for (let i = 1; i <= 50; i++) {
-    items.push({
-      day: `Thứ ${Math.ceil(i % 7)}, ngày ${i} tháng 7`,
-      time: `${Math.floor(Math.random() * 24)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`
-    })
-  }
-  return items
-}
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; // Months are zero-indexed
+  const year = date.getFullYear();
+  const hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Add leading zero
+
+  return {
+    date: `Ngày ${day} tháng ${month} năm ${year}`,
+    time: `${hours}:${minutes}`,
+  };
+};
 
 const TrainingHistory = () => {
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 6
-  const data = generateFakeData()
+  const [trainingHistory, setTrainingHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const currentItems = data.slice(startIndex, startIndex + itemsPerPage)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/training/1"
+        );
+        const formattedData = response.data.map((item) => ({
+          ...item,
+          ...formatDate(item.trainingTime),
+        }));
+        setTrainingHistory(formattedData);
+        console.log(formattedData);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const totalPages = Math.ceil(data.length / itemsPerPage)
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <section className='training-history background'>
+    <section className="training-history background">
       <div className="container">
         <h1 className="training-history-title">LỊCH SỬ ĐI TẬP</h1>
         <div className="training-history-list">
-          {currentItems.map((item, index) => (
-            <TrainingHistoryItem key={index} day={item.day} time={item.time} />
+          {trainingHistory.map((item, index) => (
+            <TrainingHistoryItem
+              key={index}
+              date={item.date}
+              time={item.time}
+            />
           ))}
-        </div>
-        <div className="pagination">
-          <button 
-            disabled={currentPage === 1} 
-            onClick={() => setCurrentPage(currentPage - 1)}
-            className='btn-prev'
-          >
-            Previous
-          </button>
-          <span>Page {currentPage} of {totalPages}</span>
-          <button 
-            disabled={currentPage === totalPages} 
-            onClick={() => setCurrentPage(currentPage + 1)}
-            className='btn-next'
-          >
-            Next
-          </button>
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default TrainingHistory
+export default TrainingHistory;
