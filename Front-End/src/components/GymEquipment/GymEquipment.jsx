@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Input, DatePicker, InputNumber } from "antd";
-import axios from 'axios';
-import moment from 'moment';
+import axios from "axios";
+import moment from "moment";
 
-const GymEquipment = ({ name, imgSrc, initialData }) => {
+const GymEquipment = ({ name, imgSrc, initialData, onDeleteSuccess }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [preview, setPreview] = useState(imgSrc); 
+    const [preview, setPreview] = useState(imgSrc);
     const [formData, setFormData] = useState(initialData);
     const [equipmentName, setEquipmentName] = useState(name);
 
@@ -30,7 +30,10 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
     const handleOk = async () => {
         setIsModalOpen(false);
         try {
-            await axios.put("http://localhost:8080/api/equipment/update", formData);
+            await axios.put(
+                "http://localhost:8080/api/equipment/update",
+                formData
+            );
             setEquipmentName(formData.equipmentName); // Cập nhật tên thiết bị
             // onEditSuccess(); // Gọi callback onEditSuccess sau khi cập nhật thành công
         } catch (error) {
@@ -47,14 +50,29 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
         setIsModalOpen(true);
     };
 
+    const handleDelete = async () => {
+        try {
+            await axios.delete(
+                `http://localhost:8080/api/equipment/delete/${formData.id}`
+            );
+            onDeleteSuccess(formData.id); // Assuming you have a callback to update the equipment list
+        } catch (error) {
+            console.error("Error deleting equipment:", error);
+            // Handle error
+        }
+    };
+
     return (
         <div className="gym-equipment">
             <div className="gym-equipment-info">
-                <h2 className="gym-equipment-name">{equipmentName}</h2> {/* Sử dụng state mới */}
+                <h2 className="gym-equipment-name">{equipmentName}</h2>{" "}
+                {/* Sử dụng state mới */}
                 <img src={imgSrc} alt={name} className="gym-equipment-img" />
             </div>
             <div className="gym-equipment-act">
-                <div className="btn-remove">Xóa</div>
+                <div className="btn-remove" onClick={handleDelete}>
+                    Xóa
+                </div>
                 <div className="btn-update" onClick={handleUpdateClick}>
                     Sửa
                 </div>
@@ -89,13 +107,18 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
                                 <label htmlFor="equipmentDate">
                                     Ngày nhập:
                                 </label>
-                                <DatePicker 
-                                    id="equipmentDate" 
-                                    value={formData.receiptDate ? moment(formData.receiptDate) : null} 
+                                <DatePicker
+                                    id="equipmentDate"
+                                    value={
+                                        formData.receiptDate
+                                            ? moment(formData.receiptDate)
+                                            : null
+                                    }
                                     onChange={(date) =>
                                         setFormData({
                                             ...formData,
-                                            receiptDate: date.format("YYYY-MM-DD"),
+                                            receiptDate:
+                                                date.format("YYYY-MM-DD"),
                                         })
                                     }
                                 />
@@ -104,9 +127,9 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
                                 <label htmlFor="equipmentQuantity">
                                     Số lượng:
                                 </label>
-                                <InputNumber 
-                                    id="equipmentQuantity" 
-                                    value={formData.equipmentQuantity} 
+                                <InputNumber
+                                    id="equipmentQuantity"
+                                    value={formData.equipmentQuantity}
                                     onChange={(value) =>
                                         setFormData({
                                             ...formData,
@@ -119,13 +142,14 @@ const GymEquipment = ({ name, imgSrc, initialData }) => {
                                 <label htmlFor="equipmentDescription">
                                     Mô tả:
                                 </label>
-                                <Input.TextArea 
-                                    id="equipmentDescription" 
-                                    value={formData.equipmentDescription} 
+                                <Input.TextArea
+                                    id="equipmentDescription"
+                                    value={formData.equipmentDescription}
                                     onChange={(e) =>
                                         setFormData({
                                             ...formData,
-                                            equipmentDescription: e.target.value,
+                                            equipmentDescription:
+                                                e.target.value,
                                         })
                                     }
                                 />

@@ -41,6 +41,7 @@ const AdminGymEquipment = () => {
 
     const handleOk = () => {
         setIsModalOpen(false);
+        handleAddEquipmentSubmit();
     };
 
     const handleCancel = () => {
@@ -68,6 +69,38 @@ const AdminGymEquipment = () => {
                 }
             });
         });
+    };
+
+    const onDeleteSuccess = (deletedId) => {
+        setGymEquipment(prevEquipment => prevEquipment.filter(equipment => equipment.id !== deletedId));
+    };
+
+    const fetchGymEquipment = async () => {
+        try {
+            const response = await axios.get("http://localhost:8080/api/equipment/all");
+            setGymEquipment(response.data);
+        } catch (error) {
+            console.error("Error fetching gym equipment data:", error);
+            // Handle error
+        }
+    };
+
+    const handleAddEquipmentSubmit = async () => {
+        try {
+            await axios.post("http://localhost:8080/api/equipment/add", {
+                equipmentName: newEquipment.name,
+                equipmentQuantity: newEquipment.quantity,
+                receiptDate: newEquipment.date,
+                equipmentDescription: newEquipment.description
+            });
+            setIsModalOpen(false); // Close the modal after successful addition
+            // Fetch updated equipment list or update the state to include the new equipment
+            // Depending on your API response, you might want to update the equipment list here
+            fetchGymEquipment(); // Fetch the updated equipment list
+        } catch (error) {
+            console.error("Error adding equipment:", error);
+            // Handle error
+        }
     };
 
     return (
@@ -121,6 +154,7 @@ const AdminGymEquipment = () => {
                         imgSrc={all_imgs.gym_equipment}
                         initialData={equipment}
                         updateName={updateEquipmentName}
+                        onDeleteSuccess={onDeleteSuccess}
                     />
                     ))}
                 </div>
