@@ -1,61 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import all_imgs from "../assets/img/all_imgs";
 
 const AdminRegistrationList = () => {
-    // State to store the value of the search bar
     const [searchTerm, setSearchTerm] = useState("");
+    const [members, setMembers] = useState([]);
 
-    // Sample member list
-    const members = [
-        {
-            name: "Nguyễn Văn A",
-            sex: "Nam",
-            age: 18,
-            phone: "0123456789",
-            img: all_imgs.gym_equipment,
-            packageName: "Gói Basic",
-            paymentMethod: "Credit Card",
-        },
-        {
-            name: "Nguyễn Đức Phú",
-            sex: "Nam",
-            age: 18,
-            phone: "0123456789",
-            img: all_imgs.gym_equipment,
-            packageName: "Gói Standard",
-            paymentMethod: "PayPal",
-        },
-        {
-            name: "Nguyễn Trọng Khánh Duy",
-            sex: "Nam",
-            age: 18,
-            phone: "0123456789",
-            img: all_imgs.gym_equipment,
-            packageName: "Gói Premium",
-            paymentMethod: "Bank Transfer",
-        },
-        {
-            name: "Chu Đình Hiển",
-            sex: "Nam",
-            age: 18,
-            phone: "0123456789",
-            img: all_imgs.gym_equipment,
-            packageName: "Gói Basic",
-            paymentMethod: "Cash",
-        },
-        {
-            name: "Phạm Mai Chi",
-            sex: "Nữ",
-            age: 18,
-            phone: "0123456789",
-            img: all_imgs.gym_equipment,
-            packageName: "Gói Standard",
-            paymentMethod: "Credit Card",
-        },
-        // Add other members here
-    ];
+    useEffect(() => {
+        // Fetch data from API
+        axios
+            .get("http://localhost:8080/api/membership/register_list")
+            .then((response) => {
+                setMembers(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
 
-    // Function to handle search bar changes
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
@@ -89,7 +51,7 @@ const AdminRegistrationList = () => {
                 <div className="member-list">
                     {members
                         .filter((member) =>
-                            member.name
+                            member.fullName
                                 .toLowerCase()
                                 .includes(searchTerm.toLowerCase())
                         )
@@ -97,29 +59,55 @@ const AdminRegistrationList = () => {
                             <div className="member-item" key={index}>
                                 <div className="member-item-left">
                                     <img
-                                        src={member.img}
+                                        src={all_imgs.gym_equipment}
                                         alt=""
                                         className="member-avatar"
                                     />
                                     <div className="member-info">
                                         <p className="member-name">
-                                            {member.name}
+                                            {member.fullName}
                                         </p>
                                         <p className="member-sex-old">
-                                            {member.sex} {member.age} tuổi
+                                            {member.sex}{" "}
+                                            {new Date().getFullYear() -
+                                                new Date(
+                                                    member.dob
+                                                ).getFullYear()}{" "}
+                                            tuổi
                                         </p>
                                         <p className="member-phone">
-                                            {member.phone}
+                                            {member.phoneNumber}
                                         </p>
                                     </div>
                                 </div>
                                 <div className="member-item-right">
                                     <div className="registration-list-package">
                                         <p className="registration-list-package-info">
-                                            Đăng ký gói: <strong>{member.packageName}</strong>
-                                        </p>
-                                        <p className="registration-list-package-payment-method">
-                                            Phương thức thanh toán: <strong>{member.paymentMethod}</strong>
+                                            {member.currentMembership ? (
+                                                <>
+                                                    Đổi gói&nbsp;
+                                                    <strong>
+                                                        {
+                                                            member.currentMembership
+                                                        }
+                                                    </strong>&nbsp;
+                                                    thành&nbsp;
+                                                    <strong>
+                                                        {
+                                                            member.registerMembership
+                                                        }
+                                                    </strong>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    Đăng ký gói:&nbsp;
+                                                    <strong>
+                                                        {
+                                                            member.registerMembership
+                                                        }
+                                                    </strong>
+                                                </>
+                                            )}
                                         </p>
                                     </div>
                                     <div className="registration-list-act">

@@ -1,0 +1,47 @@
+.membership-modal {
+    .form {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        &-left,
+        &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-left {
+            width: 100%;
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #737373;
+            }
+        }
+
+        &-right {
+            width: 30%;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            img {
+                width: 200px;
+                height: 300px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+
+            input[type="file"] {
+                display: block;
+            }
+        }
+    }
+}

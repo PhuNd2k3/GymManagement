@@ -15,8 +15,6 @@ import AdminGymEquipment from './pages/AdminGymEquipment';
 import AdminRegistrationList from './pages/AdminRegistrationList';
 import AdminPackages from './pages/AdminPackages';
 import AdminFeedback from './pages/AdminFeedback';
-import AdminProfile from './pages/AdminProfile';
-
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -79,7 +77,6 @@ const App = () => {
               <Route path="/admin/registration-list/:id" element={<AdminRegistrationList />} />
               <Route path="/admin/packages/:id" element={<AdminPackages />} />
               <Route path="/admin/feedback/:id" element={<AdminFeedback />} />
-              <Route path="/admin/profile/:id" element={<AdminProfile />} />
             </>
           ) : (
             <Route path="*" element={<Navigate to="/" />} />

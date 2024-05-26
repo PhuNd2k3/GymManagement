@@ -25,9 +25,14 @@ const AdminPackages = () => {
         packageData.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const handleRemovePackage = (id) => {
+        setPackagesData(packagesData.filter((packageData) => packageData.id !== id));
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
     };
+
     return (
         <div className="admin-packages packages background">
             <div className="container">
@@ -73,8 +78,9 @@ const AdminPackages = () => {
                 <div className="packages-list">
                     {filteredPackages.map((packageData) => (
                         <AdminPackage
-                            key={packageData.name}
+                            key={packageData.id}
                             {...packageData}
+                            onRemove={handleRemovePackage}
                         />
                     ))}
                 </div>

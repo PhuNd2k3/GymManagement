@@ -1,28 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import all_imgs from "../assets/img/all_imgs";
+import axios from 'axios';
 
 const AdminAttendance = () => {
-    // State để lưu trữ giá trị của thanh tìm kiếm
     const [searchTerm, setSearchTerm] = useState("");
+    const [members, setMembers] = useState([]);
 
-    // Danh sách thành viên mẫu
-    const members = [
-        { name: "Nguyễn Văn A", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Nguyễn Đức Phú", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Nguyễn Trọng Khánh Duy", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Chu Đình Hiển", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        // Thêm các thành viên khác ở đây
-    ];
-
-    // Hàm xử lý sự kiện thay đổi của thanh tìm kiếm
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/member/all')
+            .then(response => {
+                const membersFromAPI = response.data.map(member => ({
+                    id: member.id,
+                    name: member.fullName,
+                    sex: member.gender,
+                    age: new Date().getFullYear() - new Date(member.dob).getFullYear(),
+                    phone: member.phoneNumber,
+                    img: all_imgs.gym_equipment
+                }));
+                setMembers(membersFromAPI);
+            })
+            .catch(error => {
+                console.error('Error fetching members:', error);
+            });
+    }, []);
+    
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const handleAttendance = (id, name) => {
+        axios.put(`http://localhost:8080/api/training/add/${id}`)
+            .then(response => {
+                alert('Điểm danh thành công cho thành viên: ' + name);
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 409) {
+                    alert('Người này đã điểm danh.');
+                } else {
+                    console.error('Error marking attendance:', error);
+                }
+            });
     };
 
     return (
@@ -65,7 +82,10 @@ const AdminAttendance = () => {
                                     </div>
                                 </div>
                                 <div className="member-item-right">
-                                    <button className="attendance-btn">
+                                    <button
+                                        className="attendance-btn"
+                                        onClick={() => handleAttendance(member.id, member.name)}
+                                    >
                                         Điểm danh
                                     </button>
                                 </div>
