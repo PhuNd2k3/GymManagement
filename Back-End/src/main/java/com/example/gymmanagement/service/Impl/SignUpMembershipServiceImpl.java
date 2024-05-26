@@ -39,7 +39,7 @@ public class SignUpMembershipServiceImpl implements ISignUpMembershipService {
         result.setMembership(membership);
         result.setMember(member);
         result.setStatus("Waiting");
-        result.setPaymentMethod(result.getPaymentMethod());
+        result.setPaymentMethod(request.getPaymentMethod());
         return signUpMembershipRepository.save(result);
     }
 
