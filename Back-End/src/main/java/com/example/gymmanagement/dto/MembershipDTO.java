@@ -9,4 +9,6 @@ public class MembershipDTO {
     private Integer price;
     private Integer memberCount;
     private Integer numbersOfTrainingPerWeek;
+    private Integer period;
+    private Integer numbersOfTrainingWeek;
 }
