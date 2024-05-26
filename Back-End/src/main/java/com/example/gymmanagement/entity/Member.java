@@ -14,7 +14,7 @@ public class Member extends User {
     private Date membershipPeriod;
 
     @ManyToOne
-    @JoinColumn(name = "membership_id",nullable = false)
+    @JoinColumn(name = "membership_id")
     private Membership membership;
 
     @OneToMany(mappedBy = "member")
