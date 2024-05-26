@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FeedbackItem from "../components/FeedbackItem/FeedbackItem";
-import { Select } from 'antd'; // Importing Select from antd
+import { Select, message } from 'antd'; // Importing Select and message from antd
+import axios from 'axios';
 
 const { Option } = Select; // Destructuring Option from Select
 
@@ -44,6 +45,22 @@ const Feedback = () => {
     // State để lưu trữ nội dung phản hồi mới
     const [newFeedback, setNewFeedback] = useState("");
     const [feedbackType, setFeedbackType] = useState(""); // State to store selected feedback type
+    const [feedbackTypes, setFeedbackTypes] = useState([]); // State to store feedback types
+
+    useEffect(() => {
+        // Fetch feedback types from API
+        const fetchFeedbackTypes = async () => {
+            try {
+                const response = await axios.get('http://localhost:8080/api/feedback_type');
+                setFeedbackTypes(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error("Error fetching feedback types:", error);
+            }
+        };
+
+        fetchFeedbackTypes();
+    }, []);
 
     // Hàm xử lý khi người dùng thay đổi nội dung phản hồi mới
     const handleInputChange = (event) => {
@@ -56,13 +73,34 @@ const Feedback = () => {
     };
 
     // Hàm xử lý khi người dùng gửi phản hồi mới
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // Xử lý logic khi người dùng gửi phản hồi
-        console.log("Phản hồi mới:", newFeedback);
-        console.log("Loại phản hồi:", feedbackType);
-        // Sau khi gửi, có thể thêm logic để xóa nội dung ô text và chọn lại loại phản hồi
-        setNewFeedback("");
-        setFeedbackType("");
+        const selectedType = feedbackTypes.find(type => type.name === feedbackType);
+        if (!selectedType) {
+            message.error("Vui lòng chọn loại phản hồi hợp lệ.");
+            return;
+        }
+
+        const newFeedbackData = {
+            feedbackTypeId: selectedType.id,
+            memberId: 1, // Bạn cần thay thế giá trị này bằng ID thành viên thực tế của người dùng
+            feedbackDetail: newFeedback
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/feedback/send', newFeedbackData);
+            if (response.status === 200) {
+                message.success("Gửi phản hồi thành công!");
+                // Reset form
+                setNewFeedback("");
+                setFeedbackType("");
+            } else {
+                message.error("Không gửi được phản hồi, vui lòng thử lại.");
+            }
+        } catch (error) {
+            console.error("Error sending feedback:", error);
+            message.error("Không gửi được phản hồi, vui lòng thử lại.");
+        }
     };
 
     return (
@@ -94,10 +132,11 @@ const Feedback = () => {
                                     onChange={handleTypeChange}
                                     placeholder="Chọn loại phản hồi"
                                 >
-                                    <Option value="Training room">Training room</Option>
-                                    <Option value="Equipment">Equipment</Option>
-                                    <Option value="Staff">Staff</Option>
-                                    <Option value="Other">Other</Option>
+                                    {feedbackTypes.map(type => (
+                                        <Option key={type.id} value={type.name}>
+                                            {type.name}
+                                        </Option>
+                                    ))}
                                 </Select>
                             </div>
                             <textarea
