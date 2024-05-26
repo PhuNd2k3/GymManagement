@@ -123,7 +123,11 @@
 }
 
 .registration-list-package {
+    display: flex;
+    flex-direction: column;
     p {
+        display: inline-flex;
+        justify-content: flex-end;
         font-weight: 600;
         font-size: 1.6rem;
         color: #737373;
