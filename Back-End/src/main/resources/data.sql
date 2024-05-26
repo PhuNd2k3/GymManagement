@@ -26,16 +26,16 @@ INSERT INTO member (full_name, address, email, phone_number, password, dob, memb
 
 -- Dữ liệu cho bảng sign_up_membership
 INSERT INTO sign_up_membership (membership_id, member, status, payment_method) VALUES
-(1, 1, 'Accepted', 'direct'),
-(2, 2, 'Accepted', 'card'),
-(1, 3, 'Waiting', 'direct'),
-(2, 4, 'Accepted', 'card'),
-(1, 5, 'Accepted', 'direct'),
-(3, 6, 'Waiting', 'card'),
-(1, 7, 'Accepted', 'direct'),
-(2, 8, 'Waiting', 'card'),
-(3, 9, 'Accepted', 'direct'),
-(1, 10, 'Accepted', 'card');
+(1, 1, 'Accepted', 'Direct'),
+(2, 2, 'Accepted', 'Card'),
+(1, 3, 'Waiting', 'Direct'),
+(2, 4, 'Accepted', 'Card'),
+(1, 5, 'Accepted', 'Direct'),
+(3, 6, 'Waiting', 'Card'),
+(1, 7, 'Accepted', 'Direct'),
+(2, 8, 'Waiting', 'Card'),
+(3, 9, 'Accepted', 'Direct'),
+(1, 10, 'Accepted', 'Card');
 
 -- Dữ liệu cho bảng training_history
 INSERT INTO training_history (training_time, member_id) VALUES

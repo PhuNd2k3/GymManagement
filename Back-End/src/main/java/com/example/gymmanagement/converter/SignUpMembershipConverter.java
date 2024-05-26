@@ -15,6 +15,7 @@ public class SignUpMembershipConverter {
         result.setPhoneNumber(signUpMembership.getMember().getPhoneNumber());
         result.setRegisterMembership(signUpMembership.getMembership().getName());
         result.setRegisterMembershipId(signUpMembership.getMembership().getId());
+        result.setMemberId(signUpMembership.getMembership().getId());
         return result;
     }
 }
