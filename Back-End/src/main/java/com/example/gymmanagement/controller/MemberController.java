@@ -30,7 +30,7 @@ public class MemberController {
         return member;
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public boolean isLogin(@RequestBody LoginRequest loginRequest){
         return memberService.isLogin(loginRequest);
     }
