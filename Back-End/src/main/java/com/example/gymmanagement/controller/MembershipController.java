@@ -18,7 +18,7 @@ public class MembershipController {
     private IMembershipService membershipService;
 
     @GetMapping(value = "/{id}")
-    public void getMembership(@PathVariable Long id) {
+    public void getMembership(@PathVariable Integer id) {
         membershipService.getMembershipDetail(id);
     }
 
