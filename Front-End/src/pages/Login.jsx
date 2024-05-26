@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Login = ({ setIsLoggedIn, setUserRole }) => {
   const [role, setRole] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ phone, password }),
       });
 
       if (response.ok) {
@@ -98,13 +98,13 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
           <div className="input-container">
             <input
               type="text"
-              id="email-or-phone"
-              name="email-or-phone"
+              id="phone"
+              name="phone"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
-            <label htmlFor="email-or-phone" className="label">Email hoặc Số điện thoại:</label>
+            <label htmlFor="phone" className="label">Số điện thoại:</label>
             <div className="underline"></div>
           </div>
 
