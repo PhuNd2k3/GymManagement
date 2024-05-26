@@ -1,0 +1,116 @@
+.gym-equipment {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #fff;
+
+    &-info {
+        width: 260px;
+    }
+
+    &-name {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        font-weight: 700;
+        padding: 10px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: #c21b1b;
+    }
+
+    .gym-equipment-img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #c21b1b;
+    }
+
+    &-act {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .btn-remove,
+    .btn-update {
+        cursor: pointer;
+        height: 32px;
+        padding: 4px 15px;
+        border-radius: 6px;
+        border: 1px solid #c21b1b;
+        font-size: 1.4rem;
+        line-height: 1.5714285714285714;
+        transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    .btn-remove {
+        color: #c21b1b;
+        background-color: #fff;
+        &:hover {
+            color: #fff;
+            background-color: #c21b1b;
+        }
+    }
+    
+    .btn-update {
+        color: #fff;
+        background-color: #c21b1b;
+        &:hover {
+            color: #c21b1b;
+            background-color: #fff;
+        }
+    }
+}
+
+.gym-equipment-modal {
+    .form {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        &-left, &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-left {
+            width: 55%;
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #737373;
+            }
+        }
+
+        &-right {
+            width: 30%;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            img {
+                width: 200px;
+                height: 300px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+
+            input[type="file"] {
+                display: block;
+            }
+        }
+    }
+}
+:where(.css-dev-only-do-not-override-17seli4).ant-modal .ant-modal-title {
+    color: #c21b1b !important;
+}
