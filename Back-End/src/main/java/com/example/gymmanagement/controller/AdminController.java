@@ -45,7 +45,7 @@ public class AdminController {
     @PutMapping(value = "/membership/update_register")
     public ResponseEntity<SignUpMembership> updateRegister(@RequestBody UpdateRegisterRequest request) {
         SignUpMembership updateMembershipRegister = signUpMembershipService.updateMembershipRegister(request);
-        return null;
+        return new ResponseEntity<>(updateMembershipRegister,HttpStatus.OK);
     }
     
     @PostMapping(value = "/admin/login")

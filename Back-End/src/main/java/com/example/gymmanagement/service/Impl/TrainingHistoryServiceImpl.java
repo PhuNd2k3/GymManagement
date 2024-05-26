@@ -1,0 +1,47 @@
+package com.example.gymmanagement.service.Impl;
+
+import com.example.gymmanagement.entity.Member;
+import com.example.gymmanagement.entity.TrainingHistory;
+import com.example.gymmanagement.repository.IMemberRepository;
+import com.example.gymmanagement.repository.ITrainingHistoryRepository;
+import com.example.gymmanagement.service.ITrainingHistoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
+    @Autowired
+    private IMemberRepository memberRepository;
+    @Autowired
+    private ITrainingHistoryRepository traningHistoryRepository;
+    @Override
+    public void addTraining(Integer id) {
+        Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thành viên với id: " + id));
+        Date today = new Date();
+        TrainingHistory trainingHistoryToday = traningHistoryRepository.findByMemberIdAndAndTrainingTime(id,today);
+        if(trainingHistoryToday!=null){
+            throw new IllegalArgumentException("Thành viên " + member.getFullName() + " hôm nay đã điểm danh rồi!");
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(today);
+
+        // Thiết lập ngày trong tuần là ngày đầu tiên (ngày thứ Hai)
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+        // Lấy ngày đầu tiên của tuần
+        Date startOfWeek = calendar.getTime();
+        List<TrainingHistory> trainingHistories = traningHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,startOfWeek,today);
+        if(trainingHistories.size() >= member.getMembership().getPeriod()){
+            throw new IllegalArgumentException("Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");
+        }
+        TrainingHistory trainingHistory = new TrainingHistory();
+        trainingHistory.setMember(member);
+        trainingHistory.setTrainingTime(new Date());
+        traningHistoryRepository.save(trainingHistory);
+    }
+}
