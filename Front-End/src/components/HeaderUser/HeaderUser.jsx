@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Logo from "../Logo/Logo";
 
-const HeaderUser = () => {
+const HeaderUser = ({ userId }) => {
   const location = useLocation();
   const [isProfileActive, setIsProfileActive] = useState(false);
 
   useEffect(() => {
     // Kiểm tra xem địa chỉ URL hiện tại có phải là /profile không
-    setIsProfileActive(location.pathname === "/profile");
-  }, [location.pathname]);
+    setIsProfileActive(location.pathname === `/profile/${userId}`);
+  }, [location.pathname, userId]);
 
   return (
     <section id="header" className={isProfileActive ? "active-profile header" : "header"}>
@@ -17,7 +17,7 @@ const HeaderUser = () => {
         <div className="top-bar">
           <Logo />
           <nav>
-          <ul>
+            <ul>
               <li>
                 <NavLink exact to="/" activeClassName="active">
                   TRANG CHỦ
@@ -29,12 +29,12 @@ const HeaderUser = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/training-history" activeClassName="active">
+                <NavLink to={`/training-history/${userId}`} activeClassName="active">
                   LỊCH SỬ ĐI TẬP
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/feedback" activeClassName="active">
+                <NavLink to={`/feedback/${userId}`} activeClassName="active">
                   PHẢN HỒI
                 </NavLink>
               </li>
@@ -44,7 +44,7 @@ const HeaderUser = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/profile" activeClassName="active">
+                <NavLink to={`/profile/${userId}`} activeClassName="active">
                   THÔNG TIN CÁ NHÂN
                 </NavLink>
               </li>
@@ -54,6 +54,7 @@ const HeaderUser = () => {
             <Link to="/" onClick={() => {
               localStorage.removeItem("authToken");
               localStorage.removeItem("userRole");
+              localStorage.removeItem("userId"); // Xóa userId khi đăng xuất
               window.location.reload();
             }}>
               <button className="btn btn-login">ĐĂNG XUẤT</button>

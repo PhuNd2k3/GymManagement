@@ -20,17 +20,21 @@ import AdminProfile from './pages/AdminProfile';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null); // Thêm userId vào state
   const location = useLocation();
 
   const checkLoginStatus = () => {
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('userRole');
-    if (token && role) {
+    const id = localStorage.getItem('userId'); // Lấy userId từ localStorage
+    if (token && role && id) {
       setIsLoggedIn(true);
       setUserRole(role);
+      setUserId(id); // Cập nhật userId vào state
     } else {
       setIsLoggedIn(false);
       setUserRole(null);
+      setUserId(null);
     }
   };
 
@@ -42,9 +46,9 @@ const App = () => {
     if (location.pathname !== "/login") {
       if (isLoggedIn) {
         if (userRole === "hoivien") {
-          return <HeaderUser />;
+          return <HeaderUser userId={userId} />;
         } else if (userRole === "quantrivien") {
-          return <HeaderAdmin />;
+          return <HeaderAdmin userId={userId} />;
         }
       }
       return <Header />;
@@ -58,24 +62,24 @@ const App = () => {
       {renderHeader()}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} setUserId={setUserId} />} />
         <Route path="/packages" element={<Packages isLoggedIn={isLoggedIn} />} />
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn && userRole === "hoivien" ? (
           <>
-            <Route path="/training-history" element={<TrainingHistory />} />
-            <Route path="/feedback" element={<Feedback />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/training-history/:id" element={<TrainingHistory />} />
+            <Route path="/feedback/:id" element={<Feedback />} />
+            <Route path="/profile/:id" element={<Profile />} />
           </>
         ) : (
           isLoggedIn && userRole === "quantrivien" ? (
             <>
-              <Route path="/admin/attendance" element={<AdminAttendance />} />
-              <Route path="/admin/gym-equipment" element={<AdminGymEquipment />} />
-              <Route path="/admin/registration-list" element={<AdminRegistrationList />} />
-              <Route path="/admin/packages" element={<AdminPackages />} />
-              <Route path="/admin/feedback" element={<AdminFeedback />} />
-              <Route path="/admin/profile" element={<AdminProfile />} />
+              <Route path="/admin/attendance/:id" element={<AdminAttendance />} />
+              <Route path="/admin/gym-equipment/:id" element={<AdminGymEquipment />} />
+              <Route path="/admin/registration-list/:id" element={<AdminRegistrationList />} />
+              <Route path="/admin/packages/:id" element={<AdminPackages />} />
+              <Route path="/admin/feedback/:id" element={<AdminFeedback />} />
+              <Route path="/admin/profile/:id" element={<AdminProfile />} />
             </>
           ) : (
             <Route path="*" element={<Navigate to="/" />} />
