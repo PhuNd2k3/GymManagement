@@ -1,5 +1,6 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,9 +27,11 @@ public class Membership {
     private Integer period;
 
     @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Member> members;
 
     @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SignUpMembership> signUpMemberships;
 
 }

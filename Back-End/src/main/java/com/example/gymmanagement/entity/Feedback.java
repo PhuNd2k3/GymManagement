@@ -1,5 +1,6 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,14 +24,17 @@ public class Feedback {
     private String replyContext;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "feedback_type_id")
     private FeedbackType feedbackType;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "member_id")
     private Member member;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "admin_id")
     private Admin admin;
 

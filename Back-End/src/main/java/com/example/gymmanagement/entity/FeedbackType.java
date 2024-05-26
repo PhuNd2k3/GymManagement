@@ -1,5 +1,7 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,5 +19,6 @@ public class FeedbackType {
     private String name;
 
     @OneToMany(mappedBy = "feedbackType")
+    @JsonManagedReference
     List<Feedback> feedbacks;
 }
