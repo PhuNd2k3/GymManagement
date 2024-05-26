@@ -26,47 +26,47 @@ public class FeedbackController {
     private IFeedbackService feedbackService;
 
     @GetMapping(value = "/feedback_type")
-    public List<FeedbackType> getFeedbackTypes(){
+    public List<FeedbackType> getFeedbackTypes() {
         List<FeedbackType> feedbackTypes = feedBackTypeService.getFeedbackTypes();
         return feedbackTypes;
     }
 
     @PostMapping(value = "/feedback/send")
-    public ResponseEntity<String> sendFeedback(@RequestBody FeedbackDTO feedback){
+    public ResponseEntity<String> sendFeedback(@RequestBody FeedbackDTO feedback) {
         Feedback sendFeekback = feedbackService.sendFeedback(feedback);
-        if(sendFeekback!=null){
+        if (sendFeekback != null) {
             return new ResponseEntity<String>("Successful send feedback", HttpStatus.OK);
-        }else {
-            return new ResponseEntity<String>("Error send feeback",HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<String>("Error send feeback", HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(value = "/feedback/view/{id}")
-    public List<FeedbackResponse> getFeedbacks(@PathVariable Integer id){
+    public List<FeedbackResponse> getFeedbacks(@PathVariable Integer id) {
         List<FeedbackResponse> responses = new ArrayList<>();
         responses = feedbackService.getAll(id);
         return responses;
     }
 
     @GetMapping(value = "/feedback/detail/{id}")
-    public FeedbackResponseDetail getFeedback(@PathVariable Integer id){
+    public FeedbackResponseDetail getFeedback(@PathVariable Integer id) {
         FeedbackResponseDetail result = feedbackService.getFeedbackDetail(id);
         return result;
     }
 
     @GetMapping(value = "/feedback/all")
-    public List<MemberFeedbackResponse> getAllFeedback(){
+    public List<MemberFeedbackResponse> getAllFeedback() {
         List<MemberFeedbackResponse> result = feedbackService.getAllMemberFeedback();
         return result;
     }
 
-    @PutMapping(value = "/feedback/reply/{id}")
-    public ResponseEntity<String> replyFeedback(@RequestBody ReplyFeedbackRequest request){
+    @PutMapping(value = "/feedback/reply")
+    public ResponseEntity<String> replyFeedback(@RequestBody ReplyFeedbackRequest request) {
         Feedback replyFeedback = feedbackService.replyFeedback(request);
-        if(replyFeedback!=null){
+        if (replyFeedback != null) {
             return new ResponseEntity<String>("Successful reply feedback", HttpStatus.OK);
-        }else {
-            return new ResponseEntity<String>("Error send feeback",HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<String>("Error send feeback", HttpStatus.BAD_REQUEST);
         }
     }
 
