@@ -35,6 +35,7 @@ public class MemberController {
         return memberService.isLogin(loginRequest);
     }
 
+
     @PostMapping(value = "/register")
     public ResponseEntity<Member> addMember(@RequestBody RegisterRequest request) {
         Member savedMember = memberService.addMember(request);
