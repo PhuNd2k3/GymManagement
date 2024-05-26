@@ -3,6 +3,7 @@ package com.example.gymmanagement.controller;
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
+import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
 import com.example.gymmanagement.service.IMemberService;
@@ -31,7 +32,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/login")
-    public boolean isLogin(@RequestBody LoginRequest loginRequest) {
+    public LoginResponse isLogin(@RequestBody LoginRequest loginRequest) {
         return memberService.isLogin(loginRequest);
     }
 

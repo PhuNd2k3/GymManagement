@@ -1,5 +1,6 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class TrainingHistory {
 
     @ManyToOne
     @JoinColumn(name = "member_id",nullable = false)
+    @JsonBackReference
     private Member member;
 }

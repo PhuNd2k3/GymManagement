@@ -4,6 +4,7 @@ import com.example.gymmanagement.converter.MemberConverter;
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
+import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
 import com.example.gymmanagement.repository.IFeedbackRepository;
@@ -46,15 +47,18 @@ public class MemberServiceImpl implements IMemberService {
     }
 
     @Override
-    public Boolean isLogin(LoginRequest loginRequest) {
+    public LoginResponse isLogin(LoginRequest loginRequest) {
+        LoginResponse result = new LoginResponse();
         Member member = memberRepository.findMemberByPhoneNumber(loginRequest.getPhone());
         if(member == null){
-            return false;
+            result.setLogin(false);
         }
         if(!member.getPassword().equals(loginRequest.getPassword())){
-            return false;
+            result.setLogin(false);
         }
-        return true;
+        result.setLogin(true);
+        result.setId(member.getId());
+        return result;
     }
 
     @Override

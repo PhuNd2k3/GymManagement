@@ -1,5 +1,6 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,12 +18,13 @@ public class Member extends User {
     @JoinColumn(name = "membership_id",nullable = false)
     private Membership membership;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<TrainingHistory> trainingHistories;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
     private List<SignUpMembership> signUpMemberships;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",fetch = FetchType.LAZY)
     private List<Feedback> feedbacks;
 }
