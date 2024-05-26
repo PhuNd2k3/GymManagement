@@ -25,10 +25,10 @@ public class Membership {
     @Column(name = "period")
     private Integer period;
 
-    @OneToMany(mappedBy = "membership")
+    @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
     private List<Member> members;
 
-    @OneToMany(mappedBy = "membership")
+    @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
     private List<SignUpMembership> signUpMemberships;
 
 }

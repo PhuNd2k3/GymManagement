@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @Table(name = "admin")
 public class  Admin extends User{
-    @OneToMany(mappedBy = "admin")
+    @OneToMany(mappedBy = "admin",fetch = FetchType.LAZY)
     private List<Feedback> feedbacks;
 }
