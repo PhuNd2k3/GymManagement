@@ -1,4 +1,4 @@
-import React, { useState, useParams } from 'react'
+import React, { useState } from 'react'
 import TrainingHistoryItem from '../components/TrainingHistoryItem/TrainingHistoryItem'
 
 const generateFakeData = () => {
@@ -13,7 +13,6 @@ const generateFakeData = () => {
 }
 
 const TrainingHistory = () => {
-  const { id } = useParams();
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6
   const data = generateFakeData()
@@ -26,7 +25,7 @@ const TrainingHistory = () => {
   return (
     <section className='training-history background'>
       <div className="container">
-        <h1 className="training-history-title">LỊCH SỬ ĐI TẬP {id}</h1>
+        <h1 className="training-history-title">LỊCH SỬ ĐI TẬP</h1>
         <div className="training-history-list">
           {currentItems.map((item, index) => (
             <TrainingHistoryItem key={index} day={item.day} time={item.time} />

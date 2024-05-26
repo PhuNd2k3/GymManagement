@@ -63,7 +63,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn && userRole === "hoivien" ? (
           <>
-            <Route path="/training/:id" element={<TrainingHistory />} />
+            <Route path="/training-history" element={<TrainingHistory />} />
             <Route path="/feedback" element={<Feedback />} />
             <Route path="/profile" element={<Profile />} />
           </>
