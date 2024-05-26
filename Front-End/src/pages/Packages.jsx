@@ -2,42 +2,20 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import Package from "../components/Package/Package";
 
-const Packages = () => {
+const Packages = ({ isLoggedIn }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [packagesData, setPackagesData] = useState([]);
-  // const packagesData = [
-  //   {
-  //     name: "Gói tập Gym cơ bản",
-  //     price: 500000,
-  //     numbersOfTrainingPerWeek: "3",
-  //     memberCount: 10,
-  //   },
-  //   {
-  //     name: "Gói tập Gym nâng cao",
-  //     price: 800000,
-  //     numbersOfTrainingPerWeek: "5",
-  //     memberCount: 5,
-  //   },
-  //   {
-  //     name: "Gói Yoga giảm cân",
-  //     price: 300000,
-  //     numbersOfTrainingPerWeek: "2",
-  //     memberCount: 15,
-  //   },
-  // ];
 
   useEffect(() => {
-    // Tạo một hàm để gọi API
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/membership');
-        // console.log(response);
         setPackagesData(response.data);
       } catch (error) {
+        console.error(error);
       }
     };
 
-    // Gọi hàm fetchData khi component được mount
     fetchData();
   }, []);
 
@@ -47,7 +25,6 @@ const Packages = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Xử lý khi người dùng submit form
   };
 
   return (
@@ -94,7 +71,7 @@ const Packages = () => {
         </form>
         <div className="packages-list">
           {filteredPackages.map((packageData) => (
-            <Package key={packageData.name} {...packageData} />
+            <Package key={packageData.name} {...packageData} isLoggedIn={isLoggedIn} />
           ))}
         </div>
       </div>

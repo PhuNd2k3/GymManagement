@@ -1,0 +1,88 @@
+.feedback-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid #777;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.feedback-info {
+    flex: 1;
+}
+
+.feedback-time {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.feedback-type {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.feedback-question {
+    margin-bottom: 10px;
+}
+
+.feedback-act button {
+    background-color: #FFF;
+    color: #c21b1b;
+    border: 1px solid #c21b1b;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-act button:hover {
+    background-color: #c21b1b;
+    color: #fff;
+}
+
+.feedback-modal .ant-modal-title {
+    color: #c21b1b;
+}
+
+.feedback-modal .feedback-modal-title {
+    color: #c21b1b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.feedback-modal-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.feedback-modal-row p {
+    margin: 0;
+    width: 100px;
+    font-weight: bold;
+}
+
+.feedback-modal-row span {
+    width: 430px;
+    color: #555;
+}
+
+
+.feedback-modal-btn {
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: 600;
+    background-color: #FFF;
+    color: #c21b1b;
+    border: 1px solid #c21b1b;
+    padding: 5px 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    &:hover {
+        background-color: #c21b1b;
+        color: #FFF;
+    }
+}
