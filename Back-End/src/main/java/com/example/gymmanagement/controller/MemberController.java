@@ -19,13 +19,13 @@ public class MemberController {
     @Autowired
     private IMemberService memberService;
     @GetMapping(value = "/training/{id}")
-    public List<TrainingHistory> getTrainingHistory(@PathVariable Long id){
+    public List<TrainingHistory> getTrainingHistory(@PathVariable Integer id){
         List<TrainingHistory> trainingHistories = memberService.getTrainingHistory(id);
         return trainingHistories;
     }
 
     @GetMapping(value = "/profile/{id}")
-    public MemberDTO getProfile(@PathVariable Long id){
+    public MemberDTO getProfile(@PathVariable Integer id){
         MemberDTO member = memberService.getMember(id);
         return member;
     }
@@ -39,5 +39,15 @@ public class MemberController {
     public ResponseEntity<Member> addMember(@RequestBody RegisterRequest request){
         Member savedMember = memberService.addMember(request);
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/membership/delete/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Integer id){
+        boolean isRemoved = memberService.deleteMember(id);
+        if (isRemoved) {
+            return new ResponseEntity<>("Member deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
+        }
     }
 }

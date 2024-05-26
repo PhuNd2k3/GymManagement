@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ISignUpMembershipRepository extends JpaRepository<SignUpMembership,Integer> {
     List<SignUpMembership> findByStatus(String waiting);
+
+    void deleteAllByMemberId(Integer id);
 }

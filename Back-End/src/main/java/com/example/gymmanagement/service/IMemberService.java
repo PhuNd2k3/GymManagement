@@ -9,11 +9,13 @@ import com.example.gymmanagement.entity.TrainingHistory;
 import java.util.List;
 
 public interface IMemberService {
-    List<TrainingHistory> getTrainingHistory(Long id);
+    List<TrainingHistory> getTrainingHistory(Integer id);
 
-    MemberDTO getMember(Long id);
+    MemberDTO getMember(Integer id);
 
     Boolean isLogin(LoginRequest loginRequest);
 
     Member addMember(RegisterRequest request);
+
+    boolean deleteMember(Integer id);
 }
