@@ -1,26 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import all_imgs from "../assets/img/all_imgs";
+import axios from 'axios'; // Import Axios
 
 const AdminAttendance = () => {
-    // State để lưu trữ giá trị của thanh tìm kiếm
     const [searchTerm, setSearchTerm] = useState("");
+    const [members, setMembers] = useState([]); // State để lưu trữ danh sách thành viên
 
-    // Danh sách thành viên mẫu
-    const members = [
-        { name: "Nguyễn Văn A", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Nguyễn Đức Phú", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Nguyễn Trọng Khánh Duy", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Chu Đình Hiển", sex: "Nam", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        { name: "Phạm Mai Chi", sex: "Nữ", age: 18, phone: "0123456789", img: all_imgs.gym_equipment },
-        // Thêm các thành viên khác ở đây
-    ];
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/member/all')
+            .then(response => {
+                // Chuyển đổi cấu trúc dữ liệu từ API thành mảng thành viên
+                const membersFromAPI = response.data.map(member => ({
+                    id: member.id,
+                    name: member.fullName,
+                    sex: member.gender,
+                    age: new Date().getFullYear() - new Date(member.dob).getFullYear(),
+                    phone: member.phoneNumber,
+                    img: all_imgs.gym_equipment // Ảnh có thể cần điều chỉnh
+                }));
+                setMembers(membersFromAPI); // Cập nhật state với dữ liệu từ API
+            })
+            .catch(error => {
+                console.error('Error fetching members:', error);
+            });
+    }, []);
+    
 
-    // Hàm xử lý sự kiện thay đổi của thanh tìm kiếm
     const handleSearch = (event) => {
         setSearchTerm(event.target.value);
     };
