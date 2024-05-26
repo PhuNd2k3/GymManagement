@@ -18,7 +18,8 @@ public class FeedbackConverter {
     private IMemberRepository memberRepository;
     @Autowired
     private IFeedbackTypeRepository feedbackTypeRepository;
-    public Feedback toFeedback(FeedbackDTO feedbackDTO){
+
+    public Feedback toFeedback(FeedbackDTO feedbackDTO) {
         Feedback result = new Feedback();
         result.setFeedbackTime(new Date());
         result.setFeedbackDetail(feedbackDTO.getFeedbackDetail());
@@ -27,12 +28,12 @@ public class FeedbackConverter {
         return result;
     }
 
-    public FeedbackResponse toFeedbackResponse(Feedback feedback){
+    public FeedbackResponse toFeedbackResponse(Feedback feedback) {
         FeedbackResponse result = new FeedbackResponse();
         result.setId(feedback.getId());
-        if(feedback.getReplyContext()==null) {
+        if(feedback.getReplyContent()==null) {
             result.setReply(false);
-        }else {
+        } else {
             result.setReply(true);
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");

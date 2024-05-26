@@ -13,4 +13,5 @@ public class RegisterMembershipDTO {
     private String fullName;
     private String phoneNumber;
     private Date dob;
+    private Integer memberId;
 }

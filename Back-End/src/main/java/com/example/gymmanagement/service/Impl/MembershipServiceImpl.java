@@ -42,21 +42,24 @@ public class MembershipServiceImpl implements IMembershipService {
     }
 
     @Override
-    public Membership addMembership(Membership membership) {
+    public Membership addMembership(MembershipDTO membershipDTO) {
+        Membership membership = membershipConverter.toMembership(membershipDTO);
         return membershipRepository.save(membership);
     }
 
     @Override
-    public Membership updateMembership(Membership updateMembership) {
-        return membershipRepository.save(updateMembership);
+    public Membership updateMembership(MembershipDTO membershipDTO) {
+        Membership membership = membershipConverter.toMembership(membershipDTO);
+        return membershipRepository.save(membership);
     }
 
     @Override
     public boolean deleteMembership(Integer id) {
-        Membership membership = membershipRepository.findById(id).get();
-        if (membership == null) return false;
-        signUpMembershipRepository.deleteAllByMemberId(id);
-        membershipRepository.delete(membership);
-        return true;
+        try {
+            membershipRepository.deleteById(id);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 }

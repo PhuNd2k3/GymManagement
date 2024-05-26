@@ -1,5 +1,6 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,7 +15,7 @@ public class Membership {
     private Integer id;
 
     @Column(name = "numbers_of_training_per_week")
-    private Integer numberOfTrainingPerWeek;
+    private Integer numbersOfTrainingPerWeek;
 
     @Column(name = "name")
     private String name;
@@ -25,10 +26,12 @@ public class Membership {
     @Column(name = "period")
     private Integer period;
 
-    @OneToMany(mappedBy = "membership")
+    @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Member> members;
 
-    @OneToMany(mappedBy = "membership")
+    @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<SignUpMembership> signUpMemberships;
 
 }
