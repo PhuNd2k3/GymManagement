@@ -115,4 +115,17 @@ public class MemberServiceImpl implements IMemberService {
         member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
         return memberRepository.save(member);
     }
+
+    @Override
+    public Member updateMemberOfAdmin(MemberAdminRequest request) {
+        Member member = new Member();
+        member.setId(request.getId());
+        member.setFullName(request.getFullName());
+        member.setEmail(request.getEmail());
+        member.setDob(request.getDob());
+        member.setPhoneNumber(request.getPhoneNumber());
+        member.setGender(request.getGender());
+        member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
+        return memberRepository.save(member);
+    }
 }

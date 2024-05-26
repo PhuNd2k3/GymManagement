@@ -19,11 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Transactional
 public class AdminController {
     @Autowired
     private ISignUpMembershipService signUpMembershipService;
@@ -65,13 +67,33 @@ public class AdminController {
         return memberService.findAll();
     }
 
-//    @PostMapping(value = "/member/add")
-//    public ResponseEntity<String> addMember(@RequestBody MemberAdminRequest request){
-//        Member saved = memberService.addMemberOfAdmin(request);
-//        if(saved!=null){
-//            return new ResponseEntity<>("Thêm thành công member!", HttpStatus.CREATED);
-//        }else {
-//            return new
-//        }
-//    }
+    @PostMapping(value = "/member/add")
+    public ResponseEntity<String> addMember(@RequestBody MemberAdminRequest request){
+        Member saved = memberService.addMemberOfAdmin(request);
+        if(saved!=null){
+            return new ResponseEntity<>("Thêm thành công member!", HttpStatus.CREATED);
+        }else {
+            return new ResponseEntity<>("Lỗi thêm",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping(value = "/member/update")
+    public ResponseEntity<String> updateMember(@RequestBody MemberAdminRequest request){
+        Member updated = memberService.updateMemberOfAdmin(request);
+        if(updated!=null){
+            return new ResponseEntity<>("Sửa thành công member!", HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("Lỗi!",HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping(value = "/member/delete/{id}")
+    public ResponseEntity<String> deleteMember(@PathVariable Integer id) {
+        boolean isRemoved = memberService.deleteMember(id);
+        if (isRemoved) {
+            return new ResponseEntity<>("Member deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
+        }
+    }
 }

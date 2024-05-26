@@ -44,15 +44,6 @@ public class MemberController {
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
     }
 
-    @DeleteMapping(value = "/member/delete/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable Integer id) {
-        boolean isRemoved = memberService.deleteMember(id);
-        if (isRemoved) {
-            return new ResponseEntity<>("Member deleted successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
-        }
-    }
 
     @PostMapping(value = "/profile/update")
     public ResponseEntity<String> addMember(@RequestBody MemberRequest request) {

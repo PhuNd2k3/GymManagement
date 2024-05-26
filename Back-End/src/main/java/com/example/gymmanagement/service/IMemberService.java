@@ -25,4 +25,6 @@ public interface IMemberService {
     Member updateMember(MemberRequest request);
     List<MemberDTO> findAll();
     Member addMemberOfAdmin(MemberAdminRequest request);
+
+    Member updateMemberOfAdmin(MemberAdminRequest request);
 }
