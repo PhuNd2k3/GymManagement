@@ -3,25 +3,27 @@ package com.example.gymmanagement.service.Impl;
 import com.example.gymmanagement.converter.MemberConverter;
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
+import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
-import com.example.gymmanagement.repository.IFeedbackRepository;
-import com.example.gymmanagement.repository.IMemberRepository;
-import com.example.gymmanagement.repository.ISignUpMembershipRepository;
-import com.example.gymmanagement.repository.ITrainingHistoryRepository;
+import com.example.gymmanagement.repository.*;
 import com.example.gymmanagement.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
     @Autowired
     private IMemberRepository memberRepository;
+
+    @Autowired
+    private IMembershipRepository membershipRepository;
 
     @Autowired
     private MemberConverter memberConverter;
@@ -89,6 +91,41 @@ public class MemberServiceImpl implements IMemberService {
         member.setPhoneNumber(request.getPhoneNumber());
         member.setDob(request.getDob());
         member.setGender(request.getGender());
+        return memberRepository.save(member);
+    }
+
+    @Override
+    public List<MemberDTO> findAll() {
+        List<Member> members = memberRepository.findAll();
+        List<MemberDTO> result = new ArrayList<>();
+        for(Member it : members){
+            result.add(memberConverter.toMemberDTO(it));
+        }
+        return result;
+    }
+
+    @Override
+    public Member addMemberOfAdmin(MemberAdminRequest request) {
+        Member member = new Member();
+        member.setFullName(request.getFullName());
+        member.setEmail(request.getEmail());
+        member.setDob(request.getDob());
+        member.setPhoneNumber(request.getPhoneNumber());
+        member.setGender(request.getGender());
+        member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
+        return memberRepository.save(member);
+    }
+
+    @Override
+    public Member updateMemberOfAdmin(MemberAdminRequest request) {
+        Member member = new Member();
+        member.setId(request.getId());
+        member.setFullName(request.getFullName());
+        member.setEmail(request.getEmail());
+        member.setDob(request.getDob());
+        member.setPhoneNumber(request.getPhoneNumber());
+        member.setGender(request.getGender());
+        member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
         return memberRepository.save(member);
     }
 }
