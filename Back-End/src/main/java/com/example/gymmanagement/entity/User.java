@@ -1,30 +1,35 @@
 package com.example.gymmanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
-@Entity
-@Table(name="user")
+import java.util.Date;
+
+@MappedSuperclass
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "full_name")
+    private String fullName;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "address")
+    private String address;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "email")
+    private String email;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "dob")
+    private Date dob;
+
+    @Column(name = "gender")
+    private String gender;
 }

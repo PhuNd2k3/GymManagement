@@ -13,4 +13,6 @@ public interface IMembershipService {
     Membership addMembership(Membership membership);
 
     Membership updateMembership(Membership updateMembership);
+
+    boolean deleteMembership(Integer id);
 }

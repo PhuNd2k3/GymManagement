@@ -11,7 +11,7 @@ import java.util.List;
 public class Membership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "numbers_of_training_per_week")
     private Integer numberOfTrainingPerWeek;
@@ -27,5 +27,8 @@ public class Membership {
 
     @OneToMany(mappedBy = "membership")
     private List<Member> members;
+
+    @OneToMany(mappedBy = "membership")
+    private List<SignUpMembership> signUpMemberships;
 
 }
