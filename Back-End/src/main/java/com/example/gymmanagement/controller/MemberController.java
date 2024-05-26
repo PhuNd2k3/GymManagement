@@ -1,6 +1,5 @@
 package com.example.gymmanagement.controller;
 
-
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
@@ -18,31 +17,32 @@ import java.util.List;
 public class MemberController {
     @Autowired
     private IMemberService memberService;
+
     @GetMapping(value = "/training/{id}")
-    public List<TrainingHistory> getTrainingHistory(@PathVariable Integer id){
+    public List<TrainingHistory> getTrainingHistory(@PathVariable Integer id) {
         List<TrainingHistory> trainingHistories = memberService.getTrainingHistory(id);
         return trainingHistories;
     }
 
     @GetMapping(value = "/profile/{id}")
-    public MemberDTO getProfile(@PathVariable Integer id){
+    public MemberDTO getProfile(@PathVariable Integer id) {
         MemberDTO member = memberService.getMember(id);
         return member;
     }
 
-    @GetMapping(value = "/login")
-    public boolean isLogin(@RequestBody LoginRequest loginRequest){
+    @PostMapping(value = "/login")
+    public boolean isLogin(@RequestBody LoginRequest loginRequest) {
         return memberService.isLogin(loginRequest);
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<Member> addMember(@RequestBody RegisterRequest request){
+    public ResponseEntity<Member> addMember(@RequestBody RegisterRequest request) {
         Member savedMember = memberService.addMember(request);
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/member/delete/{id}")
-    public ResponseEntity<String> deleteMember(@PathVariable Integer id){
+    public ResponseEntity<String> deleteMember(@PathVariable Integer id) {
         boolean isRemoved = memberService.deleteMember(id);
         if (isRemoved) {
             return new ResponseEntity<>("Member deleted successfully", HttpStatus.OK);
