@@ -1,5 +1,6 @@
 package com.example.gymmanagement.controller;
 
+import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.RegisterMembershipDTO;
 import com.example.gymmanagement.dto.request.UpdateRegisterRequest;
 import com.example.gymmanagement.entity.SignUpMembership;
@@ -31,4 +32,7 @@ public class AdminController {
         SignUpMembership updateMembershipRegister = signUpMembershipService.updateMembershipRegister(request);
         return null;
     }
+
+//    @GetMapping(value = "/member/all")
+//    public List<MemberDTO>
 }

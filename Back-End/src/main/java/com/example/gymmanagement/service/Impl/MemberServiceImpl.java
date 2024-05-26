@@ -52,9 +52,11 @@ public class MemberServiceImpl implements IMemberService {
         Member member = memberRepository.findMemberByPhoneNumber(loginRequest.getPhone());
         if(member == null){
             result.setLogin(false);
+            return result;
         }
         if(!member.getPassword().equals(loginRequest.getPassword())){
             result.setLogin(false);
+            return result;
         }
         result.setLogin(true);
         result.setId(member.getId());
