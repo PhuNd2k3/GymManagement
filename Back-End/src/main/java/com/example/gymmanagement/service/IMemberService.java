@@ -2,6 +2,7 @@ package com.example.gymmanagement.service;
 
 import com.example.gymmanagement.dto.MemberDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
+import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
@@ -22,4 +23,6 @@ public interface IMemberService {
     boolean deleteMember(Integer id);
 
     Member updateMember(MemberRequest request);
+    List<MemberDTO> findAll();
+    Member addMemberOfAdmin(MemberAdminRequest request);
 }

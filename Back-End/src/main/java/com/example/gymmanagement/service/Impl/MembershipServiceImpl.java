@@ -2,12 +2,15 @@ package com.example.gymmanagement.service.Impl;
 
 import com.example.gymmanagement.converter.MembershipConverter;
 import com.example.gymmanagement.dto.MembershipDTO;
+import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.Membership;
+import com.example.gymmanagement.repository.IMemberRepository;
 import com.example.gymmanagement.repository.IMembershipRepository;
 import com.example.gymmanagement.repository.ISignUpMembershipRepository;
 import com.example.gymmanagement.service.IMembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,8 @@ public class MembershipServiceImpl implements IMembershipService {
 
     @Autowired
     private ISignUpMembershipRepository signUpMembershipRepository;
+    @Autowired
+    private IMemberRepository memberRepository;
 
     @Override
     public MembershipDTO getMembershipDetail(Integer id) {
@@ -54,8 +59,15 @@ public class MembershipServiceImpl implements IMembershipService {
     }
 
     @Override
+    @Transactional
     public boolean deleteMembership(Integer id) {
         try {
+            signUpMembershipRepository.deleteAllByMembershipId(id);
+            List<Member> members = memberRepository.findAllByMembershipId(id);
+            for (Member it : members){
+                it.setMembership(null);
+            }
+            memberRepository.saveAll(members);
             membershipRepository.deleteById(id);
             return true;
         } catch (Exception e){

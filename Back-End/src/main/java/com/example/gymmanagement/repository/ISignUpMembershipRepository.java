@@ -9,4 +9,5 @@ public interface ISignUpMembershipRepository extends JpaRepository<SignUpMembers
     List<SignUpMembership> findByStatus(String waiting);
 
     void deleteAllByMemberId(Integer id);
+    void deleteAllByMembershipId(Integer id);
 }
