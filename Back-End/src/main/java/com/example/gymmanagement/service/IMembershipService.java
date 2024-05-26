@@ -10,9 +10,9 @@ public interface IMembershipService {
 
     List<MembershipDTO> findAll();
 
-    Membership addMembership(Membership membership);
+    Membership addMembership(MembershipDTO membershipDTO);
 
-    Membership updateMembership(Membership updateMembership);
+    Membership updateMembership(MembershipDTO membershipDTO);
 
     boolean deleteMembership(Integer id);
 }

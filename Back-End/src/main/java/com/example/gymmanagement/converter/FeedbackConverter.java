@@ -30,7 +30,7 @@ public class FeedbackConverter {
     public FeedbackResponse toFeedbackResponse(Feedback feedback){
         FeedbackResponse result = new FeedbackResponse();
         result.setId(feedback.getId());
-        if(feedback.getReplyContext()==null) {
+        if(feedback.getReplyContent()==null) {
             result.setReply(false);
         }else {
             result.setReply(true);

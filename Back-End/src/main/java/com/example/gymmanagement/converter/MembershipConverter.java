@@ -16,4 +16,9 @@ public class MembershipConverter {
         membershipDTO.setMemberCount(membership.getMembers().size());
         return membershipDTO;
     }
+
+    public Membership toMembership(MembershipDTO membershipDTO){
+        Membership membership = modelMapper.map(membershipDTO,Membership.class);
+        return membership;
+    }
 }

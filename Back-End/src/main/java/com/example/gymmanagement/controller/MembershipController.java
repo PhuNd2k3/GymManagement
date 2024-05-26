@@ -34,9 +34,9 @@ public class MembershipController {
     }
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Membership> create(@RequestBody Membership item) {
+    public ResponseEntity<Membership> create(@RequestBody MembershipDTO item) {
         try {
-            Membership savedItem = membershipRepository.save(item);
+            Membership savedItem = membershipService.addMembership(item);
             return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
@@ -44,18 +44,17 @@ public class MembershipController {
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<Membership> update(@RequestBody Membership item) {
-        Optional<Membership> existingItemOptional = membershipRepository.findById(item.getId());
-        if (existingItemOptional.isPresent()) {
-            Membership updatedMembership = membershipRepository.save(item);
-            return new ResponseEntity<>(updatedMembership, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Membership> update(@RequestBody MembershipDTO item) {
+        try {
+            Membership updatedItem = membershipService.updateMembership(item);
+            return new ResponseEntity<>(updatedItem, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<HttpStatus> delete(@PathVariable("id") Integer id) {
+    public ResponseEntity<HttpStatus> delete(@PathVariable Integer id) {
         try {
             membershipService.deleteMembership(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
