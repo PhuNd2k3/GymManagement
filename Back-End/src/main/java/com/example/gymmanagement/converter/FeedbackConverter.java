@@ -39,6 +39,8 @@ public class FeedbackConverter {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(feedback.getFeedbackTime());
         result.setFeedbackTime(formattedDate);
+        result.setFeedbackType(feedback.getFeedbackType().getName());
+        result.setFeedbackDetail(feedback.getFeedbackDetail());
         return result;
     }
 }

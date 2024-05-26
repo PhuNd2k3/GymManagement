@@ -11,11 +11,23 @@ import org.springframework.stereotype.Component;
 public class MemberConverter {
     @Autowired
     private ModelMapper modelMapper;
-    public MemberDTO toMemberDTO(Member member){
+
+    public MemberDTO toMemberDTO(Member member) {
+        if (member == null) {
+            return null;
+        }
+
         MemberDTO result = modelMapper.map(member, MemberDTO.class);
-        result.setMembership(member.getMembership().getName());
+
+        if (member.getMembership() != null) {
+            result.setMembershipName(member.getMembership().getName());
+        } else {
+            result.setMembershipName(null);
+        }
+
         return result;
     }
+
 
     public Member toMember(RegisterRequest request){
         Member result = modelMapper.map(request,Member.class);

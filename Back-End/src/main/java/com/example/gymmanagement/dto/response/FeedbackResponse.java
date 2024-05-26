@@ -9,4 +9,6 @@ public class FeedbackResponse {
     private Integer id;
     private String feedbackTime;
     private boolean isReply;
+    private String feedbackType;
+    private String feedbackDetail;
 }

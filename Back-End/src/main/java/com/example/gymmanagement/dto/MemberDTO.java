@@ -15,5 +15,5 @@ public class MemberDTO {
     private String gender;
     private Date dob;
     private Date membershipPeriod;
-    private String membership;
+    private String membershipName;
 }
