@@ -19,14 +19,15 @@ import java.util.List;
 public class AdminController {
     @Autowired
     private ISignUpMembershipService signUpMembershipService;
+
     @GetMapping(value = "/membership/register_list")
-    public List<RegisterMembershipDTO> getAllRegisterMember(){
+    public List<RegisterMembershipDTO> getAllRegisterMember() {
         List<RegisterMembershipDTO> result = signUpMembershipService.getAll();
         return result;
     }
 
     @PutMapping(value = "/membership/update_register")
-    public ResponseEntity<SignUpMembership> updateRegister(@RequestBody UpdateRegisterRequest request){
+    public ResponseEntity<SignUpMembership> updateRegister(@RequestBody UpdateRegisterRequest request) {
         SignUpMembership updateMembershipRegister = signUpMembershipService.updateMembershipRegister(request);
         return null;
     }

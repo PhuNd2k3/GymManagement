@@ -24,7 +24,7 @@ public class MembershipServiceImpl implements IMembershipService {
     private ISignUpMembershipRepository signUpMembershipRepository;
 
     @Override
-    public MembershipDTO getMembershipDetail(Long id) {
+    public MembershipDTO getMembershipDetail(Integer id) {
         Membership membership = membershipRepository.findById(id).get();
         int count = membership.getMembers().size();
         System.out.println(count);

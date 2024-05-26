@@ -6,7 +6,7 @@ import com.example.gymmanagement.entity.Membership;
 import java.util.List;
 
 public interface IMembershipService {
-    MembershipDTO getMembershipDetail(Long id);
+    MembershipDTO getMembershipDetail(Integer id);
 
     List<MembershipDTO> findAll();
 

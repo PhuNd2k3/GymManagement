@@ -18,7 +18,7 @@ public class MembershipController {
     private IMembershipService membershipService;
 
     @GetMapping(value = "/{id}")
-    public void getMembership(@PathVariable Long id) {
+    public void getMembership(@PathVariable Integer id) {
         membershipService.getMembershipDetail(id);
     }
 
@@ -41,7 +41,7 @@ public class MembershipController {
     }
 
     @DeleteMapping(value = "/membership/delete/{id}")
-    public ResponseEntity<String> deleteMembership(@PathVariable Integer id){
+    public ResponseEntity<String> deleteMembership(@PathVariable Integer id) {
         boolean isRemoved = membershipService.deleteMembership(id);
         if (isRemoved) {
             return new ResponseEntity<>("Membership deleted successfully", HttpStatus.OK);
