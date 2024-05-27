@@ -43,7 +43,7 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
         Date startOfWeek = calendar.getTime();
         List<TrainingHistory> trainingHistories1 = trainingHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,
                 resetTime(startOfWeek), today);
-        if (trainingHistories1.size() >= member.getMembership().getPeriod()) {
+        if (trainingHistories1.size() >= member.getMembership().getNumbersOfTrainingPerWeek()) {
             throw new IllegalArgumentException(
                     "Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");
         }
