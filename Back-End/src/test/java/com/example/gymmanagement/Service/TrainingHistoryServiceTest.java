@@ -134,5 +134,4 @@ public class TrainingHistoryServiceTest {
                         Date.from(startOfWeek.atStartOfDay(ZoneId.systemDefault()).toInstant()),
                         new Date());
     }
-
 }
