@@ -59,7 +59,7 @@ public class AdminController {
             trainingHistoryService.addTraining(id);
             return new ResponseEntity<>("Điểm danh thành công!", HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
     }
     @GetMapping(value = "/member/all")

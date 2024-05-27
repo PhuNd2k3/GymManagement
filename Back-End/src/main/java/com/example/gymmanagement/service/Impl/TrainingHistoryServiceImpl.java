@@ -18,14 +18,17 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
     @Autowired
     private IMemberRepository memberRepository;
     @Autowired
-    private ITrainingHistoryRepository traningHistoryRepository;
+    private ITrainingHistoryRepository trainingHistoryRepository;
     @Override
     public void addTraining(Integer id) {
         Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thành viên với id: " + id));
-        Date today = new Date();
-        TrainingHistory trainingHistoryToday = traningHistoryRepository.findByMemberIdAndAndTrainingTime(id,today);
-        if(trainingHistoryToday!=null){
-            throw new IllegalArgumentException("Thành viên " + member.getFullName() + " hôm nay đã điểm danh rồi!");
+        Date today = resetTime(new Date());
+        List<TrainingHistory> trainingHistories = member.getTrainingHistories();
+        for(TrainingHistory it : trainingHistories){
+            System.out.println(resetTime(it.getTrainingTime()));
+            if(resetTime(it.getTrainingTime()).equals(resetTime(today))){
+                throw new IllegalArgumentException("Thành viên " + it.getMember().getFullName() + " hôm nay đã điểm danh rồi!");
+            }
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
@@ -35,13 +38,23 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
 
         // Lấy ngày đầu tiên của tuần
         Date startOfWeek = calendar.getTime();
-        List<TrainingHistory> trainingHistories = traningHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,startOfWeek,today);
-        if(trainingHistories.size() >= member.getMembership().getPeriod()){
+        List<TrainingHistory> trainingHistories1 = trainingHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,resetTime(startOfWeek),today);
+        if(trainingHistories1.size() >= member.getMembership().getPeriod()){
             throw new IllegalArgumentException("Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");
         }
         TrainingHistory trainingHistory = new TrainingHistory();
         trainingHistory.setMember(member);
-        trainingHistory.setTrainingTime(new Date());
-        traningHistoryRepository.save(trainingHistory);
+        trainingHistory.setTrainingTime(today);
+        trainingHistoryRepository.save(trainingHistory);
+    }
+
+    private Date resetTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface ITrainingHistoryRepository extends JpaRepository<TrainingHistory,Integer> {
     void deleteAllByMemberId(Integer id);
 
-    TrainingHistory findByMemberIdAndAndTrainingTime(Integer id, Date time);
+    List<TrainingHistory> findByMemberId(Integer id);
 
-    List<TrainingHistory> findByMemberIdAndTrainingTimeBetween(Integer id,Date start,Date today);
+    List<TrainingHistory> findByMemberIdAndTrainingTimeBetween(Integer id,Date start,Date end);
 }
