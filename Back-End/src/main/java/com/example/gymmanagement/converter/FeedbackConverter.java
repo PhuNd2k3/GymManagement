@@ -35,6 +35,7 @@ public class FeedbackConverter {
             result.setReply(false);
         } else {
             result.setReply(true);
+            result.setReplyContent(feedback.getReplyContent());
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         String formattedDate = formatter.format(feedback.getFeedbackTime());

@@ -11,4 +11,5 @@ public class FeedbackResponse {
     private boolean isReply;
     private String feedbackType;
     private String feedbackDetail;
+    private String replyContent;
 }

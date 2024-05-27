@@ -44,7 +44,7 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
         }
         TrainingHistory trainingHistory = new TrainingHistory();
         trainingHistory.setMember(member);
-        trainingHistory.setTrainingTime(today);
+        trainingHistory.setTrainingTime(new Date());
         trainingHistoryRepository.save(trainingHistory);
     }
 
