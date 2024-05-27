@@ -1,8 +1,11 @@
 package com.example.gymmanagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class Membership {
     private Integer period;
 
     @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonBackReference
     private List<Member> members;
 
     @OneToMany(mappedBy = "membership",fetch = FetchType.LAZY)
