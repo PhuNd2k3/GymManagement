@@ -15,6 +15,10 @@
 }
 
 .package-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 260px;
     text-align: center;
     margin-bottom: 20px;
     font-size: 2rem;

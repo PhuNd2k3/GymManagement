@@ -45,6 +45,7 @@ const AdminPackages = () => {
             name: formData.membershipName,
             price: formData.membershipPrice,
             period: formData.membershipPeriod,
+            memberCount: 0 // Set memberCount to 0
         };
 
         try {
