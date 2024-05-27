@@ -50,6 +50,7 @@ const AdminPackage = ({
             setPrice(formData.membershipPrice);
             setNumbersOfTrainingPerWeek(formData.trainingFrequency);
             setMembershipPeriod(formData.membershipPeriod);
+            memberCount = 0;
 
             console.log("Package updated successfully:", response.data);
             setIsModalOpen(false);
