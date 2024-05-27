@@ -1,0 +1,74 @@
+.admin-packages {
+    .container {
+        padding: 0 100px;
+    }
+    .form {
+        margin-bottom: 0 !important;
+    }
+}
+.packages-add-btn {
+    margin-left: auto;
+    margin-bottom: 20px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 1px solid #c21b1b;
+    color: #c21b1b;
+    background-color: #fff;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.5714285714;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    &:hover {
+        color: #fff;
+        background-color: #c21b1b;
+    }
+}
+
+.add-membership-modal {
+    .form {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        &-left,
+        &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-left {
+            width: 100%;
+            label {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #737373;
+            }
+        }
+
+        &-right {
+            width: 30%;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            img {
+                width: 200px;
+                height: 300px;
+                border-radius: 10px;
+                object-fit: cover;
+                margin-bottom: 10px;
+            }
+
+            input[type="file"] {
+                display: block;
+            }
+        }
+    }
+}

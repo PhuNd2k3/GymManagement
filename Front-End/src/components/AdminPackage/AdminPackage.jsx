@@ -11,7 +11,6 @@ const AdminPackage = ({
     period,
     onRemove
 }) => {
-    const [deleteSuccess, setDeleteSuccess] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         membershipName: initialName,
@@ -28,7 +27,6 @@ const AdminPackage = ({
     const handleDelete = async () => {
         try {
             await axios.delete(`http://localhost:8080/api/membership/delete/${id}`);
-            setDeleteSuccess(true);
             onRemove(id);
         } catch (error) {
             console.error("Error deleting package:", error);
@@ -156,9 +154,6 @@ const AdminPackage = ({
                     </form>
                 </Modal>
             </div>
-            {deleteSuccess && (
-                <div className="notification">Đã xóa thành công gói {name}</div>
-            )}
         </div>
     );
 };

@@ -18,17 +18,28 @@
         padding: 10px 20px;
         border-radius: 6px;
         border: 1px solid #c21b1b;
-        color: #c21b1b;
-        background-color: #fff;
         font-size: 1.6rem;
         font-weight: 600;
         line-height: 1.5714285714;
         transition: color 0.3s ease, background-color 0.3s ease;
-        &:hover {
+        &-reject {
+            color: #c21b1b;
+            background-color: #fff;
+            &:hover {
+                color: #fff;
+                background-color: #c21b1b;
+            }
+        }
+        &-accept {
             color: #fff;
             background-color: #c21b1b;
+            &:hover {
+                color: #c21b1b;
+                background-color: #fff;
+            }
         }
     }
+
     .group {
         display: flex;
         line-height: 28px;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "antd";
 
 const FeedbackItem = ({ feedback }) => {
-    const { time, type, question } = feedback;
+    const { feedbackTime, feedbackType, feedbackDetail, reply } = feedback;
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
@@ -18,38 +18,38 @@ const FeedbackItem = ({ feedback }) => {
     };
 
     return (
-        <div className="feedback-item">
+        <div className={`feedback-item ${reply ? "replied" : ""}`}>
             <div className="feedback-info">
-                <p className="feedback-time">{time}</p>
-                <p className="feedback-type">{type}</p>
-                <p className="feedback-question">{question}</p>
+                <p className="feedback-time">{feedbackTime}</p>
+                <p className="feedback-type">{feedbackType}</p>
+                <p className="feedback-question">{feedbackDetail}</p>
             </div>
             <div className="feedback-act">
-                <button onClick={showModal}>Xem trả lời</button>
+                {reply && <button onClick={showModal}>Xem trả lời</button>}
                 <Modal
                     title="THÔNG TIN PHẢN HỒI"
                     open={isModalOpen}
                     onOk={handleOk}
-                    onCancel={handleCancel}  // Add this line
+                    onCancel={handleCancel}
                     footer={[
                         <button key="submit" onClick={handleOk} className="feedback-modal-btn">
                             Thoát
                         </button>,
                     ]}
                     className="feedback-modal"
-                    width={600}  // Đặt kích thước của modal
+                    width={600}
                 >
                     <div className="feedback-modal-row">
                         <p>Thời gian gửi</p>
-                        <span>{time}</span>
+                        <span>{feedbackTime}</span>
                     </div>
                     <div className="feedback-modal-row">
                         <p>Loại phản hồi</p>
-                        <span>{type}</span>
+                        <span>{feedbackType}</span>
                     </div>
                     <div className="feedback-modal-row">
                         <p>Phản hồi</p>
-                        <span>{question}</span>
+                        <span>{feedbackDetail}</span>
                     </div>
                     <div className="feedback-modal-row feedback-modal-answer">
                         <p>Trả lời</p>

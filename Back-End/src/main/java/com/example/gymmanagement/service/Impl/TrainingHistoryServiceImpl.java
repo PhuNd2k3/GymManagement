@@ -14,20 +14,23 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
+public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
     @Autowired
     private IMemberRepository memberRepository;
     @Autowired
     private ITrainingHistoryRepository trainingHistoryRepository;
+
     @Override
     public void addTraining(Integer id) {
-        Member member = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thành viên với id: " + id));
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thành viên với id: " + id));
         Date today = resetTime(new Date());
         List<TrainingHistory> trainingHistories = member.getTrainingHistories();
-        for(TrainingHistory it : trainingHistories){
+        for (TrainingHistory it : trainingHistories) {
             System.out.println(resetTime(it.getTrainingTime()));
-            if(resetTime(it.getTrainingTime()).equals(resetTime(today))){
-                throw new IllegalArgumentException("Thành viên " + it.getMember().getFullName() + " hôm nay đã điểm danh rồi!");
+            if (resetTime(it.getTrainingTime()).equals(resetTime(today))) {
+                throw new IllegalStateException(
+                        "Thành viên " + it.getMember().getFullName() + " hôm nay đã điểm danh rồi!");
             }
         }
         Calendar calendar = Calendar.getInstance();
@@ -38,9 +41,11 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService{
 
         // Lấy ngày đầu tiên của tuần
         Date startOfWeek = calendar.getTime();
-        List<TrainingHistory> trainingHistories1 = trainingHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,resetTime(startOfWeek),today);
-        if(trainingHistories1.size() >= member.getMembership().getPeriod()){
-            throw new IllegalArgumentException("Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");
+        List<TrainingHistory> trainingHistories1 = trainingHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,
+                resetTime(startOfWeek), today);
+        if (trainingHistories1.size() >= member.getMembership().getPeriod()) {
+            throw new IllegalArgumentException(
+                    "Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");
         }
         TrainingHistory trainingHistory = new TrainingHistory();
         trainingHistory.setMember(member);
