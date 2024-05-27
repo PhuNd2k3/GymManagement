@@ -187,25 +187,36 @@
 }
 
 .package-act {
-    // width: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 20px;
 
     button {
+        width: 45%;
         cursor: pointer;
         padding: 10px 20px;
         border-radius: 6px;
         border: 1px solid #c21b1b;
-        color: #c21b1b;
-        background-color: #fff;
         font-size: 1.6rem;
         font-weight: 600;
         line-height: 1.5714285714;
         transition: color 0.3s ease, background-color 0.3s ease;
+    }
+    .package-act-remove {
+        color: #c21b1b;
+        background-color: #fff;
         &:hover {
             color: #fff;
             background-color: #c21b1b;
+        }
+    }
+    .package-act-update {
+        color: #fff;
+        background-color: #c21b1b;
+        &:hover {
+            color: #c21b1b;
+            background-color: #fff;
         }
     }
 }

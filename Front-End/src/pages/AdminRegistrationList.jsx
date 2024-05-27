@@ -111,11 +111,11 @@ const AdminRegistrationList = () => {
                                         </p>
                                     </div>
                                     <div className="registration-list-act">
-                                        <button className="registration-list-btn">
-                                            Duyệt
-                                        </button>
-                                        <button className="registration-list-btn">
+                                        <button className="registration-list-btn registration-list-btn-reject">
                                             Từ chối
+                                        </button>
+                                        <button className="registration-list-btn registration-list-btn-accept">
+                                            Duyệt
                                         </button>
                                     </div>
                                 </div>
