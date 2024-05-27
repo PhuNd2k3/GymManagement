@@ -41,7 +41,7 @@ const AdminPackages = () => {
 
     const handleOk = async () => {
         const newPackage = {
-            numberOfTrainingPerWeek: formData.trainingFrequency,
+            numbersOfTrainingPerWeek: formData.trainingFrequency,
             name: formData.membershipName,
             price: formData.membershipPrice,
             period: formData.membershipPeriod,
