@@ -1,80 +1,50 @@
 import React, { useState, useEffect } from "react";
 import FeedbackItem from "../components/FeedbackItem/FeedbackItem";
-import { Select, message } from 'antd'; // Importing Select and message from antd
+import { Select, message } from 'antd';
+import { useParams } from "react-router-dom"; // Import useParams
 import axios from 'axios';
 
-const { Option } = Select; // Destructuring Option from Select
+const { Option } = Select;
 
 const Feedback = () => {
-    // Dữ liệu feedback giả
-    const fakeFeedbackData = [
-        {
-            id: 1,
-            time: "8:00 Thứ 2, ngày 23 tháng 7",
-            type: "Other",
-            question: "Tại sao chất lượng dịch vụ thấp thế?",
-        },
-        {
-            id: 2,
-            time: "10:30 Thứ 3, ngày 24 tháng 7",
-            type: "Staff",
-            question: "Nhân viên không thân thiện",
-        },
-        {
-            id: 3,
-            time: "10:30 Thứ 3, ngày 24 tháng 7",
-            type: "Staff",
-            question: "Nhân viên không thân thiện",
-        },
-        {
-            id: 4,
-            time: "10:30 Thứ 3, ngày 24 tháng 7",
-            type: "Staff",
-            question: "Nhân viên không thân thiện",
-        },
-        {
-            id: 5,
-            time: "10:30 Thứ 3, ngày 24 tháng 7",
-            type: "Staff",
-            question:
-                "muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda muda ",
-        },
-        // Thêm các phản hồi giả khác ở đây nếu cần
-    ];
-
-    // State để lưu trữ nội dung phản hồi mới
+    const { id } = useParams(); // Get ID from URL
+    const [feedbackTypes, setFeedbackTypes] = useState([]);
     const [newFeedback, setNewFeedback] = useState("");
-    const [feedbackType, setFeedbackType] = useState(""); // State to store selected feedback type
-    const [feedbackTypes, setFeedbackTypes] = useState([]); // State to store feedback types
+    const [feedbackType, setFeedbackType] = useState("");
+    const [userFeedback, setUserFeedback] = useState([]);
 
     useEffect(() => {
-        // Fetch feedback types from API
         const fetchFeedbackTypes = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/feedback_type');
                 setFeedbackTypes(response.data);
-                console.log(response.data);
             } catch (error) {
                 console.error("Error fetching feedback types:", error);
             }
         };
 
-        fetchFeedbackTypes();
-    }, []);
+        const fetchUserFeedback = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/api/feedback/view/${id}`); // Use ID from URL
+                setUserFeedback(response.data);
+            } catch (error) {
+                console.error("Error fetching user feedback:", error);
+            }
+        };
 
-    // Hàm xử lý khi người dùng thay đổi nội dung phản hồi mới
+        fetchFeedbackTypes();
+        fetchUserFeedback();
+    }, [id]); // Dependency array includes id to refetch data when id changes
+
     const handleInputChange = (event) => {
         setNewFeedback(event.target.value);
     };
 
-    // Hàm xử lý khi người dùng thay đổi loại phản hồi
     const handleTypeChange = (value) => {
         setFeedbackType(value);
     };
 
-    // Hàm xử lý khi người dùng gửi phản hồi mới
     const handleSubmit = async () => {
-        // Xử lý logic khi người dùng gửi phản hồi
         const selectedType = feedbackTypes.find(type => type.name === feedbackType);
         if (!selectedType) {
             message.error("Vui lòng chọn loại phản hồi hợp lệ.");
@@ -83,7 +53,7 @@ const Feedback = () => {
 
         const newFeedbackData = {
             feedbackTypeId: selectedType.id,
-            memberId: 1, // Bạn cần thay thế giá trị này bằng ID thành viên thực tế của người dùng
+            memberId: id, // Use ID from URL
             feedbackDetail: newFeedback
         };
 
@@ -91,9 +61,11 @@ const Feedback = () => {
             const response = await axios.post('http://localhost:8080/api/feedback/send', newFeedbackData);
             if (response.status === 200) {
                 message.success("Gửi phản hồi thành công!");
-                // Reset form
                 setNewFeedback("");
                 setFeedbackType("");
+                // Optionally refetch feedback data to show the new feedback
+                const response = await axios.get(`http://localhost:8080/api/feedback/view/${id}`);
+                setUserFeedback(response.data);
             } else {
                 message.error("Không gửi được phản hồi, vui lòng thử lại.");
             }
@@ -110,7 +82,7 @@ const Feedback = () => {
                 <div className="feedback-container">
                     <div className="feedback-left">
                         <div className="feedback-list">
-                            {fakeFeedbackData.map((feedback) => (
+                            {userFeedback.map((feedback) => (
                                 <FeedbackItem
                                     key={feedback.id}
                                     feedback={feedback}
