@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Modal, Input, InputNumber } from "antd";
 import AdminPackage from "../components/AdminPackage/AdminPackage";
 
 const AdminPackages = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [packagesData, setPackagesData] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        membershipName: "",
+        membershipPrice: null,
+        trainingFrequency: null,
+        membershipPeriod: null
+    });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +41,15 @@ const AdminPackages = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    };
+
+    const handleOk = () => {
+        // Add new package logic here (e.g., POST request to server)
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
     };
 
     return (
@@ -77,6 +94,81 @@ const AdminPackages = () => {
                         </button>
                     </label>
                 </form>
+                <div style={{display:"flex" }}>
+                    <button
+                        className="packages-add-btn"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        Thêm gói tập mới
+                    </button>
+                    <Modal
+                        title="THÔNG TIN GÓI TẬP"
+                        visible={isModalOpen}
+                        onOk={handleOk}
+                        onCancel={handleCancel}
+                        okText="THÊM"
+                        cancelText="HỦY"
+                        className="add-membership-modal"
+                        width={700}
+                    >
+                        <form className="form">
+                            <div className="form-left">
+                                <div className="form-group">
+                                    <label htmlFor="membershipName">Tên gói tập:</label>
+                                    <Input
+                                        id="membershipName"
+                                        value={formData.membershipName}
+                                        onChange={(e) =>
+                                            setFormData({
+                                                ...formData,
+                                                membershipName: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="membershipPrice">Giá</label>
+                                    <InputNumber
+                                        id="membershipPrice"
+                                        value={formData.membershipPrice}
+                                        onChange={(value) =>
+                                            setFormData({
+                                                ...formData,
+                                                membershipPrice: value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="trainingFrequency">Tần suất tập:</label>
+                                    <InputNumber
+                                        id="trainingFrequency"
+                                        value={formData.trainingFrequency}
+                                        onChange={(value) =>
+                                            setFormData({
+                                                ...formData,
+                                                trainingFrequency: value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="membershipPeriod">Thời hạn:</label>
+                                    <InputNumber
+                                        id="membershipPeriod"
+                                        value={formData.membershipPeriod}
+                                        onChange={(value) =>
+                                            setFormData({
+                                                ...formData,
+                                                membershipPeriod: value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </form>
+                    </Modal>
+                </div>
                 <div className="packages-list">
                     {filteredPackages.map((packageData) => (
                         <AdminPackage
