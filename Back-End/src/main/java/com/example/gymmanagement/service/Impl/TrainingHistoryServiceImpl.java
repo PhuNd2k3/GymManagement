@@ -23,7 +23,7 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
     @Override
     public void addTraining(Integer id) {
         Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy thành viên với id: " + id));
+                .orElseThrow(() -> new NullPointerException("Không tìm thấy thành viên với id: " + id));
         Date today = resetTime(new Date());
         List<TrainingHistory> trainingHistories = member.getTrainingHistories();
         for (TrainingHistory it : trainingHistories) {
@@ -42,7 +42,7 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
         // Lấy ngày đầu tiên của tuần
         Date startOfWeek = calendar.getTime();
         List<TrainingHistory> trainingHistories1 = trainingHistoryRepository.findByMemberIdAndTrainingTimeBetween(id,
-                resetTime(startOfWeek), today);
+                resetTime(startOfWeek), new Date());
         if (trainingHistories1.size() >= member.getMembership().getNumbersOfTrainingPerWeek()) {
             throw new IllegalArgumentException(
                     "Thành viên " + member.getFullName() + " đã tập quá số buổi của khóa học rồi!");

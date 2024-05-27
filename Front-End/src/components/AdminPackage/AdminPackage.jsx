@@ -7,7 +7,7 @@ const AdminPackage = ({
     name: initialName,
     price: initialPrice,
     numbersOfTrainingPerWeek: initialTrainingFrequency,
-    memberCount,
+    memberCount: initialMemberCount,
     period,
     onRemove
 }) => {
@@ -17,12 +17,14 @@ const AdminPackage = ({
         membershipPrice: initialPrice,
         membershipPeriod: period,
         trainingFrequency: initialTrainingFrequency,
+        memberCount: initialMemberCount || 0 // Initialize memberCount if it's undefined
     });
 
     const [name, setName] = useState(initialName);
     const [price, setPrice] = useState(initialPrice);
     const [numbersOfTrainingPerWeek, setNumbersOfTrainingPerWeek] = useState(initialTrainingFrequency);
     const [membershipPeriod, setMembershipPeriod] = useState(period);
+    const [memberCount, setMemberCount] = useState(initialMemberCount || 0);
 
     const handleDelete = async () => {
         try {
@@ -50,6 +52,7 @@ const AdminPackage = ({
             setPrice(formData.membershipPrice);
             setNumbersOfTrainingPerWeek(formData.trainingFrequency);
             setMembershipPeriod(formData.membershipPeriod);
+            setMemberCount(formData.memberCount);
 
             console.log("Package updated successfully:", response.data);
             setIsModalOpen(false);
