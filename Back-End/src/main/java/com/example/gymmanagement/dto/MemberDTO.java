@@ -16,4 +16,5 @@ public class MemberDTO {
     private Date dob;
     private Date membershipPeriod;
     private String membershipName;
+    private boolean isTrainingToday;
 }
