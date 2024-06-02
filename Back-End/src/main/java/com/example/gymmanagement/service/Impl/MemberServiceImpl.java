@@ -113,6 +113,7 @@ public class MemberServiceImpl implements IMemberService {
         member.setPhoneNumber(request.getPhoneNumber());
         member.setGender(request.getGender());
         member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
+        member.setPassword("123456");
         return memberRepository.save(member);
     }
 
