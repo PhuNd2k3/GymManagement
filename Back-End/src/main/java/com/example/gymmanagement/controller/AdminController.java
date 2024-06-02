@@ -45,45 +45,46 @@ public class AdminController {
     @PutMapping(value = "/membership/update_register")
     public ResponseEntity<SignUpMembership> updateRegister(@RequestBody UpdateRegisterRequest request) {
         SignUpMembership updateMembershipRegister = signUpMembershipService.updateMembershipRegister(request);
-        return new ResponseEntity<>(updateMembershipRegister,HttpStatus.OK);
+        return new ResponseEntity<>(updateMembershipRegister, HttpStatus.OK);
     }
-    
+
     @PostMapping(value = "/admin/login")
     public LoginResponse isLogin(@RequestBody LoginRequest loginRequest) {
         return adminService.isLogin(loginRequest);
     }
 
     @PutMapping(value = "/training/add/{id}")
-    public ResponseEntity<String> trainingAdd(@PathVariable Integer id){
-        try{
+    public ResponseEntity<String> trainingAdd(@PathVariable Integer id) {
+        try {
             trainingHistoryService.addTraining(id);
             return new ResponseEntity<>("Điểm danh thành công!", HttpStatus.OK);
-        } catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         }
     }
+
     @GetMapping(value = "/member/all")
-    public List<MemberDTO> getAllMember(){
+    public List<MemberDTO> getAllMember() {
         return memberService.findAll();
     }
 
     @PostMapping(value = "/member/add")
-    public ResponseEntity<String> addMember(@RequestBody MemberAdminRequest request){
+    public ResponseEntity<String> addMember(@RequestBody MemberAdminRequest request) {
         Member saved = memberService.addMemberOfAdmin(request);
-        if(saved!=null){
+        if (saved != null) {
             return new ResponseEntity<>("Thêm thành công member!", HttpStatus.CREATED);
-        }else {
-            return new ResponseEntity<>("Lỗi thêm",HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Lỗi thêm", HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping(value = "/member/update")
-    public ResponseEntity<String> updateMember(@RequestBody MemberAdminRequest request){
+    public ResponseEntity<String> updateMember(@RequestBody MemberAdminRequest request) {
         Member updated = memberService.updateMemberOfAdmin(request);
-        if(updated!=null){
+        if (updated != null) {
             return new ResponseEntity<>("Sửa thành công member!", HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>("Lỗi!",HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>("Lỗi!", HttpStatus.BAD_REQUEST);
         }
     }
 

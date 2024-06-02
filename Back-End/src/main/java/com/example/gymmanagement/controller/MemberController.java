@@ -37,15 +37,13 @@ public class MemberController {
         return memberService.isLogin(loginRequest);
     }
 
-
     @PostMapping(value = "/register")
     public ResponseEntity<Member> addMember(@RequestBody RegisterRequest request) {
         Member savedMember = memberService.addMember(request);
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
     }
 
-
-    @PostMapping(value = "/profile/update")
+    @PutMapping(value = "/profile/update")
     public ResponseEntity<String> addMember(@RequestBody MemberRequest request) {
         Member updatedMember = memberService.updateMember(request);
         return new ResponseEntity<>("Update profile successful!", HttpStatus.CREATED);
