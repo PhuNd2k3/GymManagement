@@ -119,13 +119,13 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public Member updateMemberOfAdmin(MemberAdminRequest request) {
-        Member member = new Member();
-        member.setId(request.getId());
+        Member member = memberRepository.findById(request.getId()).get();
         member.setFullName(request.getFullName());
         member.setEmail(request.getEmail());
         member.setDob(request.getDob());
         member.setPhoneNumber(request.getPhoneNumber());
         member.setGender(request.getGender());
+        member.setPassword("123456");
         member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
         return memberRepository.save(member);
     }
