@@ -22,6 +22,11 @@ const HeaderAdmin = ({ userId }) => {
                 </NavLink>
               </li>
               <li>
+                <NavLink to={`/admin/members/${userId}`} activeClassName="active">
+                  NGƯỜI DÙNG
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to={`/admin/gym-equipment/${userId}`} activeClassName="active">
                   THIẾT BỊ TẬP
                 </NavLink>

@@ -22,6 +22,30 @@ const AdminRegistrationList = () => {
         setSearchTerm(event.target.value);
     };
 
+    const updateMembershipStatus = (member, status) => {
+        const data = {
+            id: member.id,
+            memberId: member.memberId,
+            membershipId: member.registerMembershipId,
+            status: status,
+            paymentMethod: member.paymentMethod,
+        };
+
+        axios
+            .put("http://localhost:8080/api/membership/update_register", data)
+            .then((response) => {
+                console.log("Update successful:", response.data);
+                // Optionally update the local state to reflect the change immediately
+                setMembers((prevMembers) =>
+                    prevMembers.filter((m) => m.id !== member.id)
+                );
+            })
+            .catch((error) => {
+                console.error("Error updating membership status:", error);
+                console.log(data)
+            });
+    };
+
     return (
         <div className="registration-list background">
             <div className="container">
@@ -111,10 +135,26 @@ const AdminRegistrationList = () => {
                                         </p>
                                     </div>
                                     <div className="registration-list-act">
-                                        <button className="registration-list-btn registration-list-btn-reject">
+                                        <button
+                                            className="registration-list-btn registration-list-btn-reject"
+                                            onClick={() =>
+                                                updateMembershipStatus(
+                                                    member,
+                                                    "Reject"
+                                                )
+                                            }
+                                        >
                                             Từ chối
                                         </button>
-                                        <button className="registration-list-btn registration-list-btn-accept">
+                                        <button
+                                            className="registration-list-btn registration-list-btn-accept"
+                                            onClick={() =>
+                                                updateMembershipStatus(
+                                                    member,
+                                                    "Accepted"
+                                                )
+                                            }
+                                        >
                                             Duyệt
                                         </button>
                                     </div>

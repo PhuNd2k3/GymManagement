@@ -15,6 +15,7 @@ import AdminGymEquipment from './pages/AdminGymEquipment';
 import AdminRegistrationList from './pages/AdminRegistrationList';
 import AdminPackages from './pages/AdminPackages';
 import AdminFeedback from './pages/AdminFeedback';
+import AdminMembers from "./pages/AdminMembers";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -73,6 +74,7 @@ const App = () => {
           isLoggedIn && userRole === "quantrivien" ? (
             <>
               <Route path="/admin/attendance/:id" element={<AdminAttendance />} />
+              <Route path="/admin/members/:id" element={<AdminMembers />} />
               <Route path="/admin/gym-equipment/:id" element={<AdminGymEquipment />} />
               <Route path="/admin/registration-list/:id" element={<AdminRegistrationList />} />
               <Route path="/admin/packages/:id" element={<AdminPackages />} />
