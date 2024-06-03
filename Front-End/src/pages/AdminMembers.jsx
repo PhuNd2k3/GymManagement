@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Input, DatePicker, Select, Button } from "antd"; // Assuming Ant Design components are used
+import { Modal, Input, DatePicker, Select, Button } from "antd";
 import moment from "moment";
 import all_imgs from "../assets/img/all_imgs";
 
@@ -9,7 +9,7 @@ const AdminMembers = () => {
     const [memberships, setMemberships] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalType, setModalType] = useState(""); // "edit" or "add"
+    const [modalType, setModalType] = useState("");
     const [selectedMember, setSelectedMember] = useState(null);
     const [newMember, setNewMember] = useState({
         fullName: "",
@@ -17,7 +17,7 @@ const AdminMembers = () => {
         sex: "",
         phoneNumber: "",
         membershipName: "",
-        email: "", // Add email to newMember state
+        email: "",
     });
 
     useEffect(() => {
@@ -32,7 +32,7 @@ const AdminMembers = () => {
                     phoneNumber: member.phoneNumber,
                     img: all_imgs.gym_equipment,
                     membershipName: member.membershipName,
-                    email: member.email, // Include email in the member object
+                    email: member.email,
                 }));
                 setMembers(membersFromAPI);
             })
@@ -66,7 +66,7 @@ const AdminMembers = () => {
             sex: member.sex,
             phoneNumber: member.phoneNumber,
             membershipName: member.membershipName,
-            email: member.email, // Set email for editing
+            email: member.email,
         });
         setModalType("edit");
         setIsModalOpen(true);
@@ -111,7 +111,7 @@ const AdminMembers = () => {
             const memberData = {
                 id: selectedMember.id,
                 fullName: newMember.fullName,
-                email: newMember.email, // Use newMember.email for update
+                email: newMember.email,
                 gender: newMember.sex,
                 dob: formattedDob,
                 phoneNumber: newMember.phoneNumber,
@@ -192,7 +192,7 @@ const AdminMembers = () => {
                                         tuổi
                                     </p>
                                     <p className="admin-member-phone">{member.phoneNumber}</p>
-                                    <p className="admin-member-email">{member.email}</p> {/* Display email */}
+                                    {/* <p className="admin-member-email">{member.email}</p> */}
                                 </div>
                             </div>
                             <div className="admin-member-act">
@@ -273,7 +273,7 @@ const AdminMembers = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="memberEmail">Email:</label> {/* Add email input field */}
+                            <label htmlFor="memberEmail">Email:</label>
                             <Input
                                 id="memberEmail"
                                 value={newMember.email}
