@@ -2,6 +2,7 @@ package com.example.gymmanagement.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Feedback {
     private Date feedbackTime;
 
     @Column(name = "feedback_detail")
+    @NotBlank(message = "Feedback not blank")
     private String feedbackDetail;
 
     @Column(name = "reply_content")

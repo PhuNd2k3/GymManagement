@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Radio, Select, Input, DatePicker } from "antd";
+import { Modal, Radio, Select, Input, DatePicker, notification } from "antd";
+import axios from 'axios';
 
 const { Option } = Select;
 
 const Package = ({
+    id, // Add id as a prop to identify the package
     name,
     price,
     numbersOfTrainingPerWeek,
@@ -13,7 +15,7 @@ const Package = ({
 }) => {
     const navigate = useNavigate();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [paymentMethod, setPaymentMethod] = useState("bankCard"); // Default payment method
+    const [paymentMethod, setPaymentMethod] = useState("Card"); // Default payment method
     const [selectedBank, setSelectedBank] = useState("");
     const [accountNumber, setAccountNumber] = useState("");
     const [cvv, setCvv] = useState("");
@@ -28,21 +30,35 @@ const Package = ({
         }
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         if (paymentMethod === "bankCard") {
             if (!selectedBank || !accountNumber || !cvv || !expiryDate) {
                 alert("Vui lòng điền đầy đủ thông tin thanh toán.");
                 return;
             }
-            console.log("Thanh toán bằng thẻ ngân hàng");
-            console.log("Ngân hàng: ", selectedBank);
-            console.log("Số tài khoản: ", accountNumber);
-            console.log("CVV: ", cvv);
-            console.log("Ngày hết hạn: ", expiryDate.format("MM/YYYY"));
-        } else if (paymentMethod === "cashOnDelivery") {
-            console.log("Thanh toán tại nhà");
         }
-        setIsModalOpen(false);
+
+        const data = {
+            memberId: 1, // Replace with actual memberId
+            membershipId: id, // Use the id of the package
+            paymentMethod: paymentMethod === "bankCard" ? "Direct" : "CashOnDelivery",
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8080/api/membership/register', data);
+            console.log("Response: ", response.data);
+            setIsModalOpen(false);
+            notification.success({
+                message: 'Thanh toán thành công',
+                description: 'Bạn đã thanh toán thành công gói tập.',
+            });
+        } catch (error) {
+            console.error("Error: ", error);
+            notification.error({
+                message: 'Thanh toán thất bại',
+                description: 'Đã có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại.',
+            });
+        }
     };
 
     const handleCancel = () => {
@@ -108,7 +124,7 @@ const Package = ({
                     Số người tập: <strong>{memberCount}</strong> người
                 </p>
                 <p className="package-number">
-                    Thời hạn: <strong>60</strong> ngày
+                    Thời hạn: <strong>60</strong> ngày  
                 </p>
             </div>
             <>
