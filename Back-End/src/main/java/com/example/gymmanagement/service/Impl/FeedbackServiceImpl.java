@@ -60,6 +60,8 @@ public class FeedbackServiceImpl implements IFeedbackService {
             memberFeedbackResponse.setId(it.getId());
             memberFeedbackResponse.setMemberName(it.getMember().getFullName());
             memberFeedbackResponse.setFeedbackDetail(it.getFeedbackDetail());
+            memberFeedbackResponse.setFeedbackTime(it.getFeedbackTime());
+            memberFeedbackResponse.setFeedbackType(it.getFeedbackType().getName());
             result.add(memberFeedbackResponse);
         }
         return result;
