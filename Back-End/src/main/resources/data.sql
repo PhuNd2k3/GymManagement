@@ -9,7 +9,7 @@ INSERT INTO membership (name, numbers_of_training_per_week, price, period) VALUE
 ('Premium Membership', 5, 100, 30),
 ('Standard Membership', 4, 70, 30),
 ('Premium Plus Membership', 7, 150, 30),
-('Student Membership', 2, 40, 30)
+('Student Membership', 2, 40, 30),
 ('Super Membership',7,500,90);
 
 -- Dữ liệu cho bảng member
