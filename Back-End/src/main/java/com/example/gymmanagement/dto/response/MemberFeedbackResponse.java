@@ -11,4 +11,5 @@ public class MemberFeedbackResponse {
     private String feedbackDetail;
     private String feedbackType;
     private Date feedbackTime;
+    private String replyContent;
 }
