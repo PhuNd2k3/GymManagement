@@ -160,8 +160,8 @@ const AdminMembers = () => {
         <div className="admin-member background">
             <div className="container">
                 <div className="admin-member-row">
-                    <h1 className="registration-list-title">DANH SÁCH ĐĂNG KÝ</h1>
-                    <div>
+                    <h1 className="registration-list-title">DANH SÁCH NGƯỜI DÙNG</h1>
+                    <div style={{display:"flex", gap:"20px"}}>
                         <button onClick={handleAddNew}>THÊM MỚI</button>
                         <div className="group">
                             <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">

@@ -7,6 +7,24 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        button {
+            display: flex;
+            margin-left: auto;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: 1px solid #c21b1b;
+            color: #c21b1b;
+            background-color: #fff;
+            font-size: 1.6rem;
+            font-weight: 600;
+            line-height: 1.5714285714;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            &:hover {
+                color: #fff;
+                background-color: #c21b1b;
+            }
+        }
     }
     .group {
         display: flex;
@@ -119,6 +137,40 @@
         &:hover {
             color: #c21b1b;
             background-color: #fff;
+        }
+    }
+}
+
+.admin-member-modal {
+    .form {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+
+        &-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        &-group:first-child {
+            flex-direction: row;
+        }
+
+        &-left, &-right {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-left {
+            width: 100%;
+            label {
+                width: 200px;
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: #737373;
+            }
         }
     }
 }
