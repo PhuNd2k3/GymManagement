@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import all_imgs from "../assets/img/all_imgs";
 import axios from 'axios';
+import { message } from 'antd';
 
 const AdminAttendance = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [members, setMembers] = useState([]);
 
-    useEffect(() => {
+    const fetchMembers = () => {
         axios.get('http://localhost:8080/api/member/all')
             .then(response => {
                 const membersFromAPI = response.data.map(member => ({
@@ -15,6 +16,7 @@ const AdminAttendance = () => {
                     sex: member.gender,
                     age: new Date().getFullYear() - new Date(member.dob).getFullYear(),
                     phone: member.phoneNumber,
+                    trainingToday: member.trainingToday,
                     img: all_imgs.gym_equipment
                 }));
                 setMembers(membersFromAPI);
@@ -22,6 +24,10 @@ const AdminAttendance = () => {
             .catch(error => {
                 console.error('Error fetching members:', error);
             });
+    };
+
+    useEffect(() => {
+        fetchMembers();
     }, []);
     
     const handleSearch = (event) => {
@@ -31,7 +37,8 @@ const AdminAttendance = () => {
     const handleAttendance = (id, name) => {
         axios.put(`http://localhost:8080/api/training/add/${id}`)
             .then(response => {
-                alert('Điểm danh thành công cho thành viên: ' + name);
+                message.success(`Điểm danh thành công cho thành viên: ${name}`);
+                fetchMembers();
             })
             .catch(error => {
                 if (error.response && error.response.status === 409) {
@@ -72,24 +79,27 @@ const AdminAttendance = () => {
                             member.name.toLowerCase().includes(searchTerm.toLowerCase())
                         )
                         .map((member, index) => (
-                            <div className="member-item" key={index}>
-                                <div className="member-item-left">
-                                    <img src={member.img} alt="" className="member-avatar" />
-                                    <div className="member-info">
-                                        <p className="member-name">{member.name}</p>
-                                        <p className="member-sex-old">{member.sex} {member.age} tuổi</p>
-                                        <p className="member-phone">{member.phone}</p>
+                            member.trainingToday ? null : 
+                            (
+                                <div className="member-item" key={index}>
+                                    <div className="member-item-left">
+                                        <img src={member.img} alt="" className="member-avatar" />
+                                        <div className="member-info">
+                                            <p className="member-name">{member.name}</p>
+                                            <p className="member-sex-old">{member.sex} {member.age} tuổi</p>
+                                            <p className="member-phone">{member.phone}</p>
+                                        </div>
+                                    </div>
+                                    <div className="member-item-right">
+                                        <button
+                                            className="attendance-btn"
+                                            onClick={() => handleAttendance(member.id, member.name)}
+                                        >
+                                            Điểm danh
+                                        </button>
                                     </div>
                                 </div>
-                                <div className="member-item-right">
-                                    <button
-                                        className="attendance-btn"
-                                        onClick={() => handleAttendance(member.id, member.name)}
-                                    >
-                                        Điểm danh
-                                    </button>
-                                </div>
-                            </div>
+                            )
                         ))}
                 </div>
             </div>
