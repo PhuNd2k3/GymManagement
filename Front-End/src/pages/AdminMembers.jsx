@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Input, DatePicker, Select, Button } from "antd";
+import { Modal, Input, DatePicker, Select, message } from "antd";
 import moment from "moment";
 import all_imgs from "../assets/img/all_imgs";
 
@@ -62,7 +62,7 @@ const AdminMembers = () => {
         setSelectedMember(member);
         setNewMember({
             fullName: member.fullName,
-            dob: member.dob,
+            dob: member.dob ? moment(member.dob) : null,
             sex: member.sex,
             phoneNumber: member.phoneNumber,
             membershipName: member.membershipName,
@@ -87,25 +87,31 @@ const AdminMembers = () => {
     };
 
     const handleDelete = (id) => {
-        axios
-            .delete(`http://localhost:8080/api/member/delete/${id}`)
-            .then((response) => {
-                setMembers(members.filter((member) => member.id !== id));
-            })
-            .catch((error) => {
-                console.error("Error deleting member:", error);
-            });
+        Modal.confirm({
+            title: "Xác nhận xóa",
+            content: "Bạn có chắc chắn muốn xóa người dùng này không?",
+            okText: "Xóa",
+            cancelText: "Hủy",
+            onOk: () => {
+                axios
+                    .delete(`http://localhost:8080/api/member/delete/${id}`)
+                    .then((response) => {
+                        setMembers(members.filter((member) => member.id !== id));
+                        message.success("Xóa thành công!");
+                    })
+                    .catch((error) => {
+                        console.error("Error deleting member:", error);
+                    });
+            },
+        });
     };
 
     const handleOk = () => {
         const selectedMembership = memberships.find(
             (m) => m.name === newMember.membershipName
         );
-        const formattedDob = newMember.dob
-            ? moment.isMoment(newMember.dob)
-                ? newMember.dob.format("YYYY-MM-DD")
-                : moment(newMember.dob).format("YYYY-MM-DD")
-            : null;
+
+        const formattedDob = newMember.dob ? newMember.dob.format("YYYY-MM-DD") : null;
 
         if (modalType === "edit") {
             const memberData = {
@@ -161,7 +167,7 @@ const AdminMembers = () => {
             <div className="container">
                 <div className="admin-member-row">
                     <h1 className="registration-list-title">DANH SÁCH NGƯỜI DÙNG</h1>
-                    <div style={{display:"flex", gap:"20px"}}>
+                    <div style={{ display: "flex", gap: "20px" }}>
                         <button onClick={handleAddNew}>THÊM MỚI</button>
                         <div className="group">
                             <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -242,22 +248,25 @@ const AdminMembers = () => {
                             <label htmlFor="memberDOB">Ngày sinh:</label>
                             <DatePicker
                                 id="memberDOB"
-                                value={newMember.dob ? moment(newMember.dob) : null}
+                                value={newMember.dob}
                                 onChange={(date) => setNewMember({ ...newMember, dob: date })}
                             />
                         </div>
                         <div className="form-group">
                             <label htmlFor="memberSex">Giới tính:</label>
-                            <Input
+                            <Select
                                 id="memberSex"
                                 value={newMember.sex}
-                                onChange={(e) =>
+                                onChange={(value) =>
                                     setNewMember({
                                         ...newMember,
-                                        sex: e.target.value,
+                                        sex: value,
                                     })
                                 }
-                            />
+                            >
+                                <Select.Option value="Male">Male</Select.Option>
+                                <Select.Option value="Female">Female</Select.Option>
+                            </Select>
                         </div>
                         <div className="form-group">
                             <label htmlFor="memberPhoneNumber">Số điện thoại:</label>
