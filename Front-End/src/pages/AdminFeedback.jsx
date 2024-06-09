@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Modal, Input, Button, notification } from "antd";
+import { Modal, Input, notification, message } from "antd";
 
 const { confirm } = Modal;
 
@@ -50,10 +50,11 @@ const AdminFeedback = () => {
                     await axios.delete(`http://localhost:8080/api/feedback/delete/${id}`);
                     setFilteredFeedbacks(filteredFeedbacks.filter(feedback => feedback.id !== id));
                     setFeedbacks(feedbacks.filter(feedback => feedback.id !== id));
-                    notification.success({
-                        message: 'Success',
-                        description: 'Phản hồi đã được xóa thành công.',
-                    });
+                    // notification.success({
+                    //     message: 'Success',
+                    //     description: 'Phản hồi đã được xóa thành công.',
+                    // });
+                    message.success("Xóa thành công!");
                 } catch (error) {
                     console.error("Error deleting feedback:", error);
                     notification.error({
@@ -88,10 +89,11 @@ const AdminFeedback = () => {
                 setSelectedFeedback(null);
                 setReplyContent("");
                 // Show success notification
-                notification.success({
-                    message: 'Success',
-                    description: 'Reply sent successfully.',
-                });
+                // notification.success({
+                //     message: 'Success',
+                //     description: 'Reply sent successfully.',
+                // });
+                message.success("Đã trả lời!");
             } catch (error) {
                 console.error("Error replying to feedback:", error);
                 // Show error notification

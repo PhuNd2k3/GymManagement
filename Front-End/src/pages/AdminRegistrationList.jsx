@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { message } from "antd";
 import all_imgs from "../assets/img/all_imgs";
 
 const AdminRegistrationList = () => {
@@ -36,6 +37,7 @@ const AdminRegistrationList = () => {
             .then((response) => {
                 console.log("Update successful:", response.data);
                 // Optionally update the local state to reflect the change immediately
+                {data.status === "Accepted" ? message.success("Đã duyệt!") : message.success("Đã từ chối!");}
                 setMembers((prevMembers) =>
                     prevMembers.filter((m) => m.id !== member.id)
                 );

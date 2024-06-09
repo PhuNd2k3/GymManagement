@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Input, InputNumber } from "antd";
+import { Modal, Input, InputNumber, message } from "antd";
 import AdminPackage from "../components/AdminPackage/AdminPackage";
 
 const AdminPackages = () => {
@@ -58,6 +58,7 @@ const AdminPackages = () => {
                 trainingFrequency: null,
                 membershipPeriod: null
             });
+            message.success("Thêm thành công!");
         } catch (error) {
             console.error(error);
         }

@@ -151,6 +151,7 @@ const AdminMembers = () => {
                 .then((response) => {
                     setMembers([...members, response.data]);
                     setIsModalOpen(false);
+                    message.success("Thêm thành công!");
                 })
                 .catch((error) => {
                     console.error("Error adding new member:", error);

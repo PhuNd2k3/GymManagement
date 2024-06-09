@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
-import { Modal, Input, InputNumber } from 'antd';
+import { Modal, Input, InputNumber, message } from 'antd';
 
 const AdminPackage = ({
     id,
@@ -30,9 +30,25 @@ const AdminPackage = ({
         try {
             await axios.delete(`http://localhost:8080/api/membership/delete/${id}`);
             onRemove(id);
+            message.success("Xóa thành công!");
         } catch (error) {
             console.error("Error deleting package:", error);
+            Modal.error({
+                title: 'Xóa thất bại',
+                content: 'Có lỗi xảy ra trong quá trình xóa gói tập.',
+            });
         }
+    };
+
+    const confirmDelete = () => {
+        Modal.confirm({
+            title: 'Xác nhận xóa',
+            content: 'Bạn có chắc chắn muốn xóa gói tập này?',
+            okText: 'Xóa',
+            okType: 'danger',
+            cancelText: 'Hủy',
+            onOk: handleDelete,
+        });
     };
 
     const showModal = () => {
@@ -53,6 +69,8 @@ const AdminPackage = ({
             setNumbersOfTrainingPerWeek(formData.trainingFrequency);
             setMembershipPeriod(formData.membershipPeriod);
             setMemberCount(formData.memberCount);
+
+            message.success("Đã chỉnh sửa!");
 
             console.log("Package updated successfully:", response.data);
             setIsModalOpen(false);
@@ -83,7 +101,7 @@ const AdminPackage = ({
                 </p>
             </div>
             <div className="package-act">
-                <button className="package-act-remove" onClick={handleDelete}>
+                <button className="package-act-remove" onClick={confirmDelete}>
                     XÓA
                 </button>
                 <button className="package-act-update" onClick={showModal}>
