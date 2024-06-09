@@ -29,13 +29,13 @@ public class MemberConverter {
         } else {
             result.setMembershipName(null);
         }
+        result.setTrainingToday(false);
         for(TrainingHistory it : member.getTrainingHistories()){
             if(resetTime(it.getTrainingTime()).equals(resetTime(new Date()))){
                 result.setTrainingToday(true);
                 break;
             }
         }
-        result.setTrainingToday(false);
         return result;
     }
 
