@@ -9,7 +9,8 @@ INSERT INTO membership (name, numbers_of_training_per_week, price, period) VALUE
 ('Premium Membership', 5, 100, 30),
 ('Standard Membership', 4, 70, 30),
 ('Premium Plus Membership', 7, 150, 30),
-('Student Membership', 2, 40, 30);
+('Student Membership', 2, 40, 30),
+('Super Membership',7,500,90);
 
 -- Dữ liệu cho bảng member
 INSERT INTO member (full_name, address, email, phone_number, password, dob, membership_period, membership_id, gender) VALUES
@@ -28,12 +29,12 @@ INSERT INTO member (full_name, address, email, phone_number, password, dob, memb
 INSERT INTO sign_up_membership (membership_id, member, status, payment_method) VALUES
 (1, 1, 'Accepted', 'Direct'),
 (2, 2, 'Accepted', 'Card'),
-(1, 3, 'Waiting', 'Direct'),
+(6, 3, 'Waiting', 'Direct'),
 (2, 4, 'Accepted', 'Card'),
 (1, 5, 'Accepted', 'Direct'),
 (3, 6, 'Waiting', 'Card'),
 (1, 7, 'Accepted', 'Direct'),
-(2, 8, 'Waiting', 'Card'),
+(6, 8, 'Waiting', 'Card'),
 (3, 9, 'Accepted', 'Direct'),
 (1, 10, 'Accepted', 'Card');
 
