@@ -23,8 +23,8 @@ public class SignUpMembership {
     @Column(name = "sign_up_date")
     private Date signUpDate;
 
-    @Column(name = "rely_date")
-    private Date relyDate;
+    @Column(name = "reply_date")
+    private Date replyDate;
 
     @ManyToOne
     @JsonBackReference
