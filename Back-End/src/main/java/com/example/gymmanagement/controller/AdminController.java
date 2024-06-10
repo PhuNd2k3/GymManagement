@@ -97,4 +97,6 @@ public class AdminController {
             return new ResponseEntity<>("Member not found", HttpStatus.NOT_FOUND);
         }
     }
+
+    //@GetMapping(value = "")
 }
