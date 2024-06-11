@@ -16,6 +16,9 @@ public class Member extends User {
     @Column(name = "membership_period")
     private Date membershipPeriod;
 
+    @Column(name = "register_date")
+    private Date registerDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "membership_id")
