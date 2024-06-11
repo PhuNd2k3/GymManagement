@@ -5,12 +5,12 @@ INSERT INTO admin (phone_number, password) VALUES
 
 -- Dữ liệu cho bảng membership
 INSERT INTO membership (name, numbers_of_training_per_week, price, period) VALUES
-('Basic Membership', 3, 50, 30),
-('Premium Membership', 5, 100, 30),
-('Standard Membership', 4, 70, 30),
-('Student Membership', 2, 40, 30),
-('Premium Plus Membership', 7, 150, 30),
-('Super Membership',7,500,90);
+('Basic', 3, 50, 30),
+('Premium', 5, 100, 30),
+('Standard', 4, 70, 30),
+('Student', 2, 40, 30),
+('Premium Plus', 7, 150, 30),
+('Super',7,500,90);
 
 -- Dữ liệu cho bảng member
 INSERT INTO member (full_name, address, email, phone_number, password, dob, membership_period, membership_id, gender, register_date) VALUES
