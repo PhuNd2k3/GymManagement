@@ -15,7 +15,7 @@ public class SignUpMembershipConverter {
         if (signUpMembership.getMember() != null && signUpMembership.getMember().getMembership() != null) {
             result.setCurrentMembership(signUpMembership.getMember().getMembership().getName());
         } else {
-            result.setCurrentMembership("No Membership");
+            result.setCurrentMembership(null);
         }
 
         if (signUpMembership.getMember() != null) {
