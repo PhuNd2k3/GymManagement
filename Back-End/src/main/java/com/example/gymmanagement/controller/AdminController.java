@@ -6,6 +6,7 @@ import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.UpdateRegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.SignUpMembership;
 import com.example.gymmanagement.repository.IAdminRepository;
@@ -98,5 +99,9 @@ public class AdminController {
         }
     }
 
-    //@GetMapping(value = "")
+    @GetMapping(value = "/statistical/new/{type}")
+    public StatisticsResponse getNewStatisticsByType(@PathVariable Integer type){
+        StatisticsResponse result = memberService.getStatistics(type);
+        return  result;
+    }
 }

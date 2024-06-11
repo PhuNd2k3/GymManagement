@@ -6,6 +6,7 @@ import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
 
@@ -27,4 +28,6 @@ public interface IMemberService {
     Member addMemberOfAdmin(MemberAdminRequest request);
 
     Member updateMemberOfAdmin(MemberAdminRequest request);
+
+    StatisticsResponse getStatistics(Integer type);
 }

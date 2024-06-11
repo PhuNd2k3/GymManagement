@@ -7,15 +7,22 @@ import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
+import com.example.gymmanagement.handlers.Impl.MonthHandler;
+import com.example.gymmanagement.handlers.Impl.WeekHandler;
+import com.example.gymmanagement.handlers.Impl.YearHandler;
+import com.example.gymmanagement.handlers.StatisticsHandler;
 import com.example.gymmanagement.repository.*;
 import com.example.gymmanagement.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -36,6 +43,8 @@ public class MemberServiceImpl implements IMemberService {
 
     @Autowired
     private IFeedbackRepository feedbackRepository;
+
+    private Map<Integer, StatisticsHandler> handlers = new HashMap<>();
 
     @Override
     public List<TrainingHistory> getTrainingHistory(Integer id) {
@@ -128,5 +137,31 @@ public class MemberServiceImpl implements IMemberService {
         member.setPassword("123456");
         member.setMembership(membershipRepository.findById(request.getMembershipId()).get());
         return memberRepository.save(member);
+    }
+
+
+    @Autowired
+    public MemberServiceImpl(IMemberRepository memberRepository, IMembershipRepository membershipRepository, MemberConverter memberConverter, ISignUpMembershipRepository signUpMembershipRepository, ITrainingHistoryRepository trainingHistory, IFeedbackRepository feedbackRepository, WeekHandler weekHandler, MonthHandler monthHandler, YearHandler yearHandler) {
+        this.memberRepository = memberRepository;
+        this.membershipRepository = membershipRepository;
+        this.memberConverter = memberConverter;
+        this.signUpMembershipRepository = signUpMembershipRepository;
+        this.trainingHistory = trainingHistory;
+        this.feedbackRepository = feedbackRepository;
+        handlers.put(1, weekHandler); // Đăng ký xử lý cho tuần
+        handlers.put(2, monthHandler);
+        handlers.put(3,yearHandler);
+        // Đăng ký thêm các loại handler khác nếu cần
+    }
+
+
+
+    @Override
+    public StatisticsResponse getStatistics(Integer type) {
+        StatisticsHandler handler = handlers.get(type);
+        if (handler != null) {
+            return handler.handle(type);
+        }
+        return null;
     }
 }
