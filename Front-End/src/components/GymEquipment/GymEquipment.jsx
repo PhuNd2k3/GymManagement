@@ -31,11 +31,9 @@ const GymEquipment = ({ name, imgSrc, initialData, onDeleteSuccess }) => {
     setIsModalOpen(false);
     try {
       await axios.put("http://localhost:8080/api/equipment/update", formData);
-      setEquipmentName(formData.equipmentName); // Cập nhật tên thiết bị
-      // onEditSuccess(); // Gọi callback onEditSuccess sau khi cập nhật thành công
+      setEquipmentName(formData.equipmentName);
     } catch (error) {
       console.error("Error updating equipment:", error);
-      // Handle error
     }
   };
 
@@ -53,35 +51,22 @@ const GymEquipment = ({ name, imgSrc, initialData, onDeleteSuccess }) => {
       content: "Bạn có chắc chắn muốn xóa thiết bị này không?",
       okText: "Xóa",
       cancelText: "Hủy",
-      onOk: () => {
-        axios
-          .delete(`http://localhost:8080/api/equipment/delete/${formData.id}`)
-          .then((response) => {
-            // setMembers(members.filter((member) => member.id !== id));
-            message.success("Xóa thành công!");
-          })
-          .catch((error) => {
-            console.error("Error deleting equipment:", error);
-          });
+      onOk: async () => {
+        try {
+          await axios.delete(`http://localhost:8080/api/equipment/delete/${formData.id}`);
+          message.success("Xóa thành công!");
+          onDeleteSuccess(formData.id);
+        } catch (error) {
+          console.error("Error deleting equipment:", error);
+        }
       },
     });
-    // try {
-    //     await axios.delete(
-    //         `http://localhost:8080/api/equipment/delete/${formData.id}`
-    //     );
-    //     onDeleteSuccess(formData.id);
-
-    // } catch (error) {
-    //     console.error("Error deleting equipment:", error);
-    //     // Handle error
-    // }
   };
 
   return (
     <div className="gym-equipment">
       <div className="gym-equipment-info">
-        <h2 className="gym-equipment-name">{equipmentName}</h2>{" "}
-        {/* Sử dụng state mới */}
+        <h2 className="gym-equipment-name">{equipmentName}</h2>
         <img src={imgSrc} alt={name} className="gym-equipment-img" />
       </div>
       <div className="gym-equipment-act">

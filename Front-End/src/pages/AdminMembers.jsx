@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Modal, Input, DatePicker, Select, message } from "antd";
+import { Modal, Input, DatePicker, Select, message, Pagination } from "antd";
 import moment from "moment";
 import all_imgs from "../assets/img/all_imgs";
 
@@ -19,6 +19,8 @@ const AdminMembers = () => {
     membershipName: "",
     email: "",
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 4;
 
   useEffect(() => {
     axios
@@ -52,6 +54,7 @@ const AdminMembers = () => {
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
   };
 
   const filteredMembers = members.filter(
@@ -169,6 +172,15 @@ const AdminMembers = () => {
     setIsModalOpen(false);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const currentMembers = filteredMembers.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
   return (
     <div className="admin-member background">
       <div className="container">
@@ -193,7 +205,7 @@ const AdminMembers = () => {
           </div>
         </div>
         <div className="admin-member-list">
-          {filteredMembers.map((member) => (
+          {currentMembers.map((member) => (
             <div className="admin-member-item" key={member.id}>
               <div className="admin-member-item-left">
                 <img src={member.img} alt="" className="admin-member-avatar" />
@@ -226,6 +238,14 @@ const AdminMembers = () => {
             </div>
           ))}
         </div>
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={filteredMembers.length}
+          onChange={handlePageChange}
+          showSizeChanger={false}
+          style={{ marginTop: '20px', textAlign: 'center' }}
+        />
       </div>
       <Modal
         title={
