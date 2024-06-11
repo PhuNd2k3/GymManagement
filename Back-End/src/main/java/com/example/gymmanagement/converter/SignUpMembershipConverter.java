@@ -6,16 +6,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SignUpMembershipConverter {
-    public RegisterMembershipDTO toRegisterMembershipDTO(SignUpMembership signUpMembership){
+
+    public RegisterMembershipDTO toRegisterMembershipDTO(SignUpMembership signUpMembership) {
         RegisterMembershipDTO result = new RegisterMembershipDTO();
         result.setId(signUpMembership.getId());
-        result.setCurrentMembership(signUpMembership.getMember().getMembership().getName());
-        result.setDob(signUpMembership.getMember().getDob());
-        result.setFullName(signUpMembership.getMember().getFullName());
-        result.setPhoneNumber(signUpMembership.getMember().getPhoneNumber());
-        result.setRegisterMembership(signUpMembership.getMembership().getName());
-        result.setRegisterMembershipId(signUpMembership.getMembership().getId());
-        result.setMemberId(signUpMembership.getMembership().getId());
+
+        // Kiểm tra nếu member hoặc membership của member là null
+        if (signUpMembership.getMember() != null && signUpMembership.getMember().getMembership() != null) {
+            result.setCurrentMembership(signUpMembership.getMember().getMembership().getName());
+        } else {
+            result.setCurrentMembership("No Membership");
+        }
+
+        if (signUpMembership.getMember() != null) {
+            result.setDob(signUpMembership.getMember().getDob());
+            result.setFullName(signUpMembership.getMember().getFullName());
+            result.setPhoneNumber(signUpMembership.getMember().getPhoneNumber());
+        }
+
+        if (signUpMembership.getMembership() != null) {
+            result.setRegisterMembership(signUpMembership.getMembership().getName());
+            result.setRegisterMembershipId(signUpMembership.getMembership().getId());
+        }
+
+        if (signUpMembership.getMember() != null) {
+            result.setMemberId(signUpMembership.getMember().getId());
+        }
+
         result.setPaymentMethod(signUpMembership.getPaymentMethod());
         return result;
     }
