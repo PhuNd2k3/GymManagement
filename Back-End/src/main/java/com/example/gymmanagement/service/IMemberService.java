@@ -7,6 +7,7 @@ import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.AgeResponse;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.SaleResponse;
 import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
@@ -32,4 +33,6 @@ public interface IMemberService {
 
     StatisticsResponse getStatistics(Integer type);
     AgeResponse getAge();
+
+    SaleResponse getSales(Integer type);
 }

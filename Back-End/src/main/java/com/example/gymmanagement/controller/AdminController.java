@@ -7,6 +7,7 @@ import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.UpdateRegisterRequest;
 import com.example.gymmanagement.dto.response.AgeResponse;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.SaleResponse;
 import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.SignUpMembership;
@@ -121,6 +122,12 @@ public class AdminController {
     @GetMapping(value = "/statistical/age")
     public AgeResponse getAge(){
         AgeResponse result = memberService.getAge();
+        return result;
+    }
+
+    @GetMapping(value = "/statistical/sales/{type}")
+    public SaleResponse getSales(@PathVariable Integer type){
+        SaleResponse result = memberService.getSales(type);
         return result;
     }
 }

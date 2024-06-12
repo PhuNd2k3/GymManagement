@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
@@ -53,5 +54,40 @@ public class DateUtils {
         LocalDate today = LocalDate.now();
         LocalDate startOfYear = today.with(TemporalAdjusters.firstDayOfYear());
         return convertToDate(startOfYear);
+    }
+
+    public static Date getStartOfWeek(int weeksAgo) {
+        LocalDate now = LocalDate.now();
+        LocalDate startOfWeek = now.with(java.time.DayOfWeek.MONDAY).minusWeeks(weeksAgo);
+
+        return convertToDate(startOfWeek);
+    }
+
+    public static Date getStartOfMonth(int monthsAgo) {
+        LocalDate now = LocalDate.now();
+        LocalDate startOfMonth = now.minusMonths(monthsAgo).withDayOfMonth(1);
+        return convertToDate(startOfMonth);
+    }
+
+    public static Date getStartOfYear(int year) {
+        LocalDate startOfYear = LocalDate.of(year, 1, 1); // Start from January 1st of the specified year
+        return convertToDate(startOfYear);
+    }
+    public static int getWeekOfYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    public static int getMonthOfYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.MONTH) + 1; // Tháng bắt đầu từ 0 nên cần cộng thêm 1
+    }
+
+    public static int getYear(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.YEAR);
     }
 }

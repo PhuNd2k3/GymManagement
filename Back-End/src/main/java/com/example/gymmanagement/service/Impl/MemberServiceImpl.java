@@ -8,13 +8,17 @@ import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
 import com.example.gymmanagement.dto.response.AgeResponse;
 import com.example.gymmanagement.dto.response.LoginResponse;
+import com.example.gymmanagement.dto.response.SaleResponse;
 import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
 import com.example.gymmanagement.handlers.Impl.MonthHandler;
 import com.example.gymmanagement.handlers.Impl.WeekHandler;
 import com.example.gymmanagement.handlers.Impl.YearHandler;
+import com.example.gymmanagement.handlers.SaleStatisticsFactory;
+import com.example.gymmanagement.handlers.SaleStatisticsHandler;
 import com.example.gymmanagement.handlers.StatisticsHandler;
+import com.example.gymmanagement.handlers.TrainingStatisticsHandler;
 import com.example.gymmanagement.repository.*;
 import com.example.gymmanagement.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +48,8 @@ public class MemberServiceImpl implements IMemberService {
 
     @Autowired
     private IFeedbackRepository feedbackRepository;
+    @Autowired
+    private SaleStatisticsFactory saleStatisticsFactory;
 
     private Map<Integer, StatisticsHandler> handlers = new HashMap<>();
 
@@ -185,5 +191,11 @@ public class MemberServiceImpl implements IMemberService {
             }
         }
         return result;
+    }
+
+    @Override
+    public SaleResponse getSales(Integer type) {
+        SaleStatisticsHandler saleStatisticsHandler = saleStatisticsFactory.getSaleStatistics(type);
+        return saleStatisticsHandler.handle();
     }
 }
