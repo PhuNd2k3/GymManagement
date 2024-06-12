@@ -171,7 +171,7 @@ public class MemberServiceImpl implements IMemberService {
         AgeResponse result = new AgeResponse();
         List<Member> members = memberRepository.findAll();
         int currentYear = LocalDate.now().getYear();
-
+        result.setTotal(members.size());
         for (Member it : members) {
             int birthYear = it.getDob().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
             int age = currentYear - birthYear;
@@ -184,7 +184,6 @@ public class MemberServiceImpl implements IMemberService {
                 result.setAgeOver35(result.getAgeOver35() + 1);
             }
         }
-
         return result;
     }
 }
