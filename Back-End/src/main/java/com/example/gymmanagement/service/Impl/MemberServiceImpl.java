@@ -6,6 +6,7 @@ import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.MemberRequest;
 import com.example.gymmanagement.dto.request.RegisterRequest;
+import com.example.gymmanagement.dto.response.AgeResponse;
 import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
@@ -19,10 +20,10 @@ import com.example.gymmanagement.service.IMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -163,5 +164,27 @@ public class MemberServiceImpl implements IMemberService {
             return handler.handle(type);
         }
         return null;
+    }
+
+    @Override
+    public AgeResponse getAge() {
+        AgeResponse result = new AgeResponse();
+        List<Member> members = memberRepository.findAll();
+        int currentYear = LocalDate.now().getYear();
+
+        for (Member it : members) {
+            int birthYear = it.getDob().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
+            int age = currentYear - birthYear;
+
+            if (age >= 17 && age < 25) {
+                result.setAgeFrom17To25(result.getAgeFrom17To25() + 1);
+            } else if (age >= 25 && age < 35) {
+                result.setAgeFrom25To35(result.getAgeFrom25To35() + 1);
+            } else {
+                result.setAgeOver35(result.getAgeOver35() + 1);
+            }
+        }
+
+        return result;
     }
 }

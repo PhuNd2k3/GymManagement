@@ -4,13 +4,15 @@ import com.example.gymmanagement.converter.SignUpMembershipConverter;
 import com.example.gymmanagement.dto.RegisterMembershipDTO;
 import com.example.gymmanagement.dto.request.SignUpMembershipRequest;
 import com.example.gymmanagement.dto.request.UpdateRegisterRequest;
+import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.Membership;
 import com.example.gymmanagement.entity.SignUpMembership;
+import com.example.gymmanagement.handlers.SignUpStatisticsFactory;
+import com.example.gymmanagement.handlers.SignUpStatisticsHandler;
 import com.example.gymmanagement.repository.IMemberRepository;
 import com.example.gymmanagement.repository.IMembershipRepository;
 import com.example.gymmanagement.repository.ISignUpMembershipRepository;
-import com.example.gymmanagement.service.IMemberService;
 import com.example.gymmanagement.service.ISignUpMembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,10 @@ public class SignUpMembershipServiceImpl implements ISignUpMembershipService {
 
     @Autowired
     private SignUpMembershipConverter signUpMembershipConverter;
+
+    @Autowired
+    private SignUpStatisticsFactory signUpStatisticsFactory;
+
     @Override
     public SignUpMembership signUpMembership(SignUpMembershipRequest request) {
         Member member = memberRepository.findById(request.getMemberId()).get();
@@ -70,5 +76,11 @@ public class SignUpMembershipServiceImpl implements ISignUpMembershipService {
         signUpMembership.setMembership(membership);
         signUpMembership.setMember(member);
         return signUpMembershipRepository.save(signUpMembership);
+    }
+
+    @Override
+    public StatisticsResponse getSignUpStatistics(Integer type) {
+        SignUpStatisticsHandler signUpStatisticsHandler = signUpStatisticsFactory.getSignUpStatistics(type);
+        return signUpStatisticsHandler.handle();
     }
 }

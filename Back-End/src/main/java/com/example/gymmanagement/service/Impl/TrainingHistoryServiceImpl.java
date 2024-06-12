@@ -1,7 +1,11 @@
 package com.example.gymmanagement.service.Impl;
 
+import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
 import com.example.gymmanagement.entity.TrainingHistory;
+import com.example.gymmanagement.handlers.SignUpStatisticsHandler;
+import com.example.gymmanagement.handlers.TrainingStatisticsFactory;
+import com.example.gymmanagement.handlers.TrainingStatisticsHandler;
 import com.example.gymmanagement.repository.IMemberRepository;
 import com.example.gymmanagement.repository.ITrainingHistoryRepository;
 import com.example.gymmanagement.service.ITrainingHistoryService;
@@ -19,6 +23,8 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
     private IMemberRepository memberRepository;
     @Autowired
     private ITrainingHistoryRepository trainingHistoryRepository;
+    @Autowired
+    private TrainingStatisticsFactory trainingStatisticsFactory;
 
     @Override
     public void addTraining(Integer id) {
@@ -51,6 +57,12 @@ public class TrainingHistoryServiceImpl implements ITrainingHistoryService {
         trainingHistory.setMember(member);
         trainingHistory.setTrainingTime(new Date());
         trainingHistoryRepository.save(trainingHistory);
+    }
+
+    @Override
+    public StatisticsResponse getTrainingStatistics(Integer type) {
+        TrainingStatisticsHandler signUpStatisticsHandler = trainingStatisticsFactory.getTrainingStatistics(type);
+        return signUpStatisticsHandler.handle();
     }
 
     private Date resetTime(Date date) {

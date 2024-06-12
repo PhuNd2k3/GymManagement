@@ -5,6 +5,7 @@ import com.example.gymmanagement.dto.RegisterMembershipDTO;
 import com.example.gymmanagement.dto.request.LoginRequest;
 import com.example.gymmanagement.dto.request.MemberAdminRequest;
 import com.example.gymmanagement.dto.request.UpdateRegisterRequest;
+import com.example.gymmanagement.dto.response.AgeResponse;
 import com.example.gymmanagement.dto.response.LoginResponse;
 import com.example.gymmanagement.dto.response.StatisticsResponse;
 import com.example.gymmanagement.entity.Member;
@@ -103,5 +104,23 @@ public class AdminController {
     public StatisticsResponse getNewStatisticsByType(@PathVariable Integer type){
         StatisticsResponse result = memberService.getStatistics(type);
         return  result;
+    }
+
+    @GetMapping(value = "/statistical/sign_up/{type}")
+    public StatisticsResponse getSignUpStatisticsByType(@PathVariable Integer type){
+        StatisticsResponse result = signUpMembershipService.getSignUpStatistics(type);
+        return result;
+    }
+
+    @GetMapping(value = "/statistical/training/{type}")
+    public StatisticsResponse getTrainingStatisticsByType(@PathVariable Integer type){
+        StatisticsResponse result = trainingHistoryService.getTrainingStatistics(type);
+        return result;
+    }
+
+    @GetMapping(value = "/statistical/age")
+    public AgeResponse getAge(){
+        AgeResponse result = memberService.getAge();
+        return result;
     }
 }
