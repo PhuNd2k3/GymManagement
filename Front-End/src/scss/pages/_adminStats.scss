@@ -1,0 +1,67 @@
+.admin-stats {
+  .container {
+    padding: 0 100px;
+  }
+  &-title {
+    font-size: 4rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+  &-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &-container {
+    &__top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    &__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__revenue {
+      width: 45%;
+    }
+    &__age {
+      width: 45%;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #efecec;
+      &--contain {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      &--percent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      &--title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 5px;
+        p {
+          font-weight: 600;
+        }
+      }
+      .icon {
+        background-color: #9f1616;
+        opacity: 0.2;
+        width: 2%;
+        height: 25px;
+        border-radius: 2px;
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

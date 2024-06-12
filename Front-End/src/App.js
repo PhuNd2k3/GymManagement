@@ -16,6 +16,7 @@ import AdminRegistrationList from './pages/AdminRegistrationList';
 import AdminPackages from './pages/AdminPackages';
 import AdminFeedback from './pages/AdminFeedback';
 import AdminMembers from "./pages/AdminMembers";
+import AdminStats from "./pages/AdminStats";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -25,11 +26,11 @@ const App = () => {
   const checkLoginStatus = () => {
     const token = localStorage.getItem('authToken');
     const role = localStorage.getItem('userRole');
-    const id = localStorage.getItem('userId'); // Lấy userId từ localStorage
+    const id = localStorage.getItem('userId');
     if (token && role && id) {
       setIsLoggedIn(true);
       setUserRole(role);
-      setUserId(id); // Cập nhật userId vào state
+      setUserId(id);
     } else {
       setIsLoggedIn(false);
       setUserRole(null);
@@ -79,6 +80,7 @@ const App = () => {
               <Route path="/admin/registration-list/:id" element={<AdminRegistrationList />} />
               <Route path="/admin/packages/:id" element={<AdminPackages />} />
               <Route path="/admin/feedback/:id" element={<AdminFeedback />} />
+              <Route path="/admin/stats/:id" element={<AdminStats />} />
             </>
           ) : (
             <Route path="*" element={<Navigate to="/" />} />

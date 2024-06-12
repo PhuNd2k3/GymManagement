@@ -187,9 +187,19 @@
       color: #c21b1b;
     }
   }
-  .ant-pagination-item-link {
-    border: 1px solid #c21b1b !important;
-    background-color: #fff!important;
+  .ant-pagination-item-link,
+  .ant-pagination-item-ellipsis {
+    // border: 1px solid #c21b1b !important;
+    background-color: #fff !important;
+    border-radius: 6px;
+    &:hover {
+      background-color: #fff !important;
+    }
+  }
+  .anticon-double-left {
+    border-radius: 6px;
+    background-color: #fff;
+    padding: 10px;
   }
 }
 
