@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import AdminStatsItem from "../components/AdminStatsItem/AdminStatsItem";
 import axios from "axios";
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
-import { ColorFactory } from "antd/es/color-picker/color";
+import { Line } from "react-chartjs-2";
+import "chart.js/auto";
+import fileDownload from "js-file-download";
+import { Document, Packer, Paragraph, TextRun } from "docx";
 
 const AdminStats = () => {
   const [type, setType] = useState(1);
@@ -101,20 +102,120 @@ const AdminStats = () => {
     setType(Number(event.target.value));
   };
 
+  const handleExport = () => {
+    const doc = new Document({
+      sections: [
+        {
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: "THỐNG KÊ",
+                  bold: true,
+                  size: 48,
+                }),
+              ],
+              spacing: {
+                after: 400,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Số buổi tập: ${practice.count}`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Đăng ký mới: ${newRegistration.count}`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Số buổi tập gia hạn: ${newExtension.count}`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Tuổi từ 17 đến 25: ${Math.round(
+                    (age.ageFrom17To25 / age.total) * 100
+                  )}%`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Tuổi từ 25 đến 35: ${Math.round(
+                    (age.ageFrom25To35 / age.total) * 100
+                  )}%`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: `Tuổi trên 35: ${Math.round(
+                    (age.ageOver35 / age.total) * 100
+                  )}%`,
+                  size: 32,
+                }),
+              ],
+              spacing: {
+                after: 200,
+              },
+            }),
+          ],
+        },
+      ],
+    });
+
+    Packer.toBlob(doc).then((blob) => {
+      fileDownload(blob, "Thống_Kê.docx");
+    });
+  };
+
   const salesData = {
     labels: Object.keys(sales),
     datasets: [
       {
-        label: '',
+        label: "",
         data: Object.values(sales),
         fill: false,
-        borderColor: '#c21b1b',
-        tension: 0.1
-      }
-    ]
+        borderColor: "#c21b1b",
+        tension: 0.1,
+      },
+    ],
   };
 
   const salesOptions = {
+    maintainAspectRatio: false, // Add this line to disable automatic resizing
     plugins: {
       legend: {
         display: false
@@ -135,18 +236,22 @@ const AdminStats = () => {
     }
   };
   
-  
 
   return (
     <div className="admin-stats background">
       <div className="container">
         <div className="admin-stats-row">
           <h1 className="admin-stats-title">THỐNG KÊ</h1>
-          <select onChange={handleTypeChange} value={type}>
-            <option value={1}>Tuần</option>
-            <option value={2}>Tháng</option>
-            <option value={3}>Năm</option>
-          </select>
+          <div>
+            <select onChange={handleTypeChange} value={type}>
+              <option value={1}>Tuần</option>
+              <option value={2}>Tháng</option>
+              <option value={3}>Năm</option>
+            </select>
+            <button onClick={handleExport} className="export-button">
+              Xuất
+            </button>
+          </div>
         </div>
         <div className="admin-stats-container">
           <div className="admin-stats-container__top">
@@ -174,7 +279,7 @@ const AdminStats = () => {
           </div>
           <div className="admin-stats-container__bottom">
             <div className="admin-stats-container__revenue">
-              <Line data={salesData} options={salesOptions} />
+              <Line data={salesData} options={salesOptions} height={250}/>
             </div>
             <div className="admin-stats-container__age">
               <div className="admin-stats-container__age--contain">

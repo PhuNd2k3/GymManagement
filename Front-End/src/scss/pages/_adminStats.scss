@@ -36,10 +36,13 @@
       padding: 20px;
       border-radius: 10px;
       background-color: #efecec;
+      height: 289px;
       &--contain {
+        height: 100%;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        justify-content: center;
+        gap: 40px;
       }
       &--percent {
         display: flex;
@@ -59,7 +62,7 @@
         background-color: #9f1616;
         opacity: 0.2;
         width: 2%;
-        height: 25px;
+        height: 35px;
         border-radius: 2px;
         &.active {
           opacity: 1;
@@ -99,4 +102,21 @@
     background-color: #f8d7da;
   }
   
+  .export-button {
+    background-color: #c21b1b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    border: 2px solid #c21b1b;
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .export-button:hover {
+    background-color: #a31717;
+  }
 }
