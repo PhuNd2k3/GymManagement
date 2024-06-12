@@ -1,0 +1,196 @@
+.register {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    color: #737373;
+    overflow: hidden;
+    padding-top: 0 !important;
+
+    &-container {
+        width: 50%;
+        height: 100%;
+        padding: 40px 100px 40px 60px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 40px 0 0 40px;
+        background-color: #fff;
+        /* Add the animation properties */
+        animation: slideIn 1s ease forwards;
+        transform: translateX(100%);
+    }
+
+    &-title {
+        position: relative;
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 70px;
+        color: #000;
+
+        &::after {
+            position: absolute;
+            content: "";
+            width: 100px;
+            height: 8px;
+            background-color: #c21b39;
+            bottom: -20px;
+            left: 0px;
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #c21b39;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: red;
+        }
+    }
+
+    label.role-select {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        height: 120px;
+        border-radius: 20px;
+        background-color: #f6f3f3;
+    }
+    label.role-selected {
+        background-color: #c21b39;
+        p {
+            color: #fff;
+        }
+        .register-icon {
+            filter: brightness(0) saturate(100%) invert(100%) sepia(0%)
+                saturate(7498%) hue-rotate(168deg) brightness(100%)
+                contrast(103%);
+        }
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    &-icon {
+        color: #737373;
+        width: 80px;
+        height: 80px;
+        padding: 20px;
+        transition: border-color 0.3s;
+    }
+
+    .input-container {
+        position: relative;
+        margin: 40px 0;
+        margin-left: 0;
+        width: 100%; // Changed to 100% to occupy full width
+    
+        input[type="text"],
+        input[type="password"],
+        input[type="date"],
+        select {
+            font-size: 20px;
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            padding: 5px 0;
+            background-color: transparent;
+            outline: none;
+            appearance: none; // Hide default styling for select
+        }
+    
+        .label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ccc;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+    
+        input[type="text"]:focus ~ .label,
+        input[type="text"]:valid ~ .label,
+        input[type="password"]:focus ~ .label,
+        input[type="password"]:valid ~ .label,
+        input[type="date"]:focus ~ .label,
+        input[type="date"]:valid ~ .label,
+        select:focus ~ .label,
+        select:valid ~ .label {
+            top: -20px;
+            font-size: 16px;
+            color: #c21b39;
+        }
+    
+        .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: #c21b39;
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+    
+        input[type="text"]:focus ~ .underline,
+        input[type="text"]:valid ~ .underline,
+        input[type="password"]:focus ~ .underline,
+        input[type="password"]:valid ~ .underline,
+        input[type="date"]:focus ~ .underline,
+        input[type="date"]:valid ~ .underline,
+        select:focus ~ .underline,
+        select:valid ~ .underline {
+            transform: scaleX(1);
+        }
+    }
+    
+    /* Style for select dropdown arrow */
+    select {
+        background-image: url('data:image/svg+xml;charset=US-ASCII,%3csvg xmlns%3d%22http%3a//www.w3.org/2000/svg%22 viewBox%3d%220 0 4 5%22%3e%3cpath fill%3d%22%23c21b39%22 d%3d%22M2 0L0 2h4z%22/%3e%3c/svg%3e');
+        background-repeat: no-repeat;
+        background-position-x: 100%;
+        background-position-y: 5px;
+    }
+    
+    .register-btn {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    
+    /* Keyframes for slide-in animation */
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+}
+
+.role-selection {
+    margin-bottom: 15px;
+
+    &-title {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+}
+
+.role-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.role-options input[type="radio"] {
+    visibility: hidden;
+}

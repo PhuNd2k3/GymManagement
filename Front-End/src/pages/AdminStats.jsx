@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AdminStatsItem from "../components/AdminStatsItem/AdminStatsItem";
 import axios from "axios";
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto';
+import { ColorFactory } from "antd/es/color-picker/color";
 
 const AdminStats = () => {
   const [type, setType] = useState(1);
@@ -25,6 +28,7 @@ const AdminStats = () => {
     ageOver35: 0,
     total: 0,
   });
+  const [sales, setSales] = useState({});
 
   const fetchAdminStats = async () => {
     try {
@@ -73,16 +77,65 @@ const AdminStats = () => {
     }
   };
 
+  const fetchSales = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/statistical/sales/${type}`
+      );
+      console.log(response.data);
+      setSales(response.data.sales);
+    } catch (error) {
+      console.error("Error fetching sales data:", error);
+    }
+  };
+
   useEffect(() => {
     fetchAdminStats();
     fetchNewRegistration();
     fetchNewExtension();
     fetchAge();
+    fetchSales();
   }, [type]);
 
   const handleTypeChange = (event) => {
     setType(Number(event.target.value));
   };
+
+  const salesData = {
+    labels: Object.keys(sales),
+    datasets: [
+      {
+        label: '',
+        data: Object.values(sales),
+        fill: false,
+        borderColor: '#c21b1b',
+        tension: 0.1
+      }
+    ]
+  };
+
+  const salesOptions = {
+    plugins: {
+      legend: {
+        display: false
+      },
+      title: {
+        display: true,
+        text: 'Doanh thu',
+        align: 'start',
+        padding: {
+          top: 10,
+          bottom: 30
+        },
+        font: {
+          size: 20
+        },
+        color: '#000000'
+      }
+    }
+  };
+  
+  
 
   return (
     <div className="admin-stats background">
@@ -120,7 +173,9 @@ const AdminStats = () => {
             />
           </div>
           <div className="admin-stats-container__bottom">
-            <div className="admin-stats-container__revenue">hihi</div>
+            <div className="admin-stats-container__revenue">
+              <Line data={salesData} options={salesOptions} />
+            </div>
             <div className="admin-stats-container__age">
               <div className="admin-stats-container__age--contain">
                 <div className="admin-stats-container__age--row">

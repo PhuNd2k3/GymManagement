@@ -17,6 +17,7 @@ import AdminPackages from './pages/AdminPackages';
 import AdminFeedback from './pages/AdminFeedback';
 import AdminMembers from "./pages/AdminMembers";
 import AdminStats from "./pages/AdminStats";
+import Register from "./components/Register/Register";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState(null);
@@ -43,7 +44,7 @@ const App = () => {
   }, [location]);
 
   const renderHeader = () => {
-    if (location.pathname !== "/login") {
+    if (!(location.pathname === "/login" || location.pathname === "/register")) {
       if (isLoggedIn) {
         if (userRole === "hoivien") {
           return <HeaderUser userId={userId} />;
@@ -63,6 +64,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} setUserId={setUserId} />} />
+        <Route path="/register" element={<Register/>} />
         <Route path="/packages" element={<Packages isLoggedIn={isLoggedIn} />} />
         <Route path="/about-us" element={<AboutUs />} />
         {isLoggedIn && userRole === "hoivien" ? (

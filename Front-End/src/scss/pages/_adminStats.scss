@@ -27,6 +27,9 @@
     }
     &__revenue {
       width: 45%;
+      background-color: #efecec;
+      padding: 20px;
+      border-radius: 10px;
     }
     &__age {
       width: 45%;
@@ -64,4 +67,36 @@
       }
     }
   }
+  select {
+    background-color: #fff;
+    color: #c21b1b;
+    border: 2px solid #c21b1b;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  select:hover {
+    background-color: #f8d7da;
+    cursor: pointer;
+  }
+  
+  select:focus {
+    background-color: #fff;
+    border-color: #c21b1b;
+  }
+  
+  option {
+    background-color: #fff;
+    color: #c21b1b;
+    font-size: 16px;
+  }
+  
+  option:hover {
+    background-color: #f8d7da;
+  }
+  
 }
