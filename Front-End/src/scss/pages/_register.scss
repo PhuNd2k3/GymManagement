@@ -112,6 +112,9 @@
             transition: all 0.3s ease;
             pointer-events: none;
         }
+        input[type="date"] ~ .label {
+            top: -10px;
+        }
     
         input[type="text"]:focus ~ .label,
         input[type="text"]:valid ~ .label,
@@ -151,7 +154,7 @@
     
     /* Style for select dropdown arrow */
     select {
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3csvg xmlns%3d%22http%3a//www.w3.org/2000/svg%22 viewBox%3d%220 0 4 5%22%3e%3cpath fill%3d%22%23c21b39%22 d%3d%22M2 0L0 2h4z%22/%3e%3c/svg%3e');
+        // background-image: url('data:image/svg+xml;charset=US-ASCII,%3csvg xmlns%3d%22http%3a//www.w3.org/2000/svg%22 viewBox%3d%220 0 4 5%22%3e%3cpath fill%3d%22%23c21b39%22 d%3d%22M2 0L0 2h4z%22/%3e%3c/svg%3e');
         background-repeat: no-repeat;
         background-position-x: 100%;
         background-position-y: 5px;

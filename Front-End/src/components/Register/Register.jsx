@@ -56,7 +56,7 @@ const Register = () => {
               required
               value={dob}
               onChange={(e) => setDob(e.target.value)}
-              placeholder=""
+              placeholder="."
             />
             <label htmlFor="dob" className="label">
               Ngày sinh:
