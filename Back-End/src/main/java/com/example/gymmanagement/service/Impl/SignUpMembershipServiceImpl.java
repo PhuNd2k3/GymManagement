@@ -65,18 +65,40 @@ public class SignUpMembershipServiceImpl implements ISignUpMembershipService {
     public SignUpMembership updateMembershipRegister(UpdateRegisterRequest request) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_MONTH, membershipRepository.findById(request.getMembershipId()).get().getPeriod());
+
+        // Lấy membership từ repository, xử lý trường hợp không tồn tại
+        Membership membership = membershipRepository.findById(request.getMembershipId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid membership ID"));
+
+        // Cộng thêm số ngày của membership vào ngày hiện tại
+        calendar.add(Calendar.DAY_OF_MONTH, membership.getPeriod());
         Date newDate = calendar.getTime();
-        Member member = memberRepository.findById(request.getMemberId()).get();
+
+        // Lấy member từ repository, xử lý trường hợp không tồn tại
+        Member member = memberRepository.findById(request.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid member ID"));
+
+        // Cập nhật thời gian membership cho member
         member.setMembershipPeriod(newDate);
-        Membership membership = membershipRepository.findById(request.getMembershipId()).get();
-        SignUpMembership signUpMembership = signUpMembershipRepository.findById(request.getId()).get();
+
+        // Lấy SignUpMembership từ repository, xử lý trường hợp không tồn tại
+        SignUpMembership signUpMembership = signUpMembershipRepository.findById(request.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid sign-up membership ID"));
+
+        // Cập nhật các thông tin cho SignUpMembership
         signUpMembership.setStatus(request.getStatus());
         signUpMembership.setPaymentMethod(request.getPaymentMethod());
         signUpMembership.setMembership(membership);
         signUpMembership.setMember(member);
+
+        // Cập nhật membership cho member
+        member.setMembership(membership);
+
+        // Lưu member và signUpMembership
+        memberRepository.save(member);
         return signUpMembershipRepository.save(signUpMembership);
     }
+
 
     @Override
     public StatisticsResponse getSignUpStatistics(Integer type) {

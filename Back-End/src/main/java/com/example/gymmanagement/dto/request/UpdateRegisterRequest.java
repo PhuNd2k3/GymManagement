@@ -7,8 +7,6 @@ public class UpdateRegisterRequest {
     private Integer id;
     private Integer memberId;
     private Integer membershipId;
-
     private String status;
-
     private String paymentMethod;
 }
