@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Radio, Select, Input, DatePicker, notification } from "antd";
 import axios from 'axios';
+import all_imgs from "../../assets/img/all_imgs";
 
 const { Option } = Select;
 
@@ -159,8 +160,8 @@ const Package = ({
                                 </Radio>
                             </Radio.Group>
                             {paymentMethod === "bankCard" && (
-                                <>
-                                    <Select
+                                <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
+                                    {/* <Select
                                         placeholder="Chọn ngân hàng"
                                         style={{ width: "100%", marginTop: 10 }}
                                         onChange={handleBankChange}
@@ -195,8 +196,9 @@ const Package = ({
                                         picker="day"
                                         format="DD/MM/YYYY"
                                         onChange={handleExpiryDateChange}
-                                    />
-                                </>
+                                    /> */}
+                                    <img src={all_imgs.ck} alt="" />
+                                </div>
                             )}
                         </div>
                     </div>
