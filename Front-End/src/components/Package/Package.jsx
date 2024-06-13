@@ -32,12 +32,12 @@ const Package = ({
   };
 
   const handleOk = async () => {
-    if (paymentMethod === "bankCard") {
-      if (!selectedBank || !accountNumber || !cvv || !expiryDate) {
-        alert("Vui lòng điền đầy đủ thông tin thanh toán.");
-        return;
-      }
-    }
+    // if (paymentMethod === "bankCard") {
+    //   if (!selectedBank || !accountNumber || !cvv || !expiryDate) {
+    //     alert("Vui lòng điền đầy đủ thông tin thanh toán.");
+    //     return;
+    //   }
+    // }
 
     const data = {
       memberId: 1, // Replace with actual memberId
